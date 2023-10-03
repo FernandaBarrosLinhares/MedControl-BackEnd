@@ -2,6 +2,7 @@ package br.senai.labmedicine.controllers;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ import jakarta.websocket.server.PathParam;
 @RestController
 @RequestMapping("/endereco")
 public class EnderecoController {
-	// @Autowired
+	@Autowired
 	private EnderecoService service;
 
 	@GetMapping
@@ -33,8 +34,7 @@ public class EnderecoController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<EnderecoResponse> buscarPorId(@PathVariable Long id) {
-		
-		return new 
+		return new ResponseEntity<>(this.service.buscarPorId(id), HttpStatus.OK);
 	}
 
 	@PostMapping
