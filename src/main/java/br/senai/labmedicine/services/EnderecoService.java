@@ -51,4 +51,12 @@ public class EnderecoService {
 		this.enderecoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Endereço não existe."));
 		this.enderecoRepository.deleteById(id);
 	}
+
+	public EnderecoResponse atualizarEndereco(Long id, EnderecoResponse endereco) {
+		Endereco enderecoBd = this.enderecoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Endereço não existe."));
+		BeanUtils.copyProperties(endereco,enderecoBd);
+		enderecoBd = this.enderecoRepository.save(enderecoBd);
+		EnderecoResponse response = new EnderecoResponse(enderecoBd);
+		return response;
+	}
 }
