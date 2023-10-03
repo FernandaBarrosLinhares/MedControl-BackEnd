@@ -1,5 +1,6 @@
 package br.senai.labmedicine.dtos;
 
+import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Range;
 
 import br.senai.labmedicine.models.Endereco;
@@ -17,6 +18,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class EnderecoCadastro {
 	@NotBlank(message = "Cep Obrigatório")
+	@Pattern(regexp = "\\d{5}-\\d{3}",message = "O formato do cep deve ser '00000-000'")
 	private String cep;
 
 	@NotBlank(message = "Cidade Obrigatório")
