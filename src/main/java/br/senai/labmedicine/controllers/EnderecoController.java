@@ -6,14 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.senai.labmedicine.dtos.EnderecoCadastro;
 import br.senai.labmedicine.dtos.EnderecoResponse;
@@ -42,24 +35,16 @@ public class EnderecoController {
         return new ResponseEntity<EnderecoResponse>(this.service.salvar(endereco), HttpStatus.CREATED);
     }
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity removerEndereco(@PathVariable Long id) {
-		try {
-			this.service.remover(id);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<>(HttpStatus.OK);
+	@PutMapping("/{id}")
+	public ResponseEntity<EnderecoResponse> atualizarEndereco(@RequestBody @Valid EnderecoResponse endereco,
+															  @PathVariable Long id){
+		return new ResponseEntity<>(this.service.atualizarEndereco(id,endereco),HttpStatus.OK);
 	}
 
-	// @PostMapping
-	// public ResponseEntity<String> salvar(@Valid @RequestBody EnderecoResponse enderecoDTO, BindingResult bindingResult) {
-	// 	// return this.service.salvar(enderecoDTO, bindingResult);
-	// }
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> removerEndereco(@PathVariable Long id) throws Exception {
+			this.service.remover(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-	// @PutMapping("/{id}")
-	// public ResponseEntity<String> editar(@PathVariable Long id, @Valid @RequestBody EnderecoResponse enderecoDTO,
-	// 		BindingResult bindingResult) {
-	// 	// return this.service.editar(id, enderecoDTO, bindingResult);
-	// }
 }
