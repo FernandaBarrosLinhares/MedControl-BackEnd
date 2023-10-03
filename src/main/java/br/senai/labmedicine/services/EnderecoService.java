@@ -32,7 +32,8 @@ public class EnderecoService {
 	}
 
 	public EnderecoResponse buscarPorId(Long id) {
-
+		Endereco enderecoBd = this.enderecoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Endereço não existe."));
+		return new EnderecoResponse(enderecoBd);
 	}
 
 	public EnderecoResponse salvar(EnderecoCadastro enderecoDTO) {
