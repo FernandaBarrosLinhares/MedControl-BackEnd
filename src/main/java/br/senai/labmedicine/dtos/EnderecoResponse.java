@@ -38,6 +38,7 @@ public class EnderecoResponse {
 	private String referencia;
 
 	public EnderecoResponse(Endereco endereco) {
+		this.id = endereco.getId();
 		this.estado = endereco.getEstado();
 		this.cidade = endereco.getCidade();
 		this.bairro = endereco.getBairro();
