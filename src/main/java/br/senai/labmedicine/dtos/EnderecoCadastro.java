@@ -18,7 +18,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class EnderecoCadastro {
 	@NotBlank(message = "Cep Obrigatório")
-	@Pattern(regexp = "\\d{5}-\\d{3}",message = "O formato do cep deve ser '00000-000'")
+	@Pattern(regexp = "\\d{8}",message = "O CEP deve ter 8 digitos")
 	private String cep;
 
 	@NotBlank(message = "Cidade Obrigatório")
