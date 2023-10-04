@@ -1,5 +1,6 @@
 package br.senai.labmedicine.models;
 
+import br.senai.labmedicine.enums.EstadoCivilEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -24,8 +25,8 @@ public class Paciente extends Pessoa{
     @Column(nullable = false,length = 20)
     private String rg;
 
-    //@Column(nullable = false)
-    //private EstadoCivilEnum estadoCivil;
+    @Column(nullable = false)
+    private EstadoCivilEnum estadoCivil;
 
     @Column(nullable = false,length = 64)
     private String naturalidade;

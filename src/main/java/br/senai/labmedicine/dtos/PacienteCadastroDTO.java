@@ -1,5 +1,6 @@
 package br.senai.labmedicine.dtos;
 
+import br.senai.labmedicine.enums.EstadoCivilEnum;
 import br.senai.labmedicine.enums.GeneroEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
@@ -50,8 +51,8 @@ public class PacienteCadastroDTO {
     @Max (value=150, message = "Tamanho máximo para RG é 150 caracteres")
     private String rg;
 
-    //@NotNull(message= "Gênero é obrigatório")
-    //private EstadoCivilEnum estadoCivil;
+    @NotNull(message= "Gênero é obrigatório")
+    private EstadoCivilEnum estadoCivil;
 
     @NotBlank (message = "Naturalidade é obrigatório")
     @Max (value=150, message = "Tamanho máximo para naturalidade é 150 caracteres")
