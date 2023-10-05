@@ -1,5 +1,6 @@
 package br.senai.labmedicine.controllers;
 
+import br.senai.labmedicine.dtos.Dieta.DietaAtualizacaoDTO;
 import br.senai.labmedicine.dtos.Dieta.DietaCadastroDTO;
 import br.senai.labmedicine.dtos.Dieta.DietaResponseDTO;
 import br.senai.labmedicine.services.DietaService;
@@ -38,4 +39,10 @@ public class DietaController {
         this.dietaService.deletarDieta(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
+    @PutMapping("{id}")
+    public ResponseEntity<DietaResponseDTO> atualizarDieta(@PathVariable Long id,@RequestBody @Valid DietaAtualizacaoDTO dietaAtualizada){
+        return new ResponseEntity<>(this.dietaService.atualizarDieta(id,dietaAtualizada),HttpStatus.CREATED);
+    }
+
 }
