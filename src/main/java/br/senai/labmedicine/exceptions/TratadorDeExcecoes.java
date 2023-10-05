@@ -10,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
 public class TratadorDeExcecoes {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> tratarEntityNotFound(EntityNotFoundException e){
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -37,5 +38,10 @@ public class TratadorDeExcecoes {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<String> tratarConflitoCpf(DataIntegrityViolationException e){
         return new ResponseEntity<>("Cpf já cadastrado",HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(DateTimeParseException.class)
+    public ResponseEntity<String> tratarErroDataHora(DateTimeParseException e){
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
     }
 }
