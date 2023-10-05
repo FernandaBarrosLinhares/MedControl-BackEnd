@@ -43,10 +43,11 @@ public class Dieta {
     @Column(nullable = false)
     private Boolean status;
 
-    //TODO precisa concentar o enum do paciente para testar o cadastro da dieta e colocar na tabela paciente
-    //@ManyToOne()
-    //@JoinColumn(name="dieta_id",referencedColumnName = "id")
-    //private Dieta dieta;
+    //TODO precisa consentar o enum do paciente para testar o cadastro da dieta e colocar na tabela paciente
+    //TODO mudar o max e min da classe paciente para @Size()
+    //TODO @ManyToOne()
+    //TODO @JoinColumn(name="dieta_id",referencedColumnName = "id")
+    //TODO private Dieta dieta;
     @ManyToOne
     @JoinColumn(name = "paciente_id",referencedColumnName = "id",nullable = false)
     private Paciente paciente;
