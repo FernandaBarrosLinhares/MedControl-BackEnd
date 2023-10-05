@@ -1,5 +1,6 @@
 package br.senai.labmedicine.services;
 
+import br.senai.labmedicine.dtos.Dieta.DietaAtualizacaoDTO;
 import br.senai.labmedicine.dtos.Dieta.DietaCadastroDTO;
 import br.senai.labmedicine.dtos.Dieta.DietaResponseDTO;
 import br.senai.labmedicine.dtos.PacienteResponseDTO;
@@ -67,5 +68,22 @@ public class DietaService {
     public void deletarDieta(Long id){
         Dieta dieta = this.dietaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Dieta não encontrada."));
         this.dietaRepository.deleteById(id);
+    }
+
+    public DietaResponseDTO atualizarDieta(Long id,DietaAtualizacaoDTO dietaAtualizada) {
+        Dieta dieta = this.dietaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Dieta não encontrada."));
+        if (dietaAtualizada.getPaciente().getId() == null) {
+            throw new EntityNotFoundException("Paciente não encontrado.");
+        }
+        PacienteResponseDTO pacienteDTO = this.pacienteService.buscarPorId(dietaAtualizada.getPaciente().getId());
+        DietaResponseDTO dietaResponseDTO = new DietaResponseDTO();
+        Paciente paciente = new Paciente();
+        BeanUtils.copyProperties(dietaAtualizada,dieta);
+        paciente.setId(dietaAtualizada.getPaciente().getId());
+        dieta.setPaciente(paciente);
+        dieta = this.dietaRepository.save(dieta);
+        BeanUtils.copyProperties(dieta,dietaResponseDTO);
+        dietaResponseDTO.setPaciente(pacienteDTO);
+        return dietaResponseDTO;
     }
 }
