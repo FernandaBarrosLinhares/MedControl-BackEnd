@@ -38,7 +38,7 @@ public class ExercicioService {
     }
 
     public ExercicioResponseDTO atualizarExercicio(Long id, ExercicioAtualizacaoDTO exercicioAtualizado) {
-        Exercicio exercicio = this.exercicioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Exercicio não encontrado"));
+        Exercicio exercicio = this.exercicioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Exercício não encontrado"));
         ExercicioResponseDTO exercicioResponseDTO = new ExercicioResponseDTO();
         BeanUtils.copyProperties(exercicioAtualizado, exercicio);
         exercicio = this.exercicioRepository.save(exercicio);
@@ -49,12 +49,12 @@ public class ExercicioService {
     }
 
     public void deletarExercicio(Long id) {
-        Exercicio exercicio = this.exercicioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Exercicio não encotrado"));
+        Exercicio exercicio = this.exercicioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Exercício não encotrado"));
         this.exercicioRepository.deleteById(id);
     }
 
     public ExercicioResponseDTO buscarExercicioPorId(Long id){
-        Exercicio exercicio = this.exercicioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Exercicio não encontrado"));
+        Exercicio exercicio = this.exercicioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Exercício não encontrado"));
         ExercicioResponseDTO exercicioDTO = new ExercicioResponseDTO();
         BeanUtils.copyProperties(exercicio, exercicioDTO);
         PacienteResponseDTO pacienteDTO = this.pacienteService.buscarPorId(exercicio.getPaciente().getId());

@@ -35,8 +35,4 @@ public class ExercicioResponseDTO {
     private Boolean status;
 
     private PacienteResponseDTO paciente;
-//
-//    public String getTipoExercicio() {
-//        return tipoExercicioEnum.getDescricao();
-//    }
 }

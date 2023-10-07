@@ -30,9 +30,9 @@ public enum TipoExercicioEnum {
                     return tipo;
                 }
             }catch (NumberFormatException erro){
-                throw new NumberFormatException("Especialização Clínica inválida");
+                throw new NumberFormatException("Tipo de exercício inválido");
             }
         }
-        throw new IllegalArgumentException("Especialização Clínica inválida");
+        throw new IllegalArgumentException("Tipo de exercício inválido");
     }
 }
