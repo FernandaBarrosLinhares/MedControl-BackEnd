@@ -1,5 +1,8 @@
 package br.senai.labmedicine.models;
 
+import br.senai.labmedicine.dtos.usuario.UsuarioCadastroDTO;
+import br.senai.labmedicine.dtos.usuario.UsuarioResponseDTO;
+import br.senai.labmedicine.enums.GeneroEnum;
 import br.senai.labmedicine.enums.TipoUsuarioEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,4 +22,10 @@ public class Usuario extends Pessoa{
     @Column(nullable = false)
     private TipoUsuarioEnum tipoUsuario;
 
+    public Usuario(UsuarioCadastroDTO usuarioDTO) {
+        super(null,usuarioDTO.getNomeCompleto(),usuarioDTO.getGenero(),usuarioDTO.getCpf(),
+                usuarioDTO.getTelefone(), usuarioDTO.getEmail(), true);
+        this.senha = usuarioDTO.getSenha();
+        this.tipoUsuario = usuarioDTO.getTipoUsuario();
+    }
 }
