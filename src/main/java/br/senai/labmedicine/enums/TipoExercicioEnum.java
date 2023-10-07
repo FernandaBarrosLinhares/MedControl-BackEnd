@@ -1,30 +1,38 @@
 package br.senai.labmedicine.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 
 @Getter
 public enum TipoExercicioEnum {
-    RESISTENCIA_AEROBICA(1,"Resistência Aeróbica"),
-    RESISTENCIA_MUSCULAR(2,"Resistência Muscular"),
-    FLEXIBILIDADE(3,"Flexibilidade"),
-    FORCA(4,"Força"),
-    AGILIDADE(5,"Agilidade"),
-    OUTRO(6,"Outro");
+    RESISTENCIA_AEROBICA("Resistência Aeróbica"),
+    RESISTENCIA_MUSCULAR("Resistência Muscular"),
+    FLEXIBILIDADE("Flexibilidade"),
+    FORCA("Força"),
+    AGILIDADE("Agilidade"),
+    OUTRO("Outro");
 
     private final String descricao;
-    private final int valor;
 
-    TipoExercicioEnum(int valor,String descricao) {
+    TipoExercicioEnum(String descricao) {
         this.descricao = descricao;
-        this.valor = valor;
     }
 
-    public static TipoExercicioEnum retornarValor(int valor){
-        for(TipoExercicioEnum tipoExercicioEnum: TipoExercicioEnum.values()){
-            if(tipoExercicioEnum.valor == valor){
-                return tipoExercicioEnum;
+    public String getDescricao() {
+        return descricao;
+    }
+
+    @JsonCreator
+    public static TipoExercicioEnum fromString(String value){
+        for(TipoExercicioEnum tipo: TipoExercicioEnum.values()){
+            try {
+                if(tipo.ordinal() == Integer.parseInt(value)){
+                    return tipo;
+                }
+            }catch (NumberFormatException erro){
+                throw new NumberFormatException("Especialização Clínica inválida");
             }
         }
-        throw new IllegalArgumentException("Valor inválido para enum");
+        throw new IllegalArgumentException("Especialização Clínica inválida");
     }
 }

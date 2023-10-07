@@ -26,8 +26,7 @@ public class ExercicioResponseDTO {
 
     private LocalTime horario;
 
-    @Getter
-    private TipoExercicioEnum tipoExercicio;
+    private TipoExercicioEnum tipoExercicioEnum;
 
     private int quantidadePorSemana;
 
@@ -36,4 +35,8 @@ public class ExercicioResponseDTO {
     private Boolean status;
 
     private PacienteResponseDTO paciente;
+//
+//    public String getTipoExercicio() {
+//        return tipoExercicioEnum.getDescricao();
+//    }
 }

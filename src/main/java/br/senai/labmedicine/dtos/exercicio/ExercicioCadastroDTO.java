@@ -19,7 +19,7 @@ import java.time.format.DateTimeParseException;
 @NoArgsConstructor
 public class ExercicioCadastroDTO {
 
-    @NotBlank(message = "Nome da dieta deve ser informado")
+    @NotBlank(message = "Nome do exercício deve ser informado")
     @Size(min = 5,max = 100,message = "Campo nome deve conter de 5 a 100 caracteres")
     private String nome;
 
@@ -32,11 +32,12 @@ public class ExercicioCadastroDTO {
     private LocalTime horario;
 
     @NotNull(message = "Tipo de exercício deve ser informado")
-    private TipoExercicioEnum tipoExcercicio;
+    private TipoExercicioEnum tipoExercicioEnum;
 
     @NotNull(message = "Quantidade de exercícios deve ser informada")
     private int quantidadePorSemana;
 
+    @NotBlank(message = "A descrição deve ser informada")
     @Size(min =10, max = 1000,message = "Campo descrição deve conter no máximo 100 caracteres")
     private String descricao;
 
