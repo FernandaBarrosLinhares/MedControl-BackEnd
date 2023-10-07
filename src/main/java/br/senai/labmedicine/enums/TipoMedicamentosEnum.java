@@ -4,13 +4,13 @@ import lombok.Getter;
 
 @Getter
 public enum TipoMedicamentosEnum {
-    CÁPSULA(1, "Cápsula"),
+    CAPSULA(1, "Cápsula"),
     COMPRIMIDO(2, "Comprimido"),
-    LÍQUIDO(3, "Líquido"),
+    LIQUIDO(3, "Líquido"),
     CREME(4, "Creme"),
     GEL(5, "Gel"),
-    INALAÇÃO(5, "Inalação"),
-    INJEÇÃO(6, "Injeção"),
+    INALACAO(5, "Inalação"),
+    INJECAO(6, "Injeção"),
     SPRAY(7, "Spray");
 
     private final String descricao;
