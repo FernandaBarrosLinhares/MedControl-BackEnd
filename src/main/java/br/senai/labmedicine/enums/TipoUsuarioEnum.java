@@ -27,6 +27,6 @@ public enum TipoUsuarioEnum {
                 throw new NumberFormatException("Tipo de usuário inválido");
             }
         };
-        throw new IllegalArgumentException("Especialização Clínica inválida");
+        throw new IllegalArgumentException("Tipo de usuário inválido");
     }
 }
