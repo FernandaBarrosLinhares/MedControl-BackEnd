@@ -32,7 +32,6 @@ public class Medicamento {
     private LocalDate data;
 
     @Column(nullable = false)
-    @DateTimeFormat(pattern = "HH:mm:ss")
     private LocalTime horario;
 
     @Column(nullable = false)
@@ -50,8 +49,4 @@ public class Medicamento {
 
     @Column(nullable = false)
     private Boolean status;
-
-    //@ManyToMany
-    //@JoinColumn(name = "consultas_id",referencedColumnName = "id",nullable = false)
-    //private Consultas consultas;
 }

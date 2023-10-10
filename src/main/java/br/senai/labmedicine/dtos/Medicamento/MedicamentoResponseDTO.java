@@ -20,7 +20,6 @@ public class MedicamentoResponseDTO {
     private String nomeMedicamento;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate data;
-    @DateTimeFormat(pattern = "HH:mm:ss")
     private LocalTime horario;
     private TipoMedicamentosEnum tipoMedicamento;
     private Double quantidade;

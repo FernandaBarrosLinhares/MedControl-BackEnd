@@ -26,7 +26,6 @@ public class MedicamentoCadastroDTO {
     private LocalDate data;
 
     @NotNull(message = "Horário deve ser informado.")
-    @DateTimeFormat(pattern = "HH:mm:ss")
     private LocalTime horario;
 
     @NotNull(message = "Tipo de medicamento deve ser informado.")

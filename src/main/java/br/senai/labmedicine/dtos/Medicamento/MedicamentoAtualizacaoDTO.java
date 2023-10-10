@@ -24,7 +24,7 @@ public class MedicamentoAtualizacaoDTO {
     @NotNull(message = "Tipo de medicamento deve ser informado.")
     private TipoMedicamentosEnum tipoMedicamento;
 
-    @NotBlank(message = "Quantidade deve ser informada.")
+    @NotNull(message = "Quantidade deve ser informada.")
     private Double quantidade;
 
     @NotNull(message = "Unidade de medicamento deve ser informada.")
