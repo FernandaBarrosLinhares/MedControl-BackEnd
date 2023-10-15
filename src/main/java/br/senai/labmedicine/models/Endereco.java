@@ -24,7 +24,7 @@ public class Endereco {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false,length = 150)
+    @Column(nullable = false,length = 10)
     private String cep;
 
     @Column(nullable = false,length = 150)
@@ -37,8 +37,7 @@ public class Endereco {
     private String logradouro;
 
     @Column(nullable = false)
-	@Min(value = 1,message ="O número deve ser maior que 0")
-    private int numero;
+    private String numero;
 
 	@Column(length = 200)
     private String complemento;
@@ -50,6 +49,7 @@ public class Endereco {
     private String referencia;
 
 	public Endereco(EnderecoResponse enderecoDTO) {
+		this.id = enderecoDTO.getId();
 		this.estado = enderecoDTO.getEstado();
 		this.cidade = enderecoDTO.getCidade();
 		this.bairro = enderecoDTO.getBairro();
