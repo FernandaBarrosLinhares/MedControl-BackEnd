@@ -22,11 +22,6 @@ public class ProntuarioController {
 	private ProntuarioService prontuarioService;
 
 	@GetMapping
-	public ResponseEntity<List<ProntuarioResponseDTO>> buscar() {
-		return new ResponseEntity<>(this.prontuarioService.buscarTodos(), HttpStatus.OK);
-	}
-
-	@GetMapping
 	public ResponseEntity<List<ProntuarioResponseDTO>> buscar(@RequestParam ProntuarioRequestDTO prontuarioRequestDTO) {
 		return new ResponseEntity<>(this.prontuarioService.buscarPorIdOuNome(prontuarioRequestDTO), HttpStatus.OK);
 	}
