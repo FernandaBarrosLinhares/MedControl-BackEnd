@@ -1,6 +1,7 @@
 package br.senai.labmedicine.controllers;
 
 
+import br.senai.labmedicine.dtos.PacienteAtualizacaoDTO;
 import br.senai.labmedicine.dtos.PacienteCadastroDTO;
 import br.senai.labmedicine.dtos.PacienteResponseDTO;
 import br.senai.labmedicine.services.PacienteService;
@@ -13,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/paciente")
-
+@RequestMapping("/pacientes")
 public class PacienteController {
 
     @Autowired
@@ -31,12 +31,12 @@ public class PacienteController {
     }
 
     @PostMapping
-    public ResponseEntity<PacienteResponseDTO> cadastrarPaciente(@Valid @RequestBody PacienteCadastroDTO paciente){
-        return new ResponseEntity<PacienteResponseDTO>(this.service.salvar(paciente), HttpStatus.CREATED);
+    public ResponseEntity<PacienteResponseDTO> cadastrarPaciente(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@Valid @RequestBody PacienteCadastroDTO paciente){
+        return new ResponseEntity<PacienteResponseDTO>(this.service.salvar(idUsuarioLogado,paciente), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PacienteResponseDTO> atualizarPaciente(@RequestBody @Valid PacienteResponseDTO paciente,
+    public ResponseEntity<PacienteResponseDTO> atualizarPaciente(@RequestBody @Valid PacienteAtualizacaoDTO paciente,
                                                               @PathVariable Long id){
         return new ResponseEntity<>(this.service.atualizarPaciente(id,paciente),HttpStatus.OK);
     }
