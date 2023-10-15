@@ -27,8 +27,8 @@ public class EnderecoResponse {
 	@NotBlank(message = "Logradouro Obrigatório")
 	private String logradouro;
 
-	@NotNull(message = "Número Obrigatório")
-	private int numero;
+	@NotBlank(message = "Número Obrigatório")
+	private String numero;
 
 	private String complemento;
 
@@ -48,4 +48,5 @@ public class EnderecoResponse {
 		this.complemento = endereco.getComplemento();
 		this.numero = endereco.getNumero();
 	}
+
 }

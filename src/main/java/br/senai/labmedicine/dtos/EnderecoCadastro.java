@@ -30,9 +30,8 @@ public class EnderecoCadastro {
 	@NotBlank(message = "Logradouro Obrigatório")
 	private String logradouro;
 
-	@NotNull(message = "Número Obrigatório")
-	@Range(min = 0)
-	private int numero;
+	@NotBlank(message = "Número Obrigatório")
+	private String numero;
 
 	private String complemento;
 
