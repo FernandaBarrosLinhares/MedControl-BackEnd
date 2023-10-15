@@ -1,26 +1,33 @@
 package br.senai.labmedicine.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public enum UnidadeMedicamentosEnum {
-    MG(1, "mg"),
-    MGC(2, "mgc"),
-    G(3, "g"),
-    ML(4, "ml"),
-    PORCENTAGEM(5, "%");
+    MG("mg"),
+    MGC("mgc"),
+    G("g"),
+    ML("ml"),
+    PORCENTAGEM("%");
 
     private final String descricao;
-    private final int valor;
 
-    UnidadeMedicamentosEnum(int valor, String descricao) {
+
+    UnidadeMedicamentosEnum(String descricao) {
         this.descricao = descricao;
-        this.valor = valor;
+
     }
 
-    public static UnidadeMedicamentosEnum retornarValor(int valor){
-        for(UnidadeMedicamentosEnum unidadeMedicamento: UnidadeMedicamentosEnum.values()){
-            if(unidadeMedicamento.valor == valor){
-                return unidadeMedicamento;
+    @JsonCreator
+    public static UnidadeMedicamentosEnum fromString(String value){
+        for(UnidadeMedicamentosEnum unidade: UnidadeMedicamentosEnum.values()){
+            try {
+                if(unidade.ordinal() == Integer.parseInt(value)){
+                    return unidade;
+                }
+            }catch (NumberFormatException erro){
+                throw new NumberFormatException("Unidade de medicamento inválido.");
             }
-        }
-        throw new IllegalArgumentException("Valor inválido para enum");
+        };
+        throw new IllegalArgumentException("Unidade de medicamento inválido.");
     }
 }

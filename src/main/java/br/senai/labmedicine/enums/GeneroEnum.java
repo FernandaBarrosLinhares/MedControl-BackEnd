@@ -1,27 +1,32 @@
 package br.senai.labmedicine.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 
 @Getter
 public enum GeneroEnum {
 
-    MASCULINO(1,"Masculino"),
-    FEMININO(2,"Feminino"),
-    OUTROS(3,"Outros");
+    MASCULINO("Masculino"),
+    FEMININO("Feminino"),
+    OUTROS("Outros");
 
     private final String descricao;
-    private final int valor;
 
-    GeneroEnum(int valor,String descricao) {
+    GeneroEnum(String descricao) {
         this.descricao = descricao;
-        this.valor = valor;
+
     }
-    public static GeneroEnum retornarValor(int valor){
+    @JsonCreator
+    public static GeneroEnum fromString(String value){
         for(GeneroEnum genero: GeneroEnum.values()){
-            if(genero.valor == valor){
-                return genero;
+            try {
+                if(genero.ordinal() == Integer.parseInt(value)){
+                    return genero;
+                }
+            }catch (NumberFormatException erro){
+                throw new NumberFormatException("Gênero informado é inválido.");
             }
-        }
-        throw new IllegalArgumentException("Valor inválido para enum");
+        };
+        throw new IllegalArgumentException("Gênero informado é inválido");
     }
 }
