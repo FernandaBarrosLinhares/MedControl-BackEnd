@@ -62,7 +62,7 @@ public class ExameService {
 		if (nomePaciente == null || nomePaciente.isEmpty()) {
 			exames = this.exameRepository.findAll();
 		} else {
-			exames = this.exameRepository.BuscaPorNomePaciente(nomePaciente);
+			exames = this.exameRepository.findAllByPacienteNomeCompletoOrderByDataAscHorario(nomePaciente);
 		}
 
 		for (Exame exame : exames) {
