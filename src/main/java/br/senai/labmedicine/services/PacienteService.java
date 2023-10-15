@@ -1,8 +1,10 @@
 package br.senai.labmedicine.services;
 
 
-import br.senai.labmedicine.dtos.PacienteCadastroDTO;
-import br.senai.labmedicine.dtos.PacienteResponseDTO;
+import br.senai.labmedicine.dtos.*;
+import br.senai.labmedicine.dtos.log.LogCadastroDTO;
+import br.senai.labmedicine.dtos.usuario.UsuarioResponseDTO;
+import br.senai.labmedicine.models.Endereco;
 import br.senai.labmedicine.models.Paciente;
 import br.senai.labmedicine.repositories.PacienteRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -10,7 +12,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -19,16 +22,28 @@ public class PacienteService {
     @Autowired
     private PacienteRepository pacienteRepository;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private LogService logService;
+
+    @Autowired EnderecoService enderecoService;
     public List<PacienteResponseDTO> buscarTodos() {
-        List<PacienteResponseDTO> pacientesDTO = new ArrayList<> ();
-        List<Paciente> pacientes = this.pacienteRepository.findAll();
+//        List<PacienteResponseDTO> pacientesDTO = new ArrayList<> ();
+//        List<Paciente> pacientes = this.pacienteRepository.findAll();
+//        for (Paciente paciente : pacientes) {
+//            PacienteResponseDTO pacienteDTO = new PacienteResponseDTO();
+//            EnderecoResponse enderecoDTO = new EnderecoResponse();
+//            BeanUtils.copyProperties(paciente, pacienteDTO);
+//            BeanUtils.copyProperties(paciente.getEndereco(),enderecoDTO);
+//            pacienteDTO.setEndereco(enderecoDTO);
+//            pacientesDTO.add(pacienteDTO);
+//        }
+//        return pacientesDTO;
 
-        for (Paciente paciente : pacientes) {
-            PacienteResponseDTO pacienteDTO = new PacienteResponseDTO();
-            BeanUtils.copyProperties(paciente, pacienteDTO);
-            pacientesDTO.add(pacienteDTO);
-        }
-
+        List<PacienteResponseDTO> pacientesDTO;
+        pacientesDTO = this.pacienteRepository.findAll().stream().map(PacienteResponseDTO::new).toList();
         return pacientesDTO;
     }
 
@@ -37,15 +52,13 @@ public class PacienteService {
         return new PacienteResponseDTO(pacienteBd);
     }
 
-    public PacienteResponseDTO salvar(PacienteCadastroDTO pacienteDTO) {
-        Paciente paciente = new Paciente();
-        PacienteResponseDTO response = new PacienteResponseDTO();
-
-        BeanUtils.copyProperties(pacienteDTO, paciente);
+    public PacienteResponseDTO salvar(Long idUsuarioLogado, PacienteCadastroDTO pacienteDTO) {
+        UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
+        Paciente paciente = new Paciente(pacienteDTO);
         paciente = this.pacienteRepository.save(paciente);
-        BeanUtils.copyProperties(paciente, response);
-
-        return response;
+        String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Cadastrou o paciente: (id: "+paciente.getId()+") "+paciente.getNomeCompleto();
+        logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
+        return new PacienteResponseDTO(paciente);
     }
 
     public void remover(Long id) throws Exception {
@@ -53,11 +66,27 @@ public class PacienteService {
         this.pacienteRepository.deleteById(id);
     }
 
-    public PacienteResponseDTO atualizarPaciente(Long id, PacienteResponseDTO paciente) {
+    public PacienteResponseDTO atualizarPaciente(Long id, PacienteAtualizacaoDTO pacienteAtualizado) {
         Paciente pacienteBd = this.pacienteRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Paciente não existe."));
-        BeanUtils.copyProperties(paciente,pacienteBd);
+        BeanUtils.copyProperties(pacienteAtualizado,pacienteBd);
+        Endereco endereco = new Endereco(pacienteAtualizado.getEndereco());
+        endereco.setId(pacienteBd.getEndereco().getId());
+        pacienteBd.setEndereco(endereco);
         pacienteBd = this.pacienteRepository.save(pacienteBd);
-        PacienteResponseDTO response = new PacienteResponseDTO(pacienteBd);
-        return response;
+        return new PacienteResponseDTO(pacienteBd);
+    }
+
+    public List<PacienteResponseDTO> buscarPorNome(String nomeCompleto) {
+//        List<PacienteResponseDTO> pacientesDTO = new ArrayList<> ();
+//        List<Paciente> pacientes = this.pacienteRepository.findByNomeCompleto(nomeCompleto);
+//        for (Paciente paciente : pacientes) {
+//            PacienteResponseDTO pacienteDTO = new PacienteResponseDTO();
+//            BeanUtils.copyProperties(paciente, pacienteDTO);
+//            pacientesDTO.add(pacienteDTO);
+//        }
+//        return pacientesDTO;
+        List<PacienteResponseDTO> pacientesDTO;
+        pacientesDTO = this.pacienteRepository.findByNomeCompleto(nomeCompleto).stream().map(PacienteResponseDTO::new).toList();
+        return pacientesDTO;
     }
 }
