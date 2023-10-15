@@ -52,7 +52,7 @@ public class DietaService {
         if(nomePaciente == null || nomePaciente.isEmpty()){
             dietas = this.dietaRepository.findAll();
         }else {
-            dietas = this.dietaRepository.BuscaPorNomePaciente(nomePaciente);
+            dietas = this.dietaRepository.findAllByPacienteNomeCompletoOrderByDataAscHorario(nomePaciente);
         }
            for(Dieta dieta : dietas){
                 PacienteResponseDTO pacienteDTO = new PacienteResponseDTO();
