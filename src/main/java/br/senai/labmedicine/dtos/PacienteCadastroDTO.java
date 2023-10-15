@@ -3,6 +3,7 @@ package br.senai.labmedicine.dtos;
 import br.senai.labmedicine.enums.EstadoCivilEnum;
 import br.senai.labmedicine.enums.GeneroEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,66 +20,67 @@ import java.time.LocalDate;
 @Setter
 public class PacienteCadastroDTO {
 
-    @NotBlank(message ="Nome completo é obrigatório")
-    @Min (value=8, message = "Tamanho mínimo para nome completo é 8 caracteres")
-    @Max (value=150, message = "Tamanho máximo para nome completo é 150 caracteres")
+    @NotBlank(message ="Nome completo é obrigatório.")
+    @Size(min = 8,max = 64,message = "O nome dever ter de 8 a 64 caracteres.")
     private String nomeCompleto;
 
     @NotNull(message= "Gênero é obrigatório")
     private GeneroEnum genero;
 
-    @CPF @NotBlank (message = "Cpf é obrigatório")
+    @NotNull (message = "Data de nascimento é obrigatória")
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dataNascimento;
+
+    @NotNull(message= "Estado Civil é obrigatório")
+    private EstadoCivilEnum estadoCivil;
+
+    @CPF(message = "CPF inválido") //TODO retirar
+    @NotBlank (message = "Cpf é obrigatório")
+    @Pattern(regexp = "\\d{11}",message = "CPF: informe apenas números.")
     private String cpf;
 
     @NotBlank (message ="Telefone é obrigatório")
-    @JsonFormat(pattern = "\\d{11}")
-
+    @Pattern(regexp = "\\d{11}",message = "Telefone: informe apenas números com DDD")
     private String telefone;
 
     @NotBlank (message ="Email é obrigatório")
     @Email
-    @Max (value=150, message = "Tamanho máximo para email é 150 caracteres")
+    @Size(max = 150,message = "Email deve ter no máximo 150 caracteres.")
     private String email;
 
     @NotNull (message= "Status é obrigatório")
     private Boolean status;
 
-    @NotNull (message = "Data de nascimento é obrigatória")
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataNascimento;
-
     @NotBlank (message = "RG e orgão emissor é obrigatório ")
-    @Max (value=150, message = "Tamanho máximo para RG é 150 caracteres")
+    @Size(max = 150,message = "O RG dever ter até 150 caracteres.")
     private String rg;
 
-    @NotNull(message= "Gênero é obrigatório")
-    private EstadoCivilEnum estadoCivil;
-
     @NotBlank (message = "Naturalidade é obrigatório")
-    @Max (value=150, message = "Tamanho máximo para naturalidade é 150 caracteres")
+    @Size(min=8,max = 64,message = "A naturalidade dever ter de  8 a 64 caracteres.")
     private String naturalidade;
 
-
-    @JsonFormat(pattern = "\\d{11}")
+    @Pattern(regexp= "\\d{11}",message = "telefone em formato inválido: use apenas os números.")
     private String contatoEmergencia;
 
-    @Max (value=300, message = "Tamanho máximo para lista de alergia é 300 caracteres")
+    @Size(max = 1024,message = "Campo alergias deve ter até 1024 caracteres.")
     private String alergias;
 
-    @Max (value=300, message = "Tamanho máximo para cuidados específicos é 300 caracteres")
+    @Size(max = 1024,message = "Campo Cuidados Específicos deve ter até 1024 caracteres.")
     private String cuidadosEspecificos;
 
-    @Max (value=150, message = "Tamanho máximo para convênio é 150 caracteres")
+    @Size(max = 200,message = "Campo Convênio deve ter até 200 caracteres.")
     private String convenio;
 
-    @Max (value=20, message = "Tamanho máximo para número do convênio é 20 caracteres")
+    @Size(max = 100,message = "Campo número do convênio deve ter até 100 caracteres.")
     private String numeroConvenio;
 
   //TODO REVER ESTE PONTO
+    @Pattern(regexp = "\\d{2}/\\d{4}",message = "Validade do convênio: informe mês e ano 00/0000.")
     private String validadeConvenio;
 
     @NotNull(message = "Endereço deve ser informado")
-    private EnderecoResponse endereco;
+    @Valid
+    private EnderecoCadastro endereco;
 
 
 }
