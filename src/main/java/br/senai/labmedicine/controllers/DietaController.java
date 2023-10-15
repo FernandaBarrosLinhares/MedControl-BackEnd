@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/dieta")
+@RequestMapping("/dietas")
 public class DietaController {
 
     @Autowired
