@@ -1,11 +1,16 @@
 package br.senai.labmedicine.repositories;
 
-import br.senai.labmedicine.models.Medicamento;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import br.senai.labmedicine.models.Medicamento;
 
 @Repository
 public interface MedicamentoRepository extends JpaRepository<Medicamento, Long> {
+
+	@Query(value = "select m.* from medicamento as m inner join consulta as c on m.id = c.medicamento_id inner join paciente as p on c.paciente_id = p.id where p.nome_completo like %:nome%", nativeQuery = true)
+	List<Medicamento> buscarPorNomePaciente(String nome);
 }

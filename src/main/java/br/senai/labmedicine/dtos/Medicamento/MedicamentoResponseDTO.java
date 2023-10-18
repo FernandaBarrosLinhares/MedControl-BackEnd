@@ -17,13 +17,13 @@ import java.time.LocalTime;
 @NoArgsConstructor
 public class MedicamentoResponseDTO {
     private Long id;
-    private String nomeMedicamento;
+    private String nome;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate data;
     private LocalTime horario;
-    private TipoMedicamentosEnum tipoMedicamento;
+    private TipoMedicamentosEnum tipo;
     private Double quantidade;
-    private UnidadeMedicamentosEnum unidadeMedicamentos;
+    private UnidadeMedicamentosEnum unidade;
     private String observacao;
     private Boolean status;
 }

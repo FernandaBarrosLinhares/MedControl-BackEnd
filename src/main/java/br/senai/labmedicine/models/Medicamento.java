@@ -1,17 +1,22 @@
 package br.senai.labmedicine.models;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import br.senai.labmedicine.enums.TipoMedicamentosEnum;
 import br.senai.labmedicine.enums.UnidadeMedicamentosEnum;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -25,23 +30,23 @@ public class Medicamento {
 
     @Column(nullable = false)
     @Size(min = 5, max = 100)
-    private String nomeMedicamento;
+    private String nome;
 
     @Column(nullable = false)
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate data;
 
     @Column(nullable = false)
     private LocalTime horario;
 
     @Column(nullable = false)
-    private TipoMedicamentosEnum tipoMedicamento;
+    private TipoMedicamentosEnum tipo;
 
     @Column(nullable = false)
     private Double quantidade;
 
     @Column(nullable = false)
-    private UnidadeMedicamentosEnum unidadeMedicamentos;
+    private UnidadeMedicamentosEnum unidade;
 
     @Column(nullable = false)
     @Size(min = 10, max = 1000)

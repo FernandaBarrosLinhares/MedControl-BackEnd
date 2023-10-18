@@ -36,7 +36,7 @@ public class MedicamentoController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<MedicamentoResponseDTO> listaMedicamentoId(@PathVariable Long id){
 
-        MedicamentoResponseDTO response = service.ListaMedicamentoId(id);
+        MedicamentoResponseDTO response = service.buscarMedicamentoPorId(id);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -45,16 +45,13 @@ public class MedicamentoController {
     @DeleteMapping(value = "{id}")
     @Transactional
     public ResponseEntity excluirMediamentoid(@PathVariable Long id){
-
         service.excluirMedicamentoId(id);
-
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    //Retorna Medicamentos por Paciente
-    //@GetMapping
-    //public ResponseEntity<List<MedicamentoResponseDTO>> buscarMedicamentoPorPaciente(@RequestParam(required = false) String nomePaciente){
-    //    return new ResponseEntity<>(HttpStatus.OK);
-    //}
+    @GetMapping
+    public ResponseEntity<List<MedicamentoResponseDTO>> buscar(@RequestParam(required = false) String nomePaciente){
+       return new ResponseEntity<>(this.service.buscar(nomePaciente), HttpStatus.OK);
+    }
 
 }

@@ -19,16 +19,16 @@ public class MedicamentoAtualizacaoDTO {
     private Long id;
     @NotBlank(message = "Nome do medicamento deve ser informado.")
     @Size(min = 5, max = 100, message = "Nome deve ter entre 5 e 100 caracteres.")
-    private String nomeMedicamento;
+    private String nome;
 
     @NotNull(message = "Tipo de medicamento deve ser informado.")
-    private TipoMedicamentosEnum tipoMedicamento;
+    private TipoMedicamentosEnum tipo;
 
     @NotNull(message = "Quantidade deve ser informada.")
     private Double quantidade;
 
     @NotNull(message = "Unidade de medicamento deve ser informada.")
-    private UnidadeMedicamentosEnum unidadeMedicamentos;
+    private UnidadeMedicamentosEnum unidade;
 
     @NotBlank(message = "Observações deve ser informada.")
     @Size(min = 10, max = 1000, message = "Nome deve ter entre 10 e 1000 caracteres.")
