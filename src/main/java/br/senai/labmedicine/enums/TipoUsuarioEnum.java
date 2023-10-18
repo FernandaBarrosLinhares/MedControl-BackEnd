@@ -20,7 +20,7 @@ public enum TipoUsuarioEnum {
     public static TipoUsuarioEnum fromString(String value){
         for(TipoUsuarioEnum tipo: TipoUsuarioEnum.values()){
             try {
-                if(tipo.ordinal() == Integer.parseInt(value)){
+                if(tipo.name().equals(value)){
                     return tipo;
                 }
             }catch (NumberFormatException erro){

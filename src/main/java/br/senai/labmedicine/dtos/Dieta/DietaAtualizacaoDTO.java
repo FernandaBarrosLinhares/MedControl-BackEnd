@@ -29,7 +29,6 @@ public class DietaAtualizacaoDTO {
     @NotNull(message = "O status deve ser informado.")
     private Boolean status;
 
-    // TODO quando arrumar a classe paciente pode descomentar
     @NotNull(message = "Paciente obrigatório.")
     private PacienteResponseDTO paciente;
 

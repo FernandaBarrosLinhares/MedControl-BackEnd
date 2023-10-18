@@ -48,7 +48,7 @@ public class DietaService {
 
     public List<DietaResponseDTO> buscarDietaPorPaciente(String nomePaciente){
         List<Dieta> dietas;
-        List<DietaResponseDTO> deitasDTO = new ArrayList<>();
+        List<DietaResponseDTO> dietasDTO = new ArrayList<>();
         if(nomePaciente == null || nomePaciente.isEmpty()){
             dietas = this.dietaRepository.findAll();
         }else {
@@ -60,9 +60,9 @@ public class DietaService {
                 BeanUtils.copyProperties(dieta,dietaDTO);
                 BeanUtils.copyProperties(dieta.getPaciente(),pacienteDTO);
                 dietaDTO.setPaciente(pacienteDTO);
-                deitasDTO.add(dietaDTO);
+                dietasDTO.add(dietaDTO);
            }
-           return deitasDTO;
+           return dietasDTO;
     }
 
     public void deletarDieta(Long id){

@@ -40,7 +40,6 @@ public class DietaCadastroDTO {
     @Setter(AccessLevel.NONE)
     private final Boolean status = true;
 
-   // TODO quando arrumar a classe paciente pode descomentar
     @NotNull(message = "Paciente obrigatório")
     private PacienteResponseDTO paciente;
 

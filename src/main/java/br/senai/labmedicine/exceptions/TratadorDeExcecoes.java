@@ -9,6 +9,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.security.sasl.AuthenticationException;
 import java.io.UnsupportedEncodingException;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @RestControllerAdvice
 public class TratadorDeExcecoes {
+
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> tratarEntityNotFound(EntityNotFoundException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -28,11 +30,6 @@ public class TratadorDeExcecoes {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> tratarExcecaoEnum(IllegalArgumentException e){
         return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(NumberFormatException.class)
-    public ResponseEntity<String> tratarExcecaoNumero(NumberFormatException e){
-        return new ResponseEntity<>("O valor informado é inválido.",HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -46,7 +43,7 @@ public class TratadorDeExcecoes {
     }
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<String> tratarConflitoCpf(DataIntegrityViolationException e){
-        return new ResponseEntity<>("Cpf já cadastrado",HttpStatus.CONFLICT);
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(DateTimeParseException.class)
@@ -77,5 +74,12 @@ public class TratadorDeExcecoes {
     public ResponseEntity<String> tratarErroInternalError(InternalError e){
         return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(NumberFormatException.class)
+    public ResponseEntity<String> tratarExcecaoNumero(NumberFormatException e){
+        return new ResponseEntity<>("O valor informado é inválido.",HttpStatus.BAD_REQUEST);
+    }
+
+
 
 }

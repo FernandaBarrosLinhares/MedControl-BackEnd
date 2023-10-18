@@ -23,7 +23,7 @@ public enum EstadoCivilEnum {
     public static EstadoCivilEnum fromString(String value){
         for(EstadoCivilEnum estado: EstadoCivilEnum.values()){
             try {
-                if(estado.ordinal() == Integer.parseInt(value)){
+                if(estado.name().equals(value)){
                     return estado;
                 }
             }catch (NumberFormatException erro){
