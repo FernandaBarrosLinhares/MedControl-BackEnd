@@ -7,9 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ConsultaRepository  extends JpaRepository<Consulta, Long> {
-
-    //TODO BUSCA PELAS MEDICACOES(LISTA), PACIENTE E USUARIO
+public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
 
     List<Consulta> findAllByPacienteId(Long id);
 }

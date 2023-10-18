@@ -1,17 +1,24 @@
 package br.senai.labmedicine.dtos.consulta;
 
-import br.senai.labmedicine.dtos.PacienteResponseDTO;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import lombok.*;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import br.senai.labmedicine.dtos.PacienteResponseDTO;
+import br.senai.labmedicine.dtos.Medicamento.MedicamentoResponseDTO;
+import br.senai.labmedicine.dtos.usuario.UsuarioResponseDTO;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -39,6 +46,11 @@ public class ConsultaCadastroDTO {
     private final Boolean status = true;
     @NotNull(message = "Paciente obrigatório")
     private PacienteResponseDTO paciente;
+    @NotNull(message = "Usuário obrigatório")
+    private UsuarioResponseDTO usuario;
+    @NotNull(message = "Medicamento obrigatório")
+    private MedicamentoResponseDTO medicamento;
+
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     public ConsultaCadastroDTO(String data,String horario){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

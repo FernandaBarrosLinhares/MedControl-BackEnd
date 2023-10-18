@@ -1,6 +1,9 @@
 package br.senai.labmedicine.dtos.consulta;
 
 import br.senai.labmedicine.dtos.PacienteResponseDTO;
+import br.senai.labmedicine.dtos.Medicamento.MedicamentoResponseDTO;
+import br.senai.labmedicine.dtos.usuario.UsuarioResponseDTO;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,4 +28,6 @@ public class ConsultaResponseDTO {
     private String dosagensPrecaucoes;
     private Boolean status;
     private PacienteResponseDTO paciente;
+    private UsuarioResponseDTO usuario;
+    private MedicamentoResponseDTO medicamento;
 }

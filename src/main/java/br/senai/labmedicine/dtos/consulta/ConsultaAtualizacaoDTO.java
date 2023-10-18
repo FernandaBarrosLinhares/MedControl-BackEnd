@@ -2,6 +2,9 @@ package br.senai.labmedicine.dtos.consulta;
 
 
 import br.senai.labmedicine.dtos.PacienteResponseDTO;
+import br.senai.labmedicine.dtos.Medicamento.MedicamentoResponseDTO;
+import br.senai.labmedicine.dtos.usuario.UsuarioResponseDTO;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -32,8 +35,12 @@ public class ConsultaAtualizacaoDTO {
     private String indicadorMedicacao;
     @Size(min = 16,max = 256,message = "Campo dosagens e precauçoes  deve conter de 16 a 256 caracteres")
     private String dosagensPrecaucoes;
-    @Setter(AccessLevel.NONE)
-    private final Boolean status = true;
     @NotNull(message = "Paciente obrigatório")
     private PacienteResponseDTO paciente;
+    @NotNull(message = "Usuário obrigatório")
+    private UsuarioResponseDTO usuario;
+    @NotNull(message = "Medicamento obrigatório")
+    private MedicamentoResponseDTO medicamento;
+    @NotNull(message = "Status obrigatório")
+    private final Boolean status = true;
 }
