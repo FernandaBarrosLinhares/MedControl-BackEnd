@@ -37,6 +37,5 @@ public class DietaResponseDTO {
 
     private Boolean status;
 
-    //TODO quando arrumar a classe paciente pode descomentar
     private PacienteResponseDTO paciente;
 }
