@@ -28,7 +28,7 @@ public enum TipoDietaEnum {
     public static TipoDietaEnum fromString(String value){
         for(TipoDietaEnum tipo: TipoDietaEnum.values()){
             try {
-                if(tipo.ordinal() == Integer.parseInt(value)){
+                if(tipo.name().equals(value)){
                     return tipo;
                 }
             }catch (NumberFormatException erro){

@@ -21,7 +21,7 @@ public enum UnidadeMedicamentosEnum {
     public static UnidadeMedicamentosEnum fromString(String value){
         for(UnidadeMedicamentosEnum unidade: UnidadeMedicamentosEnum.values()){
             try {
-                if(unidade.ordinal() == Integer.parseInt(value)){
+                if(unidade.name().equals(value)){
                     return unidade;
                 }
             }catch (NumberFormatException erro){

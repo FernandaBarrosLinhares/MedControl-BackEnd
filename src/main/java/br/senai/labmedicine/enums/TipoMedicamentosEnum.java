@@ -24,7 +24,7 @@ public enum TipoMedicamentosEnum {
     public static TipoMedicamentosEnum fromString(String value){
         for(TipoMedicamentosEnum tipo: TipoMedicamentosEnum.values()){
             try {
-                if(tipo.ordinal() == Integer.parseInt(value)){
+                if(tipo.name().equals(value)){
                     return tipo;
                 }
             }catch (NumberFormatException erro){

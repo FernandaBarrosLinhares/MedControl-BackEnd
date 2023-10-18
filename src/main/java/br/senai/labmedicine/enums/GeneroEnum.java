@@ -20,7 +20,7 @@ public enum GeneroEnum {
     public static GeneroEnum fromString(String value){
         for(GeneroEnum genero: GeneroEnum.values()){
             try {
-                if(genero.ordinal() == Integer.parseInt(value)){
+                if(genero.name().equals(value)){
                     return genero;
                 }
             }catch (NumberFormatException erro){
