@@ -10,6 +10,7 @@ import br.senai.labmedicine.repositories.PacienteRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -30,18 +31,6 @@ public class PacienteService {
 
     @Autowired EnderecoService enderecoService;
     public List<PacienteResponseDTO> buscarTodos() {
-//        List<PacienteResponseDTO> pacientesDTO = new ArrayList<> ();
-//        List<Paciente> pacientes = this.pacienteRepository.findAll();
-//        for (Paciente paciente : pacientes) {
-//            PacienteResponseDTO pacienteDTO = new PacienteResponseDTO();
-//            EnderecoResponse enderecoDTO = new EnderecoResponse();
-//            BeanUtils.copyProperties(paciente, pacienteDTO);
-//            BeanUtils.copyProperties(paciente.getEndereco(),enderecoDTO);
-//            pacienteDTO.setEndereco(enderecoDTO);
-//            pacientesDTO.add(pacienteDTO);
-//        }
-//        return pacientesDTO;
-
         List<PacienteResponseDTO> pacientesDTO;
         pacientesDTO = this.pacienteRepository.findAll().stream().map(PacienteResponseDTO::new).toList();
         return pacientesDTO;
@@ -53,6 +42,7 @@ public class PacienteService {
     }
 
     public PacienteResponseDTO salvar(Long idUsuarioLogado, PacienteCadastroDTO pacienteDTO) {
+        checarDisponibilidadeEmailECpf(pacienteDTO.getCpf(), pacienteDTO.getEmail());
         UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
         Paciente paciente = new Paciente(pacienteDTO);
         paciente = this.pacienteRepository.save(paciente);
@@ -61,32 +51,50 @@ public class PacienteService {
         return new PacienteResponseDTO(paciente);
     }
 
-    public void remover(Long id) throws Exception {
-        this.pacienteRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Paciente não existe."));
+    public void remover(Long idUsuarioLogado,Long id) throws Exception {
+        Paciente pacienteBd = this.pacienteRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Paciente não existe."));
+        UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
+        String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" deletou o paciente: (id: "+pacienteBd.getId()+") "+pacienteBd.getNomeCompleto();
+        logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
         this.pacienteRepository.deleteById(id);
     }
 
-    public PacienteResponseDTO atualizarPaciente(Long id, PacienteAtualizacaoDTO pacienteAtualizado) {
+    public PacienteResponseDTO atualizarPaciente(Long idUsuarioLogado,Long id, PacienteAtualizacaoDTO pacienteAtualizado) {
         Paciente pacienteBd = this.pacienteRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Paciente não existe."));
+        UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
+        if(!pacienteBd.getEmail().equals(pacienteAtualizado.getEmail())){
+            checarDisponibilidadeEmailECpf("", pacienteAtualizado.getEmail());
+        }
         BeanUtils.copyProperties(pacienteAtualizado,pacienteBd);
         Endereco endereco = new Endereco(pacienteAtualizado.getEndereco());
         endereco.setId(pacienteBd.getEndereco().getId());
         pacienteBd.setEndereco(endereco);
         pacienteBd = this.pacienteRepository.save(pacienteBd);
+        String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" atualizou o paciente: (id: "+pacienteBd.getId()+") "+pacienteBd.getNomeCompleto();
+        logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
         return new PacienteResponseDTO(pacienteBd);
     }
 
     public List<PacienteResponseDTO> buscarPorNome(String nomeCompleto) {
-//        List<PacienteResponseDTO> pacientesDTO = new ArrayList<> ();
-//        List<Paciente> pacientes = this.pacienteRepository.findByNomeCompleto(nomeCompleto);
-//        for (Paciente paciente : pacientes) {
-//            PacienteResponseDTO pacienteDTO = new PacienteResponseDTO();
-//            BeanUtils.copyProperties(paciente, pacienteDTO);
-//            pacientesDTO.add(pacienteDTO);
-//        }
-//        return pacientesDTO;
         List<PacienteResponseDTO> pacientesDTO;
         pacientesDTO = this.pacienteRepository.findByNomeCompleto(nomeCompleto).stream().map(PacienteResponseDTO::new).toList();
         return pacientesDTO;
+    }
+
+    public List<PacienteResponseDTO> buscarProFiltro(String filtro) {
+        List<PacienteResponseDTO> pacientesDTO;
+        pacientesDTO = this.pacienteRepository.buscarComFiltro(filtro).stream().map(PacienteResponseDTO::new).toList();
+        return pacientesDTO;
+    }
+
+
+    public void checarDisponibilidadeEmailECpf(String cpf,String email){
+        boolean cpfExiste = this.pacienteRepository.existsByCpf(cpf);
+        boolean emailExiste = this.pacienteRepository.existsByEmail(email);
+        if(cpfExiste){
+            throw new DataIntegrityViolationException("CPF já cadastrado.");
+        }else if(emailExiste){
+            throw new DataIntegrityViolationException("Email já cadastrado.");
+        }
     }
 }

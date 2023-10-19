@@ -53,8 +53,10 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@PathVariable Long id,@RequestBody @Valid UsuarioAtualizacaoDTO usuarioAtualizacaoDTO) throws NoSuchAlgorithmException {
-        return new ResponseEntity<>(this.usuarioService.atualizarUsuario(id,usuarioAtualizacaoDTO),HttpStatus.OK);
+    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@PathVariable Long id,
+                                                               @RequestBody @Valid UsuarioAtualizacaoDTO usuarioAtualizacaoDTO,
+                                                               @RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado) throws NoSuchAlgorithmException {
+        return new ResponseEntity<>(this.usuarioService.atualizarUsuario(idUsuarioLogado,id,usuarioAtualizacaoDTO),HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
