@@ -54,13 +54,13 @@ public class PacienteService {
     public void remover(Long idUsuarioLogado,Long id) throws Exception {
         Paciente pacienteBd = this.pacienteRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Paciente não existe."));
         UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
-        String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" deletou o paciente: (id: "+pacienteBd.getId()+") "+pacienteBd.getNomeCompleto();
-        logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
         try {
             this.pacienteRepository.deleteById(id);
         }catch (DataIntegrityViolationException e){
             throw new DataIntegrityViolationException("Paciente em uso não pode ser deletado.");
         }
+        String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" deletou o paciente: (id: "+pacienteBd.getId()+") "+pacienteBd.getNomeCompleto();
+        logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
     }
 
     public PacienteResponseDTO atualizarPaciente(Long idUsuarioLogado,Long id, PacienteAtualizacaoDTO pacienteAtualizado) {

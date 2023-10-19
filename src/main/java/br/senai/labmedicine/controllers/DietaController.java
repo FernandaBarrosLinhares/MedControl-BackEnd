@@ -20,8 +20,8 @@ public class DietaController {
     private DietaService dietaService;
 
     @PostMapping
-    public ResponseEntity<DietaResponseDTO> salvarDieta(@RequestBody @Valid DietaCadastroDTO novaDieta){
-        return new ResponseEntity<>(this.dietaService.salvar(novaDieta), HttpStatus.CREATED);
+    public ResponseEntity<DietaResponseDTO> salvarDieta(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@RequestBody @Valid DietaCadastroDTO novaDieta){
+        return new ResponseEntity<>(this.dietaService.salvar(idUsuarioLogado,novaDieta), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -35,14 +35,14 @@ public class DietaController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deletarDieta(@PathVariable Long id){
-        this.dietaService.deletarDieta(id);
+    public ResponseEntity<Void> deletarDieta(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id){
+        this.dietaService.deletarDieta(idUsuarioLogado,id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<DietaResponseDTO> atualizarDieta(@PathVariable Long id,@RequestBody @Valid DietaAtualizacaoDTO dietaAtualizada){
-        return new ResponseEntity<>(this.dietaService.atualizarDieta(id,dietaAtualizada),HttpStatus.CREATED);
+    public ResponseEntity<DietaResponseDTO> atualizarDieta(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id,@RequestBody @Valid DietaAtualizacaoDTO dietaAtualizada){
+        return new ResponseEntity<>(this.dietaService.atualizarDieta(idUsuarioLogado,id,dietaAtualizada),HttpStatus.CREATED);
     }
 
 }

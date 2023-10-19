@@ -5,6 +5,7 @@ import br.senai.labmedicine.dtos.Medicamento.MedicamentoResponseDTO;
 import br.senai.labmedicine.dtos.consulta.ConsultaAtualizacaoDTO;
 import br.senai.labmedicine.dtos.consulta.ConsultaCadastroDTO;
 import br.senai.labmedicine.dtos.consulta.ConsultaResponseDTO;
+import br.senai.labmedicine.dtos.log.LogCadastroDTO;
 import br.senai.labmedicine.dtos.usuario.UsuarioResponseDTO;
 import br.senai.labmedicine.models.Consulta;
 import br.senai.labmedicine.models.Medicamento;
@@ -16,6 +17,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,12 +34,15 @@ public class ConsultaService {
     private UsuarioService usuarioService;
     @Autowired
     private MedicamentoService medicamentoService;
+    @Autowired
+    private LogService logService;
 
-    public ConsultaResponseDTO salvar(ConsultaCadastroDTO novaConsulta) {
+    public ConsultaResponseDTO salvar(Long idUsuarioLogado, ConsultaCadastroDTO novaConsulta) {
         Consulta consulta = new Consulta();
         ConsultaResponseDTO consultaDTO = new ConsultaResponseDTO();
         PacienteResponseDTO pacienteDTO = this.pacienteService.buscarPorId(novaConsulta.getPaciente().getId());
         UsuarioResponseDTO usuarioDTO = this.usuarioService.buscarUsuarioPorId(novaConsulta.getUsuario().getId());
+        UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
         MedicamentoResponseDTO medicamentoDTO = this.medicamentoService
                 .buscarMedicamentoPorId(novaConsulta.getMedicamento().getId());
 
@@ -58,6 +65,8 @@ public class ConsultaService {
         consultaDTO.setPaciente(pacienteDTO);
         consultaDTO.setUsuario(usuarioDTO);
         consultaDTO.setMedicamento(medicamentoDTO);
+        String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Realizou uma consulta (id:"+ consulta.getId() +") com o paciente: (id: "+pacienteDTO.getId()+") "+pacienteDTO.getNomeCompleto();
+        logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
         return consultaDTO;
     }
 
@@ -111,15 +120,19 @@ public class ConsultaService {
         return consultasDTO;
     }
 
-    public void deletarConsulta(Long id) {
+    public void deletarConsulta(Long idUsuarioLogado,Long id) {
         Consulta consulta = this.consultaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Consulta não encontrada."));
+        UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
         this.consultaRepository.deleteById(id);
+        String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Deletou a consulta (id:"+ consulta.getId()+") com o paciente: (id: "+consulta.getPaciente().getId()+") "+consulta.getPaciente().getNomeCompleto();
+        logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
     }
 
-    public ConsultaResponseDTO atualizarConsulta(Long id, ConsultaAtualizacaoDTO consultaAtualizada) {
+    public ConsultaResponseDTO atualizarConsulta(Long idUsuarioLogado,Long id, ConsultaAtualizacaoDTO consultaAtualizada) {
         Consulta consulta = this.consultaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Consulta não encontrada."));
+        UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
         if (consultaAtualizada.getPaciente().getId() == null) {
             throw new EntityNotFoundException("Paciente não encontrado.");
         }
@@ -135,6 +148,8 @@ public class ConsultaService {
         consulta = this.consultaRepository.save(consulta);
         BeanUtils.copyProperties(consulta, consultaResponseDTO);
         consultaResponseDTO.setPaciente(pacienteDTO);
+        String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Atualizou a consulta (id:"+ consulta.getId()+") com o paciente: (id: "+consulta.getPaciente().getId()+") "+consulta.getPaciente().getNomeCompleto();
+        logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
         return consultaResponseDTO;
     }
 }

@@ -1,8 +1,12 @@
 package br.senai.labmedicine.services;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.senai.labmedicine.dtos.log.LogCadastroDTO;
+import br.senai.labmedicine.dtos.usuario.UsuarioResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +24,12 @@ public class MedicamentoService {
 
     @Autowired
     private MedicamentoRepository medicamentoRepository;
+    @Autowired
+    private UsuarioService usuarioService;
+    @Autowired
+    private LogService logService;
 
-    public MedicamentoResponseDTO cadastraMedicamento(MedicamentoCadastroDTO medicamentoDTO) {
+    public MedicamentoResponseDTO cadastraMedicamento(Long idUsuarioLogado,MedicamentoCadastroDTO medicamentoDTO) {
         Medicamento novoMedicamento = new Medicamento();
 
         MedicamentoResponseDTO response = new MedicamentoResponseDTO();
@@ -31,11 +39,13 @@ public class MedicamentoService {
         novoMedicamento = medicamentoRepository.save(novoMedicamento);
 
         BeanUtils.copyProperties(novoMedicamento, response);
-
+        UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
+        String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Cadastrou o medicamento (id:"+ novoMedicamento.getId()+")";
+        logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
         return response;
     }
 
-    public MedicamentoResponseDTO atualizaMedicamentoId(Long id, MedicamentoAtualizacaoDTO medicamentoDTO) {
+    public MedicamentoResponseDTO atualizaMedicamentoId(Long idUsuarioLogado,Long id, MedicamentoAtualizacaoDTO medicamentoDTO) {
         Medicamento atualizaMedicamento = medicamentoRepository.getReferenceById(medicamentoDTO.getId());
 
         BeanUtils.copyProperties(medicamentoDTO, atualizaMedicamento);
@@ -45,7 +55,9 @@ public class MedicamentoService {
         MedicamentoResponseDTO response = new MedicamentoResponseDTO();
 
         BeanUtils.copyProperties(atualizaMedicamento, response);
-
+        UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
+        String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Atualizou o medicamento (id:"+ atualizaMedicamento.getId()+")";
+        logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
         return response;
     }
 
@@ -56,13 +68,16 @@ public class MedicamentoService {
         return response;
     }
 
-    public void excluirMedicamentoId(Long id) {
+    public void excluirMedicamentoId(Long idUsuarioLogado,Long id) {
         Medicamento medicamentoBd = this.medicamentoRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Medicamento não cadastrado."));
+        UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
         try {
             medicamentoRepository.deleteById(id);
         }catch (DataIntegrityViolationException e){
             throw new DataIntegrityViolationException("Medicamento em uso não pode ser deletado.");
         }
+        String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Deletou o medicamento (id:"+ medicamentoBd.getId()+")";
+        logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
 
     }
 

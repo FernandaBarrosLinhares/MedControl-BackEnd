@@ -20,15 +20,15 @@ public class MedicamentoController {
     private MedicamentoService service;
     // cadastra medicamento
     @PostMapping
-    public ResponseEntity<MedicamentoResponseDTO> cadastraMedicamento(@RequestBody @Valid MedicamentoCadastroDTO medicamento){
-        MedicamentoResponseDTO response = service.cadastraMedicamento(medicamento);
+    public ResponseEntity<MedicamentoResponseDTO> cadastraMedicamento(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@RequestBody @Valid MedicamentoCadastroDTO medicamento){
+        MedicamentoResponseDTO response = service.cadastraMedicamento(idUsuarioLogado,medicamento);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     // atualiza medicamento
     @PutMapping(value = "/{id}")
-    public ResponseEntity<MedicamentoResponseDTO> atualizaMedicamento (@PathVariable Long id, @RequestBody @Valid MedicamentoAtualizacaoDTO medicamento){
-        MedicamentoResponseDTO response = service.atualizaMedicamentoId(id, medicamento);
+    public ResponseEntity<MedicamentoResponseDTO> atualizaMedicamento (@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id, @RequestBody @Valid MedicamentoAtualizacaoDTO medicamento){
+        MedicamentoResponseDTO response = service.atualizaMedicamentoId(idUsuarioLogado,id, medicamento);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -44,8 +44,8 @@ public class MedicamentoController {
     //excluir medicamento
     @DeleteMapping(value = "{id}")
     @Transactional
-    public ResponseEntity excluirMediamentoid(@PathVariable Long id){
-        service.excluirMedicamentoId(id);
+    public ResponseEntity excluirMediamentoid(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id){
+        service.excluirMedicamentoId(idUsuarioLogado,id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 

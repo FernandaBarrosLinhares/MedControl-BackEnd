@@ -5,14 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.senai.labmedicine.dtos.ExameCadastroDTO;
 import br.senai.labmedicine.dtos.ExameEdicaoDTO;
@@ -37,17 +30,18 @@ public class ExameController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ExameResponseDTO> salvar(@RequestBody ExameCadastroDTO exameDTO) {
-		return new ResponseEntity<>(this.exameService.salvar(exameDTO), HttpStatus.CREATED);
+	public ResponseEntity<ExameResponseDTO> salvar(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@RequestBody ExameCadastroDTO exameDTO) {
+		return new ResponseEntity<>(this.exameService.salvar(idUsuarioLogado,exameDTO), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<ExameResponseDTO> editar(@PathVariable Long id, @RequestBody ExameEdicaoDTO exameDTO) {
-		return new ResponseEntity<>(this.exameService.atualizarExame(id, exameDTO), HttpStatus.OK);
+	public ResponseEntity<ExameResponseDTO> editar(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id, @RequestBody ExameEdicaoDTO exameDTO) {
+		return new ResponseEntity<>(this.exameService.atualizarExame(idUsuarioLogado,id, exameDTO), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deletar(@PathVariable Long id) {
+	public ResponseEntity<Void> deletar(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id) {
+		this.exameService.deletarExame(idUsuarioLogado,id);
 		return new ResponseEntity<>(HttpStatus.ACCEPTED);
 	}
 }
