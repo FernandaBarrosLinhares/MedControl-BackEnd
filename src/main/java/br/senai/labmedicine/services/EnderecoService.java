@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.senai.labmedicine.dtos.EnderecoCadastro;
@@ -49,7 +50,11 @@ public class EnderecoService {
 
 	public void remover(Long id) throws Exception {
 		this.enderecoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Endereço não existe."));
+		try{
 		this.enderecoRepository.deleteById(id);
+		}catch (DataIntegrityViolationException e){
+			throw new DataIntegrityViolationException("Endereço em uso não pode ser deletado.");
+		}
 	}
 
 	public EnderecoResponse atualizarEndereco(Long id, EnderecoResponse endereco) {

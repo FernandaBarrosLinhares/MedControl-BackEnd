@@ -3,8 +3,10 @@ package br.senai.labmedicine.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.senai.labmedicine.dtos.Medicamento.MedicamentoAtualizacaoDTO;
@@ -55,7 +57,13 @@ public class MedicamentoService {
     }
 
     public void excluirMedicamentoId(Long id) {
-        medicamentoRepository.deleteById((long) Math.toIntExact(id));
+        Medicamento medicamentoBd = this.medicamentoRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Medicamento não cadastrado."));
+        try {
+            medicamentoRepository.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("Medicamento em uso não pode ser deletado.");
+        }
+
     }
 
     public List<MedicamentoResponseDTO> buscar(String nomePaciente) {

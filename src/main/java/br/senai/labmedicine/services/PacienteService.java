@@ -56,7 +56,11 @@ public class PacienteService {
         UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
         String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" deletou o paciente: (id: "+pacienteBd.getId()+") "+pacienteBd.getNomeCompleto();
         logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
-        this.pacienteRepository.deleteById(id);
+        try {
+            this.pacienteRepository.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("Paciente em uso não pode ser deletado.");
+        }
     }
 
     public PacienteResponseDTO atualizarPaciente(Long idUsuarioLogado,Long id, PacienteAtualizacaoDTO pacienteAtualizado) {

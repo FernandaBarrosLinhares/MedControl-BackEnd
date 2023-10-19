@@ -7,6 +7,7 @@ import br.senai.labmedicine.repositories.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import javax.security.sasl.AuthenticationException;
@@ -93,7 +94,11 @@ public class UsuarioService {
         if(usuarioLogado.getId().equals(usuarioParaDeletar.getId())){
             throw new AccessDeniedException("Id informado não pode ser deletado");
         }
-        this.usuarioRepository.deleteById(id);
+        try {
+            this.usuarioRepository.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("Usuário em uso não pode ser deletado.");
+        }
         String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" deletou o usuário: (id: "+usuarioParaDeletar.getId()+") "+usuarioParaDeletar.getNomeCompleto();
         logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
     }
