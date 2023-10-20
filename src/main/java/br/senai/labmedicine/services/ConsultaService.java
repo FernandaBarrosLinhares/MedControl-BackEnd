@@ -152,4 +152,8 @@ public class ConsultaService {
         logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
         return consultaResponseDTO;
     }
+
+    public List<ConsultaResponseDTO> buscarConsultaPorUsuario(Long idUsuario){
+        return this.consultaRepository.findAllByUsuarioId(idUsuario).stream().map(ConsultaResponseDTO::new).toList();
+    }
 }

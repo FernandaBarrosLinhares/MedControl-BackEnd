@@ -10,4 +10,5 @@ import java.util.List;
 public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
 
     List<Consulta> findAllByPacienteId(Long id);
+    List<Consulta> findAllByUsuarioId(Long id);
 }

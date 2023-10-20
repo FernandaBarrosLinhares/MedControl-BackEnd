@@ -1,8 +1,12 @@
 package br.senai.labmedicine.services;
 
+import br.senai.labmedicine.dtos.consulta.ConsultaAtualizacaoDTO;
+import br.senai.labmedicine.dtos.consulta.ConsultaResponseDTO;
 import br.senai.labmedicine.dtos.log.LogCadastroDTO;
 import br.senai.labmedicine.dtos.usuario.*;
+import br.senai.labmedicine.models.Consulta;
 import br.senai.labmedicine.models.Usuario;
+import br.senai.labmedicine.repositories.ConsultaRepository;
 import br.senai.labmedicine.repositories.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
@@ -27,6 +31,10 @@ public class UsuarioService {
 
     @Autowired
     private LogService logService;
+
+    @Autowired
+    private ConsultaRepository consultaRepository;
+
 
     public UsuarioResponseDTO login(UsuarioLoginDTO usuarioLogin) throws AuthenticationException,NoSuchAlgorithmException {
         Usuario usuarioBd = this.usuarioRepository.findByEmail(usuarioLogin.getEmail());
@@ -80,6 +88,7 @@ public class UsuarioService {
         Usuario usuarioLogado = this.usuarioRepository.findById(idUsuarioLogado).orElseThrow(()->new EntityNotFoundException("Usuário Logado não encontrado."));
         BeanUtils.copyProperties(usuarioAtualizado,usuario);
         usuario.setSenha(criptografarSenha(usuarioAtualizado.getSenha()));
+        this.inativarConsulta(usuarioLogado.getId(),usuario.getId(),usuarioAtualizado.getStatus());
         String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" atualizou o usuário: (id: "+usuario.getId()+") "+usuario.getNomeCompleto();
         logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
         return new UsuarioResponseDTO(this.usuarioRepository.save(usuario));
@@ -107,5 +116,13 @@ public class UsuarioService {
         MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
         byte[] senhaByte = algorithm.digest(senha.getBytes());
         return Arrays.toString(senhaByte);
+    }
+
+    public void inativarConsulta(Long idUsuarioLogado,Long idUsuario,boolean status){
+        List<Consulta> consultas = this.consultaRepository.findAllByUsuarioId(idUsuario);
+        for(Consulta consulta: consultas){
+            consulta.setStatus(status);
+            this.consultaRepository.save(consulta);
+        }
     }
 }
