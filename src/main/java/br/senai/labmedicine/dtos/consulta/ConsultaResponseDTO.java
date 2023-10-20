@@ -4,6 +4,7 @@ import br.senai.labmedicine.dtos.PacienteResponseDTO;
 import br.senai.labmedicine.dtos.Medicamento.MedicamentoResponseDTO;
 import br.senai.labmedicine.dtos.usuario.UsuarioResponseDTO;
 
+import br.senai.labmedicine.models.Consulta;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,4 +31,18 @@ public class ConsultaResponseDTO {
     private PacienteResponseDTO paciente;
     private UsuarioResponseDTO usuario;
     private MedicamentoResponseDTO medicamento;
+
+    public ConsultaResponseDTO(Consulta consulta) {
+        this.id = consulta.getId();
+        this.motivo = consulta.getMotivo();
+        this.data = consulta.getData();
+        this.horario = consulta.getHorario();
+        this.descricao = consulta.getDescricao();
+        this.indicadorMedicacao = consulta.getIndicadorMedicacao();
+        this.dosagensPrecaucoes = consulta.getDosagensPrecaucoes();
+        this.status = consulta.getStatus();
+        this.paciente = new PacienteResponseDTO(consulta.getPaciente());
+        this.usuario = new UsuarioResponseDTO(consulta.getUsuario());
+        this.medicamento = new MedicamentoResponseDTO(consulta.getMedicamento());
+    }
 }

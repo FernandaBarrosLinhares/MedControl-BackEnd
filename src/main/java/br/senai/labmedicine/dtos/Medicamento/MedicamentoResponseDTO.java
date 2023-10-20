@@ -2,6 +2,7 @@ package br.senai.labmedicine.dtos.Medicamento;
 
 import br.senai.labmedicine.enums.TipoMedicamentosEnum;
 import br.senai.labmedicine.enums.UnidadeMedicamentosEnum;
+import br.senai.labmedicine.models.Medicamento;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,4 +27,16 @@ public class MedicamentoResponseDTO {
     private UnidadeMedicamentosEnum unidade;
     private String observacao;
     private Boolean status;
+
+    public MedicamentoResponseDTO(Medicamento medicamento) {
+        this.id = medicamento.getId();
+        this.nome = medicamento.getNome();
+        this.data = medicamento.getData();
+        this.horario = medicamento.getHorario();
+        this.tipo = medicamento.getTipo();
+        this.quantidade = medicamento.getQuantidade();
+        this.unidade = medicamento.getUnidade();
+        this.observacao = medicamento.getObservacao();
+        this.status = medicamento.getStatus();
+    }
 }
