@@ -58,22 +58,13 @@ public class DietaService {
     }
 
     public List<DietaResponseDTO> buscarDietaPorPaciente(String nomePaciente){
-        List<Dieta> dietas;
-        List<DietaResponseDTO> dietasDTO = new ArrayList<>();
+        List<DietaResponseDTO> dietasResponseDTO;
         if(nomePaciente == null || nomePaciente.isEmpty()){
-            dietas = this.dietaRepository.findAll();
+            dietasResponseDTO = this.dietaRepository.findAll().stream().map(DietaResponseDTO::new).toList();
         }else {
-            dietas = this.dietaRepository.findAllByPacienteNomeCompletoOrderByDataAscHorario(nomePaciente);
+            dietasResponseDTO = this.dietaRepository.findAllByPacienteNomeCompletoContainingIgnoreCaseOrderByDataAscHorario(nomePaciente).stream().map(DietaResponseDTO::new).toList();
         }
-           for(Dieta dieta : dietas){
-                PacienteResponseDTO pacienteDTO = new PacienteResponseDTO();
-                DietaResponseDTO dietaDTO = new DietaResponseDTO();
-                BeanUtils.copyProperties(dieta,dietaDTO);
-                BeanUtils.copyProperties(dieta.getPaciente(),pacienteDTO);
-                dietaDTO.setPaciente(pacienteDTO);
-                dietasDTO.add(dietaDTO);
-           }
-           return dietasDTO;
+           return dietasResponseDTO;
     }
 
     public void deletarDieta(Long idUsuarioLogado,Long id){

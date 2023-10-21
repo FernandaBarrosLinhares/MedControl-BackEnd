@@ -4,9 +4,8 @@ package br.senai.labmedicine.services;
 import br.senai.labmedicine.dtos.*;
 import br.senai.labmedicine.dtos.log.LogCadastroDTO;
 import br.senai.labmedicine.dtos.usuario.UsuarioResponseDTO;
-import br.senai.labmedicine.models.Endereco;
-import br.senai.labmedicine.models.Paciente;
-import br.senai.labmedicine.repositories.PacienteRepository;
+import br.senai.labmedicine.models.*;
+import br.senai.labmedicine.repositories.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -30,6 +30,19 @@ public class PacienteService {
     private LogService logService;
 
     @Autowired EnderecoService enderecoService;
+
+    @Autowired
+    private ConsultaRepository consultaRepository;
+
+    @Autowired
+    private ExameRepository exameRepository;
+
+    @Autowired
+    private ExercicioRepository exercicioRepository;
+
+    @Autowired
+    private DietaRepository dietaRepository;
+
     public List<PacienteResponseDTO> buscarTodos() {
         List<PacienteResponseDTO> pacientesDTO;
         pacientesDTO = this.pacienteRepository.findAll().stream().map(PacienteResponseDTO::new).toList();
@@ -69,6 +82,9 @@ public class PacienteService {
         if(!pacienteBd.getEmail().equals(pacienteAtualizado.getEmail())){
             checarDisponibilidadeEmailECpf("", pacienteAtualizado.getEmail());
         }
+        if(pacienteBd.getStatus() && !pacienteAtualizado.getStatus()){
+            this.inativarRelacionamentos(usuarioLogado,pacienteBd.getId());
+        }
         BeanUtils.copyProperties(pacienteAtualizado,pacienteBd);
         Endereco endereco = new Endereco(pacienteAtualizado.getEndereco());
         endereco.setId(pacienteBd.getEndereco().getId());
@@ -100,5 +116,39 @@ public class PacienteService {
         }else if(emailExiste){
             throw new DataIntegrityViolationException("Email já cadastrado.");
         }
+    }
+
+    public void inativarRelacionamentos(UsuarioResponseDTO usuarioLogado ,Long idPaciente){
+
+        List<Consulta> consultas = this.consultaRepository.findAllByPacienteId(idPaciente);
+        for (Consulta consulta: consultas){
+            consulta.setStatus(false);
+            this.consultaRepository.save(consulta);
+            String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" atualizou o status da consulta: (id: "+consulta.getId()+") do paciente: ("+consulta.getPaciente().getId()+") "+consulta.getPaciente().getNomeCompleto();
+            this.logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(),LocalTime.now(),mensagem));
+        }
+        List<Dieta> dietas = this.dietaRepository.findAllByPacienteId(idPaciente);
+        for(Dieta dieta: dietas){
+            dieta.setStatus(false);
+            this.dietaRepository.save(dieta);
+            String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" atualizou o status da dieta: (id: "+dieta.getId()+") do paciente: ("+dieta.getPaciente().getId()+") "+dieta.getPaciente().getNomeCompleto();
+            this.logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(),LocalTime.now(),mensagem));
+        }
+        List<Exame> exames = this.exameRepository.findAllByPacienteId(idPaciente);
+        for(Exame exame:exames){
+            exame.setStatus(false);
+            this.exameRepository.save(exame);
+            String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" atualizou o status do exame: (id: "+exame.getId()+") do paciente: ("+exame.getPaciente().getId()+") "+exame.getPaciente().getNomeCompleto();
+            this.logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(),LocalTime.now(),mensagem));
+        }
+        List<Exercicio> exercicios = this.exercicioRepository.findAllByPacienteId(idPaciente);
+        for(Exercicio exercicio:exercicios){
+            exercicio.setStatus(false);
+            this.exercicioRepository.save(exercicio);
+            String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" atualizou o status do exercicio: (id: "+exercicio.getId()+") do paciente: ("+exercicio.getPaciente().getId()+") "+exercicio.getPaciente().getNomeCompleto();
+            this.logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(),LocalTime.now(),mensagem));
+        }
+
+
     }
 }

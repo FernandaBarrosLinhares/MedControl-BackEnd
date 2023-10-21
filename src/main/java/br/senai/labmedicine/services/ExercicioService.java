@@ -86,7 +86,7 @@ public class ExercicioService {
         if(nomePaciente == null || nomePaciente.isEmpty()){
             exercicios = this.exercicioRepository.findAll();
         }else {
-            exercicios = this.exercicioRepository.findByPaciente_NomeCompleto(nomePaciente);
+            exercicios = this.exercicioRepository.findAllByPaciente_NomeCompletoContainingIgnoreCase(nomePaciente);
         }
         for(Exercicio exercicio : exercicios){
             ExercicioResponseDTO exercicioDTO = new ExercicioResponseDTO();

@@ -10,5 +10,7 @@ import br.senai.labmedicine.models.Exame;
 
 public interface ExameRepository extends JpaRepository<Exame, Long> {
 	List<Exame> findAllByPacienteNomeCompletoOrderByDataAscHorario(String nomeCompleto);
+
+	List<Exame> findAllByPacienteId(Long id);
 	
 }
