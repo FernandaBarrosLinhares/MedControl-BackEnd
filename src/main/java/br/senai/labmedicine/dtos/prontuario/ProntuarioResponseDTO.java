@@ -5,7 +5,7 @@ import java.util.List;
 import br.senai.labmedicine.dtos.consulta.ConsultaResponseDTO;
 import br.senai.labmedicine.dtos.exame.ExameResponseDTO;
 import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
-import br.senai.labmedicine.dtos.Dieta.DietaResponseDTO;
+import br.senai.labmedicine.dtos.dieta.DietaResponseDTO;
 import br.senai.labmedicine.dtos.exercicio.ExercicioResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;

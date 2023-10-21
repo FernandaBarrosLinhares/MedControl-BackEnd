@@ -1,8 +1,8 @@
 package br.senai.labmedicine.controllers;
 
-import br.senai.labmedicine.dtos.Dieta.DietaAtualizacaoDTO;
-import br.senai.labmedicine.dtos.Dieta.DietaCadastroDTO;
-import br.senai.labmedicine.dtos.Dieta.DietaResponseDTO;
+import br.senai.labmedicine.dtos.dieta.DietaAtualizacaoDTO;
+import br.senai.labmedicine.dtos.dieta.DietaCadastroDTO;
+import br.senai.labmedicine.dtos.dieta.DietaResponseDTO;
 import br.senai.labmedicine.services.DietaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

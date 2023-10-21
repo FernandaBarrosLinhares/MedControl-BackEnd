@@ -1,4 +1,4 @@
-package br.senai.labmedicine.dtos.Dieta;
+package br.senai.labmedicine.dtos.dieta;
 
 import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import br.senai.labmedicine.enums.TipoDietaEnum;

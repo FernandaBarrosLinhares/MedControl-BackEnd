@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import br.senai.labmedicine.dtos.exame.ExameResponseDTO;
 import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import br.senai.labmedicine.dtos.prontuario.ProntuarioRequestDTO;
-import br.senai.labmedicine.dtos.Dieta.DietaResponseDTO;
+import br.senai.labmedicine.dtos.dieta.DietaResponseDTO;
 import br.senai.labmedicine.dtos.exercicio.ExercicioResponseDTO;
 import br.senai.labmedicine.dtos.prontuario.ProntuarioResponseDTO;
 

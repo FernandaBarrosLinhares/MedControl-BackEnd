@@ -1,8 +1,8 @@
 package br.senai.labmedicine.services;
 
-import br.senai.labmedicine.dtos.Dieta.DietaAtualizacaoDTO;
-import br.senai.labmedicine.dtos.Dieta.DietaCadastroDTO;
-import br.senai.labmedicine.dtos.Dieta.DietaResponseDTO;
+import br.senai.labmedicine.dtos.dieta.DietaAtualizacaoDTO;
+import br.senai.labmedicine.dtos.dieta.DietaCadastroDTO;
+import br.senai.labmedicine.dtos.dieta.DietaResponseDTO;
 import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import br.senai.labmedicine.dtos.log.LogCadastroDTO;
 import br.senai.labmedicine.dtos.usuario.UsuarioResponseDTO;
