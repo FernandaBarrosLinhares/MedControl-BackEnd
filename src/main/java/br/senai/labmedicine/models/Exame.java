@@ -58,8 +58,4 @@ public class Exame {
     @JoinColumn(name = "paciente_id",referencedColumnName = "id",nullable = false)
 	private Paciente paciente;
 
-	// TODO esperar a classe usuario ser implementada
-	// @ManyToOne
-    // @JoinColumn(name = "usuario_id",referencedColumnName = "id",nullable = false)
-	// private Usuario usuario;
 }
