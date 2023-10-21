@@ -1,5 +1,6 @@
-package br.senai.labmedicine.dtos;
+package br.senai.labmedicine.dtos.exame;
 
+import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

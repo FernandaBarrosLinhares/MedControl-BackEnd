@@ -1,7 +1,9 @@
-package br.senai.labmedicine.dtos;
+package br.senai.labmedicine.dtos.paciente;
 
+import br.senai.labmedicine.dtos.endereco.EnderecoCadastro;
 import br.senai.labmedicine.enums.EstadoCivilEnum;
 import br.senai.labmedicine.enums.GeneroEnum;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -13,6 +15,8 @@ import org.hibernate.validator.constraints.br.CPF;
 
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -74,7 +78,6 @@ public class PacienteCadastroDTO {
     @Size(max = 100,message = "Campo número do convênio deve ter até 100 caracteres.")
     private String numeroConvenio;
 
-  //TODO REVER ESTE PONTO
     @Pattern(regexp = "\\d{2}/\\d{4}",message = "Validade do convênio: informe mês e ano 00/0000.")
     private String validadeConvenio;
 
@@ -82,5 +85,17 @@ public class PacienteCadastroDTO {
     @Valid
     private EnderecoCadastro endereco;
 
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    public PacienteCadastroDTO(String dataNascimento){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatoHorario = DateTimeFormatter.ofPattern("HH:mm:ss");
+        if (dataNascimento != null && !dataNascimento.isBlank()) {
+            try {
+                this.dataNascimento = LocalDate.from(formatter.parse(dataNascimento));
+            }catch (DateTimeParseException e){
+                throw new DateTimeParseException("Data inválida use formato 00/00/0000", "", 0);
+            }
+        }
+    }
 
 }

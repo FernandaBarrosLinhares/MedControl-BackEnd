@@ -1,8 +1,9 @@
-package br.senai.labmedicine.dtos;
+package br.senai.labmedicine.dtos.exame;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;

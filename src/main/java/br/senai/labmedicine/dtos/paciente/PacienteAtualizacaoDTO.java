@@ -1,5 +1,6 @@
-package br.senai.labmedicine.dtos;
+package br.senai.labmedicine.dtos.paciente;
 
+import br.senai.labmedicine.dtos.endereco.EnderecoResponse;
 import br.senai.labmedicine.enums.EstadoCivilEnum;
 import br.senai.labmedicine.enums.GeneroEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -9,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
 
