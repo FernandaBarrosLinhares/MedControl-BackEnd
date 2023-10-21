@@ -32,9 +32,9 @@ public enum TipoDietaEnum {
                     return tipo;
                 }
             }catch (NumberFormatException erro){
-                throw new NumberFormatException("Especialização Clínica inválida");
+                throw new NumberFormatException("Tipo dieta inválida");
             }
         };
-        throw new IllegalArgumentException("Especialização Clínica inválida");
+        throw new IllegalArgumentException("Tipo dieta inválida");
     }
 }
