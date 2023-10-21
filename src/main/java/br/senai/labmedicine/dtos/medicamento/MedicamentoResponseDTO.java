@@ -3,6 +3,7 @@ package br.senai.labmedicine.dtos.medicamento;
 import br.senai.labmedicine.enums.TipoMedicamentosEnum;
 import br.senai.labmedicine.enums.UnidadeMedicamentosEnum;
 import br.senai.labmedicine.models.Medicamento;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ import java.time.LocalTime;
 public class MedicamentoResponseDTO {
     private Long id;
     private String nome;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate data;
     private LocalTime horario;
     private TipoMedicamentosEnum tipo;
