@@ -49,12 +49,7 @@ public class DietaService {
 
     public DietaResponseDTO buscarDietaPorId(Long id) {
         Dieta dieta = this.dietaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Dieta não encontrada."));
-        DietaResponseDTO dietaResponseDTO = new DietaResponseDTO();
-        PacienteResponseDTO pacienteDTO = new PacienteResponseDTO();
-        BeanUtils.copyProperties(dieta.getPaciente(),pacienteDTO);
-        BeanUtils.copyProperties(dieta,dietaResponseDTO);
-        dietaResponseDTO.setPaciente(pacienteDTO);
-        return dietaResponseDTO;
+        return new DietaResponseDTO(dieta);
     }
 
     public List<DietaResponseDTO> buscarDietaPorPaciente(String nomePaciente){
