@@ -1,4 +1,4 @@
-package br.senai.labmedicine.dtos.Medicamento;
+package br.senai.labmedicine.dtos.medicamento;
 
 import br.senai.labmedicine.enums.TipoMedicamentosEnum;
 import br.senai.labmedicine.enums.UnidadeMedicamentosEnum;

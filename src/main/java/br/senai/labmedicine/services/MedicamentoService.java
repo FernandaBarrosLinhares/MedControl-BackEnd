@@ -13,9 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import br.senai.labmedicine.dtos.Medicamento.MedicamentoAtualizacaoDTO;
-import br.senai.labmedicine.dtos.Medicamento.MedicamentoCadastroDTO;
-import br.senai.labmedicine.dtos.Medicamento.MedicamentoResponseDTO;
+import br.senai.labmedicine.dtos.medicamento.MedicamentoAtualizacaoDTO;
+import br.senai.labmedicine.dtos.medicamento.MedicamentoCadastroDTO;
+import br.senai.labmedicine.dtos.medicamento.MedicamentoResponseDTO;
 import br.senai.labmedicine.models.Medicamento;
 import br.senai.labmedicine.repositories.MedicamentoRepository;
 

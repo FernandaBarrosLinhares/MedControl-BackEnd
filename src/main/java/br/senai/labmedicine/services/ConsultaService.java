@@ -1,7 +1,7 @@
 package br.senai.labmedicine.services;
 
 import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
-import br.senai.labmedicine.dtos.Medicamento.MedicamentoResponseDTO;
+import br.senai.labmedicine.dtos.medicamento.MedicamentoResponseDTO;
 import br.senai.labmedicine.dtos.consulta.ConsultaAtualizacaoDTO;
 import br.senai.labmedicine.dtos.consulta.ConsultaCadastroDTO;
 import br.senai.labmedicine.dtos.consulta.ConsultaResponseDTO;

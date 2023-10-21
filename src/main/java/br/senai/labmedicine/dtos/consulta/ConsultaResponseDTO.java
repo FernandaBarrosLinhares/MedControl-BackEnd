@@ -1,7 +1,7 @@
 package br.senai.labmedicine.dtos.consulta;
 
 import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
-import br.senai.labmedicine.dtos.Medicamento.MedicamentoResponseDTO;
+import br.senai.labmedicine.dtos.medicamento.MedicamentoResponseDTO;
 import br.senai.labmedicine.dtos.usuario.UsuarioResponseDTO;
 
 import br.senai.labmedicine.models.Consulta;

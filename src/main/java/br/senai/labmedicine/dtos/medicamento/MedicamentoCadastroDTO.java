@@ -1,4 +1,4 @@
-package br.senai.labmedicine.dtos.Medicamento;
+package br.senai.labmedicine.dtos.medicamento;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

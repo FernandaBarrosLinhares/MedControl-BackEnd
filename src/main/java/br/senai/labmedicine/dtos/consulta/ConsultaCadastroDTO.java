@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
-import br.senai.labmedicine.dtos.Medicamento.MedicamentoResponseDTO;
+import br.senai.labmedicine.dtos.medicamento.MedicamentoResponseDTO;
 import br.senai.labmedicine.dtos.usuario.UsuarioResponseDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
