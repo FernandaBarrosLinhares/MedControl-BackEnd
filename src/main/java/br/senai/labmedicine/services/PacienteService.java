@@ -126,28 +126,28 @@ public class PacienteService {
         for (Consulta consulta: consultas){
             consulta.setStatus(false);
             this.consultaRepository.save(consulta);
-            String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" atualizou o status da consulta: (id: "+consulta.getId()+") do paciente: ("+consulta.getPaciente().getId()+") "+consulta.getPaciente().getNomeCompleto();
+            String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" atualizou o status da consulta: (id: "+consulta.getId()+") do paciente: (id: "+consulta.getPaciente().getId()+") "+consulta.getPaciente().getNomeCompleto();
             this.logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(),LocalTime.now(),mensagem));
         }
         List<Dieta> dietas = this.dietaRepository.findAllByPacienteId(idPaciente);
         for(Dieta dieta: dietas){
             dieta.setStatus(false);
             this.dietaRepository.save(dieta);
-            String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" atualizou o status da dieta: (id: "+dieta.getId()+") do paciente: ("+dieta.getPaciente().getId()+") "+dieta.getPaciente().getNomeCompleto();
+            String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" atualizou o status da dieta: (id: "+dieta.getId()+") do paciente: (id: "+dieta.getPaciente().getId()+") "+dieta.getPaciente().getNomeCompleto();
             this.logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(),LocalTime.now(),mensagem));
         }
         List<Exame> exames = this.exameRepository.findAllByPacienteId(idPaciente);
         for(Exame exame:exames){
             exame.setStatus(false);
             this.exameRepository.save(exame);
-            String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" atualizou o status do exame: (id: "+exame.getId()+") do paciente: ("+exame.getPaciente().getId()+") "+exame.getPaciente().getNomeCompleto();
+            String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" atualizou o status do exame: (id: "+exame.getId()+") do paciente: (id: "+exame.getPaciente().getId()+") "+exame.getPaciente().getNomeCompleto();
             this.logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(),LocalTime.now(),mensagem));
         }
         List<Exercicio> exercicios = this.exercicioRepository.findAllByPacienteId(idPaciente);
         for(Exercicio exercicio:exercicios){
             exercicio.setStatus(false);
             this.exercicioRepository.save(exercicio);
-            String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" atualizou o status do exercicio: (id: "+exercicio.getId()+") do paciente: ("+exercicio.getPaciente().getId()+") "+exercicio.getPaciente().getNomeCompleto();
+            String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" atualizou o status do exercicio: (id: "+exercicio.getId()+") do paciente: (id: "+exercicio.getPaciente().getId()+") "+exercicio.getPaciente().getNomeCompleto();
             this.logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(),LocalTime.now(),mensagem));
         }
 
