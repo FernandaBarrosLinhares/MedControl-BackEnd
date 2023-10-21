@@ -1,7 +1,5 @@
 package br.senai.labmedicine.services;
 
-import br.senai.labmedicine.dtos.consulta.ConsultaAtualizacaoDTO;
-import br.senai.labmedicine.dtos.consulta.ConsultaResponseDTO;
 import br.senai.labmedicine.dtos.log.LogCadastroDTO;
 import br.senai.labmedicine.dtos.usuario.*;
 import br.senai.labmedicine.models.Consulta;
@@ -56,6 +54,7 @@ public class UsuarioService {
     }
 
     public UsuarioResponseDTO cadastrarUsuario(Long idUsuarioLogado,UsuarioCadastroDTO novoUsuario) throws AccessDeniedException,NoSuchAlgorithmException {
+        checarDisponibilidadeEmailECpf(novoUsuario.getCpf(), novoUsuario.getEmail());
         Usuario usuarioLogado = this.usuarioRepository.findById(idUsuarioLogado).orElseThrow(()->new EntityNotFoundException("Usuário não encontrado"));
         if(!usuarioLogado.getTipoUsuario().getDescricao().equals("Administrador")){
             throw new AccessDeniedException("Usuário sem acesso!");
@@ -124,6 +123,16 @@ public class UsuarioService {
         for(Consulta consulta: consultas){
             consulta.setStatus(status);
             this.consultaRepository.save(consulta);
+        }
+    }
+
+    public void checarDisponibilidadeEmailECpf(String cpf,String email){
+        boolean cpfExiste = this.usuarioRepository.existsByCpf(cpf);
+        boolean emailExiste = this.usuarioRepository.existsByEmail(email);
+        if(cpfExiste){
+            throw new DataIntegrityViolationException("CPF já cadastrado.");
+        }else if(emailExiste){
+            throw new DataIntegrityViolationException("Email já cadastrado.");
         }
     }
 }
