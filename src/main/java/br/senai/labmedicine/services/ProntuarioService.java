@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 import br.senai.labmedicine.dtos.exame.ExameResponseDTO;
 import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
-import br.senai.labmedicine.dtos.ProntuarioRequestDTO;
+import br.senai.labmedicine.dtos.prontuario.ProntuarioRequestDTO;
 import br.senai.labmedicine.dtos.Dieta.DietaResponseDTO;
 import br.senai.labmedicine.dtos.exercicio.ExercicioResponseDTO;
-import br.senai.labmedicine.dtos.validacoes.ProntuarioResponseDTO;
+import br.senai.labmedicine.dtos.prontuario.ProntuarioResponseDTO;
 
 @Service
 public class ProntuarioService {
