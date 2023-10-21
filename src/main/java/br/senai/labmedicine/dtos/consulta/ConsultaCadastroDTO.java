@@ -8,7 +8,7 @@ import java.time.format.DateTimeParseException;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.senai.labmedicine.dtos.PacienteResponseDTO;
+import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import br.senai.labmedicine.dtos.Medicamento.MedicamentoResponseDTO;
 import br.senai.labmedicine.dtos.usuario.UsuarioResponseDTO;
 import jakarta.validation.constraints.NotBlank;

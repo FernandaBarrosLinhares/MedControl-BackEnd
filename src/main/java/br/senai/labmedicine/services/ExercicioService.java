@@ -1,6 +1,6 @@
 package br.senai.labmedicine.services;
 
-import br.senai.labmedicine.dtos.PacienteResponseDTO;
+import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import br.senai.labmedicine.dtos.exercicio.ExercicioAtualizacaoDTO;
 import br.senai.labmedicine.dtos.exercicio.ExercicioCadastroDTO;
 import br.senai.labmedicine.dtos.exercicio.ExercicioResponseDTO;

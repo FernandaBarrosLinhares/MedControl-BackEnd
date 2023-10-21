@@ -1,8 +1,10 @@
 package br.senai.labmedicine.services;
 
 
-import br.senai.labmedicine.dtos.*;
 import br.senai.labmedicine.dtos.log.LogCadastroDTO;
+import br.senai.labmedicine.dtos.paciente.PacienteAtualizacaoDTO;
+import br.senai.labmedicine.dtos.paciente.PacienteCadastroDTO;
+import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import br.senai.labmedicine.dtos.usuario.UsuarioResponseDTO;
 import br.senai.labmedicine.models.*;
 import br.senai.labmedicine.repositories.*;
@@ -13,7 +15,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 

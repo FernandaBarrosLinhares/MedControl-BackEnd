@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.senai.labmedicine.dtos.ExameResponseDTO;
-import br.senai.labmedicine.dtos.PacienteResponseDTO;
+import br.senai.labmedicine.dtos.exame.ExameResponseDTO;
+import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import br.senai.labmedicine.dtos.ProntuarioRequestDTO;
 import br.senai.labmedicine.dtos.Dieta.DietaResponseDTO;
 import br.senai.labmedicine.dtos.exercicio.ExercicioResponseDTO;

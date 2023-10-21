@@ -1,8 +1,7 @@
 package br.senai.labmedicine.models;
 
-import br.senai.labmedicine.dtos.PacienteCadastroDTO;
+import br.senai.labmedicine.dtos.paciente.PacienteCadastroDTO;
 import br.senai.labmedicine.enums.EstadoCivilEnum;
-import br.senai.labmedicine.enums.GeneroEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

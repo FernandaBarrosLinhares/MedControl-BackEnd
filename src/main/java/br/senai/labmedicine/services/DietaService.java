@@ -3,7 +3,7 @@ package br.senai.labmedicine.services;
 import br.senai.labmedicine.dtos.Dieta.DietaAtualizacaoDTO;
 import br.senai.labmedicine.dtos.Dieta.DietaCadastroDTO;
 import br.senai.labmedicine.dtos.Dieta.DietaResponseDTO;
-import br.senai.labmedicine.dtos.PacienteResponseDTO;
+import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import br.senai.labmedicine.dtos.log.LogCadastroDTO;
 import br.senai.labmedicine.dtos.usuario.UsuarioResponseDTO;
 import br.senai.labmedicine.models.Dieta;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

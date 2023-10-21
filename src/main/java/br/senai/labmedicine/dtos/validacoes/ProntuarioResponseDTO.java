@@ -2,8 +2,8 @@ package br.senai.labmedicine.dtos.validacoes;
 
 import java.util.List;
 
-import br.senai.labmedicine.dtos.ExameResponseDTO;
-import br.senai.labmedicine.dtos.PacienteResponseDTO;
+import br.senai.labmedicine.dtos.exame.ExameResponseDTO;
+import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import br.senai.labmedicine.dtos.Dieta.DietaResponseDTO;
 import br.senai.labmedicine.dtos.exercicio.ExercicioResponseDTO;
 import lombok.AllArgsConstructor;

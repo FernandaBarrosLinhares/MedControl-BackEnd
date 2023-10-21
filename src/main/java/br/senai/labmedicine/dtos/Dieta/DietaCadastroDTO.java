@@ -1,9 +1,7 @@
 package br.senai.labmedicine.dtos.Dieta;
 
-import br.senai.labmedicine.dtos.PacienteCadastroDTO;
-import br.senai.labmedicine.dtos.PacienteResponseDTO;
+import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import br.senai.labmedicine.enums.TipoDietaEnum;
-import br.senai.labmedicine.models.Paciente;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;

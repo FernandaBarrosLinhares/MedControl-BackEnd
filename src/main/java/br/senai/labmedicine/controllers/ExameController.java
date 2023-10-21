@@ -7,9 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import br.senai.labmedicine.dtos.ExameCadastroDTO;
-import br.senai.labmedicine.dtos.ExameEdicaoDTO;
-import br.senai.labmedicine.dtos.ExameResponseDTO;
+import br.senai.labmedicine.dtos.exame.ExameCadastroDTO;
+import br.senai.labmedicine.dtos.exame.ExameEdicaoDTO;
+import br.senai.labmedicine.dtos.exame.ExameResponseDTO;
 import br.senai.labmedicine.services.ExameService;
 
 @RestController

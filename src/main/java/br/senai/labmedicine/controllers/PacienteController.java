@@ -1,9 +1,9 @@
 package br.senai.labmedicine.controllers;
 
 
-import br.senai.labmedicine.dtos.PacienteAtualizacaoDTO;
-import br.senai.labmedicine.dtos.PacienteCadastroDTO;
-import br.senai.labmedicine.dtos.PacienteResponseDTO;
+import br.senai.labmedicine.dtos.paciente.PacienteAtualizacaoDTO;
+import br.senai.labmedicine.dtos.paciente.PacienteCadastroDTO;
+import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import br.senai.labmedicine.services.PacienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -11,10 +11,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.senai.labmedicine.dtos.ExameCadastroDTO;
-import br.senai.labmedicine.dtos.ExameEdicaoDTO;
-import br.senai.labmedicine.dtos.ExameResponseDTO;
-import br.senai.labmedicine.dtos.PacienteResponseDTO;
+import br.senai.labmedicine.dtos.exame.ExameCadastroDTO;
+import br.senai.labmedicine.dtos.exame.ExameEdicaoDTO;
+import br.senai.labmedicine.dtos.exame.ExameResponseDTO;
+import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import br.senai.labmedicine.models.Exame;
 import br.senai.labmedicine.models.Paciente;
 import br.senai.labmedicine.repositories.ExameRepository;

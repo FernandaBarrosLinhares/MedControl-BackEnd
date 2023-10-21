@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import br.senai.labmedicine.dtos.EnderecoCadastro;
-import br.senai.labmedicine.dtos.EnderecoResponse;
+import br.senai.labmedicine.dtos.endereco.EnderecoCadastro;
+import br.senai.labmedicine.dtos.endereco.EnderecoResponse;
 import br.senai.labmedicine.models.Endereco;
 import br.senai.labmedicine.repositories.EnderecoRepository;
 import jakarta.persistence.EntityNotFoundException;
