@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -80,6 +81,9 @@ public class TratadorDeExcecoes {
         return new ResponseEntity<>("O valor informado é inválido.",HttpStatus.BAD_REQUEST);
     }
 
-
+    @ExceptionHandler(MissingRequestHeaderException.class)
+    public ResponseEntity<String> trartarExcecaoHeader(MissingRequestHeaderException e){
+        return new ResponseEntity<>("Usuário logado deve ser informado no header.",HttpStatus.BAD_REQUEST);
+    }
 
 }
