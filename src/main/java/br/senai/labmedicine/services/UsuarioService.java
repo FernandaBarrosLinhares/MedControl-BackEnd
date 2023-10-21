@@ -62,9 +62,10 @@ public class UsuarioService {
         }
         novoUsuario.setSenha(this.criptografarSenha(novoUsuario.getSenha()));
         Usuario usuario = new Usuario(novoUsuario);
+        usuario = this.usuarioRepository.save(usuario);
         String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Cadastrou o usuário: (id: "+usuario.getId()+") "+usuario.getNomeCompleto();
         logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
-        return new UsuarioResponseDTO(this.usuarioRepository.save(usuario));
+        return new UsuarioResponseDTO(usuario);
     }
 
     public List<UsuarioResponseDTO> buscarTodosUsuarios(){
