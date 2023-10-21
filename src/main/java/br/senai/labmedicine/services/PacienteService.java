@@ -59,6 +59,7 @@ public class PacienteService {
         checarDisponibilidadeEmailECpf(pacienteDTO.getCpf(), pacienteDTO.getEmail());
         UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
         Paciente paciente = new Paciente(pacienteDTO);
+        paciente.setStatus(true);
         paciente = this.pacienteRepository.save(paciente);
         String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Cadastrou o paciente: (id: "+paciente.getId()+") "+paciente.getNomeCompleto();
         logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));

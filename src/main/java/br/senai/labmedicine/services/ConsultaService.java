@@ -59,7 +59,7 @@ public class ConsultaService {
         Medicamento medicamento = new Medicamento();
         consulta.setMedicamento(medicamento);
         consulta.getMedicamento().setId(novaConsulta.getMedicamento().getId());
-
+        consulta.setStatus(true);
         consulta = this.consultaRepository.save(consulta);
         BeanUtils.copyProperties(consulta, consultaDTO);
         consultaDTO.setPaciente(pacienteDTO);

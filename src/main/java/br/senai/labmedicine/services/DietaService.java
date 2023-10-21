@@ -38,6 +38,7 @@ public class DietaService {
         BeanUtils.copyProperties(novaDieta,dieta);
         dieta.setPaciente(paciente);
         dieta.getPaciente().setId(novaDieta.getPaciente().getId());
+        dieta.setStatus(true);
         dieta = this.dietaRepository.save(dieta);
         BeanUtils.copyProperties(dieta,dietaDTO);
         dietaDTO.setPaciente(pacienteDTO);

@@ -35,7 +35,7 @@ public class MedicamentoService {
         MedicamentoResponseDTO response = new MedicamentoResponseDTO();
 
         BeanUtils.copyProperties(medicamentoDTO, novoMedicamento);
-
+        novoMedicamento.setStatus(true);
         novoMedicamento = medicamentoRepository.save(novoMedicamento);
 
         BeanUtils.copyProperties(novoMedicamento, response);

@@ -41,6 +41,7 @@ public class ExercicioService {
         BeanUtils.copyProperties(novoExercicio, exercicio);
         exercicio.setPaciente(paciente);
         exercicio.getPaciente().setId(novoExercicio.getPaciente().getId());
+        exercicio.setStatus(true);
         exercicio = this.exercicioRepository.save(exercicio);
         BeanUtils.copyProperties(exercicio, exercicioDTO);
         exercicioDTO.setPaciente(pacienteDTO);

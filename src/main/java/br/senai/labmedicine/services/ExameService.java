@@ -45,6 +45,7 @@ public class ExameService {
 		BeanUtils.copyProperties(novoExame, exame);
 		exame.setPaciente(paciente);
 		exame.getPaciente().setId(novoExame.getPaciente().getId());
+		exame.setStatus(true);
 		exame = this.exameRepository.save(exame);
 
 		BeanUtils.copyProperties(exame, exameDTO);
