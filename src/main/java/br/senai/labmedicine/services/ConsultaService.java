@@ -130,27 +130,18 @@ public class ConsultaService {
     }
 
     public ConsultaResponseDTO atualizarConsulta(Long idUsuarioLogado,Long id, ConsultaAtualizacaoDTO consultaAtualizada) {
-        Consulta consulta = this.consultaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Consulta não encontrada."));
+        Consulta consulta = this.consultaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Consulta não encontrada."));
         UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
-        if (consultaAtualizada.getPaciente().getId() == null) {
-            throw new EntityNotFoundException("Paciente não encontrado.");
-        }
-        PacienteResponseDTO pacienteDTO = this.pacienteService.buscarPorId(consultaAtualizada.getPaciente().getId());
-        UsuarioResponseDTO usuarioDTO = this.usuarioService.buscarUsuarioPorId(consultaAtualizada.getUsuario().getId());
-        MedicamentoResponseDTO medicamentoDTO = this.medicamentoService
-                .buscarMedicamentoPorId(consultaAtualizada.getMedicamento().getId());
+        MedicamentoResponseDTO medicamentoDTO = this.medicamentoService.buscarMedicamentoPorId(consultaAtualizada.getMedicamento().getId());
         ConsultaResponseDTO consultaResponseDTO = new ConsultaResponseDTO();
-        Paciente paciente = new Paciente();
         BeanUtils.copyProperties(consultaAtualizada, consulta);
-        paciente.setId(consultaAtualizada.getPaciente().getId());
-        consulta.setPaciente(paciente);
+        consulta.setMedicamento(new Medicamento(medicamentoDTO));
         consulta = this.consultaRepository.save(consulta);
-        BeanUtils.copyProperties(consulta, consultaResponseDTO);
-        consultaResponseDTO.setPaciente(pacienteDTO);
+//        BeanUtils.copyProperties(consulta, consultaResponseDTO);
+        ConsultaResponseDTO consultaResponseDTO1 = new ConsultaResponseDTO(consulta);
         String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Atualizou a consulta (id:"+ consulta.getId()+") com o paciente: (id: "+consulta.getPaciente().getId()+") "+consulta.getPaciente().getNomeCompleto();
         logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
-        return consultaResponseDTO;
+        return consultaResponseDTO1;
     }
 
     public List<ConsultaResponseDTO> buscarConsultaPorUsuario(Long idUsuario){

@@ -25,7 +25,6 @@ public class ConsultaResponseDTO {
     private LocalDate data;
     private LocalTime horario;
     private String descricao;
-    private String indicadorMedicacao;
     private String dosagensPrecaucoes;
     private Boolean status;
     private PacienteResponseDTO paciente;
@@ -38,7 +37,6 @@ public class ConsultaResponseDTO {
         this.data = consulta.getData();
         this.horario = consulta.getHorario();
         this.descricao = consulta.getDescricao();
-        this.indicadorMedicacao = consulta.getIndicadorMedicacao();
         this.dosagensPrecaucoes = consulta.getDosagensPrecaucoes();
         this.status = consulta.getStatus();
         this.paciente = new PacienteResponseDTO(consulta.getPaciente());

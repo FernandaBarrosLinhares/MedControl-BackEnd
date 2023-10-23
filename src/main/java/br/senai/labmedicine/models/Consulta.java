@@ -37,8 +37,6 @@ public class Consulta {
     private LocalTime horario;
     @Column(nullable = false,length = 1024)
     private String descricao;
-    @Column(nullable = false,length = 100)
-    private String indicadorMedicacao;
     @Column(nullable = false,length = 256)
     private String dosagensPrecaucoes;
     @Column(nullable = false)
@@ -50,6 +48,6 @@ public class Consulta {
     @JoinColumn(name = "usuario_id",referencedColumnName = "id",nullable = false)
     private Usuario usuario;
     @ManyToOne
-    @JoinColumn(name = "medicamento_id",referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "medicamento_id",referencedColumnName = "id",nullable = true)
     private Medicamento medicamento;
 }
