@@ -42,7 +42,7 @@ public class DietaService {
         dieta = this.dietaRepository.save(dieta);
         BeanUtils.copyProperties(dieta,dietaDTO);
         dietaDTO.setPaciente(pacienteDTO);
-        String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Registrou a Dieta (id:"+ dieta.getId()+") para o paciente (id:"+dieta.getPaciente().getId()+") nome: "+ dieta.getPaciente().getNomeCompleto();
+        String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Registrou a Dieta (id:"+ dieta.getId()+") para o paciente (id:"+dieta.getPaciente().getId()+") nome: "+ dietaDTO.getPaciente().getNomeCompleto();
         logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
         return dietaDTO;
     }
