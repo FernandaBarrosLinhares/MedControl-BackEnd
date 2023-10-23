@@ -62,7 +62,7 @@ public class ExercicioCadastroDTO {
             try {
                 this.horario = LocalTime.from(formatoHorario.parse(horario));
             }catch (DateTimeParseException e){
-                throw new DateTimeParseException("Horario inválido", "", 0);
+                throw new DateTimeParseException("Horário inválido", "", 0);
             }
         }
     }
