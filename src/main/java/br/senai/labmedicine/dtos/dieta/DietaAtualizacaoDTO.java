@@ -29,7 +29,4 @@ public class DietaAtualizacaoDTO {
     @NotNull(message = "O status deve ser informado.")
     private Boolean status;
 
-    @NotNull(message = "Paciente obrigatório.")
-    private PacienteResponseDTO paciente;
-
 }

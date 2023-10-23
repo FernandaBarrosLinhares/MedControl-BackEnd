@@ -73,18 +73,11 @@ public class DietaService {
     public DietaResponseDTO atualizarDieta(Long idUsuarioLogado,Long id,DietaAtualizacaoDTO dietaAtualizada) {
         Dieta dieta = this.dietaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Dieta não encontrada."));
         UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
-        if (dietaAtualizada.getPaciente().getId() == null) {
-            throw new EntityNotFoundException("Paciente não encontrado.");
-        }
-        PacienteResponseDTO pacienteDTO = this.pacienteService.buscarPorId(dietaAtualizada.getPaciente().getId());
-        DietaResponseDTO dietaResponseDTO = new DietaResponseDTO();
-        Paciente paciente = new Paciente();
+        DietaResponseDTO dietaResponseDTO;
         BeanUtils.copyProperties(dietaAtualizada,dieta);
-        paciente.setId(dietaAtualizada.getPaciente().getId());
-        dieta.setPaciente(paciente);
         dieta = this.dietaRepository.save(dieta);
-        BeanUtils.copyProperties(dieta,dietaResponseDTO);
-        dietaResponseDTO.setPaciente(pacienteDTO);
+        dietaResponseDTO = new DietaResponseDTO(dieta);
+
         String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Atualizou a Dieta (id:"+ dieta.getId()+") para o paciente (id:"+dieta.getPaciente().getId()+") nome: "+ dieta.getPaciente().getNomeCompleto();
         logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
         return dietaResponseDTO;
