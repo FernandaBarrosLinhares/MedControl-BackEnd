@@ -62,7 +62,7 @@ public class MedicamentoService {
     }
 
     public MedicamentoResponseDTO buscarMedicamentoPorId(Long id) {
-        Medicamento listaMedicamentoId = medicamentoRepository.getReferenceById(id);
+        Medicamento listaMedicamentoId = medicamentoRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Medicamento não existe"));
         MedicamentoResponseDTO response = new MedicamentoResponseDTO();
         BeanUtils.copyProperties(listaMedicamentoId, response);
         return response;
