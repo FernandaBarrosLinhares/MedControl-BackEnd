@@ -37,8 +37,6 @@ public class ConsultaCadastroDTO {
     private LocalTime horario;
     @Size(min = 16,max = 1024,message = "Campo descrição deve conter de 16 a 1024 caracteres")
     private String descricao;
-    @NotBlank (message = "Campo indicador de medicação deve ser obrigatório")
-    private String indicadorMedicacao;
     @NotBlank (message= "Campo dosagens e precauçoes  deve ser obrigatório")
     @Size(min = 16,max = 256,message = "Campo dosagens e precauçoes  deve conter de 16 a 256 caracteres")
     private String dosagensPrecaucoes;
