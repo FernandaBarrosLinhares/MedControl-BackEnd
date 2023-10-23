@@ -7,6 +7,7 @@ import java.util.List;
 
 import br.senai.labmedicine.dtos.log.LogCadastroDTO;
 import br.senai.labmedicine.dtos.usuario.UsuarioResponseDTO;
+import br.senai.labmedicine.models.Consulta;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class MedicamentoService {
 
     @Autowired
     private MedicamentoRepository medicamentoRepository;
+
     @Autowired
     private UsuarioService usuarioService;
     @Autowired
@@ -46,7 +48,7 @@ public class MedicamentoService {
     }
 
     public MedicamentoResponseDTO atualizaMedicamentoId(Long idUsuarioLogado,Long id, MedicamentoAtualizacaoDTO medicamentoDTO) {
-        Medicamento atualizaMedicamento = medicamentoRepository.getReferenceById(medicamentoDTO.getId());
+        Medicamento atualizaMedicamento = medicamentoRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Medicamento não encontrado"));
 
         BeanUtils.copyProperties(medicamentoDTO, atualizaMedicamento);
 
@@ -71,11 +73,11 @@ public class MedicamentoService {
     public void excluirMedicamentoId(Long idUsuarioLogado,Long id) {
         Medicamento medicamentoBd = this.medicamentoRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Medicamento não cadastrado."));
         UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
-        try {
-            medicamentoRepository.deleteById(id);
-        }catch (DataIntegrityViolationException e){
+        List<Medicamento> medicamentos = this.medicamentoRepository.existsByMedicamentoId(id);
+        if(!medicamentos.isEmpty()){
             throw new DataIntegrityViolationException("Medicamento em uso não pode ser deletado.");
         }
+        this.medicamentoRepository.deleteById(id);
         String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Deletou o medicamento (id:"+ medicamentoBd.getId()+")";
         logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
 

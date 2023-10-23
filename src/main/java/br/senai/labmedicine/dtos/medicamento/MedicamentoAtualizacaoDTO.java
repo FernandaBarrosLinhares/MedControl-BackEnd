@@ -15,8 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MedicamentoAtualizacaoDTO {
-    @NotNull
-    private Long id;
+
     @NotBlank(message = "Nome do medicamento deve ser informado.")
     @Size(min = 5, max = 100, message = "Nome deve ter entre 5 e 100 caracteres.")
     private String nome;
