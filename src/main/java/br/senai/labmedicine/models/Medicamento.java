@@ -3,6 +3,7 @@ package br.senai.labmedicine.models;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import br.senai.labmedicine.dtos.medicamento.MedicamentoResponseDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.senai.labmedicine.enums.TipoMedicamentosEnum;
@@ -54,4 +55,16 @@ public class Medicamento {
 
     @Column(nullable = false)
     private Boolean status;
+
+    public Medicamento(MedicamentoResponseDTO medicamentoResponseDTO) {
+        this.id = medicamentoResponseDTO.getId();
+        this.nome = medicamentoResponseDTO.getNome();
+        this.data = medicamentoResponseDTO.getData();
+        this.horario = medicamentoResponseDTO.getHorario();
+        this.tipo = medicamentoResponseDTO.getTipo();
+        this.quantidade = medicamentoResponseDTO.getQuantidade();
+        this.unidade = medicamentoResponseDTO.getUnidade();
+        this.observacao = medicamentoResponseDTO.getObservacao();
+        this.status = medicamentoResponseDTO.getStatus();
+    }
 }
