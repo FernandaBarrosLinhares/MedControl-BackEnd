@@ -45,30 +45,28 @@ public class ProntuarioService {
 		return prontuariosDTO;
 	}
 
-	public List<ProntuarioResponseDTO> buscarPorIdOuNome(ProntuarioRequestDTO prontuario) {
+	public List<ProntuarioResponseDTO> buscarPorIdOuNome(String nomeCompletoPaciente, Long pacienteId) {
 		List<ProntuarioResponseDTO> prontuariosDTO = new ArrayList<>();
 		boolean nomePreenchido = false;
 		boolean idPreenchido = false;
 
-		if (prontuario.getNomeCompletoPaciente() != null && !prontuario.getNomeCompletoPaciente().isBlank())
+		if (nomeCompletoPaciente != null && !nomeCompletoPaciente.isBlank())
 			nomePreenchido = true;
-		if (prontuario.getPacienteId() > 0)
+		if (pacienteId != null)
 			idPreenchido = true;
 
 		if (nomePreenchido && idPreenchido) {
-			PacienteResponseDTO pacienteDTO = this.pacienteService.buscarPorId(prontuario.getPacienteId());
-			if (!pacienteDTO.getNomeCompleto().equals(prontuario.getNomeCompletoPaciente())) {
-				new IllegalArgumentException("O id e nome devem ser do mesmo paciente.");
-			}			
-		} 
+			PacienteResponseDTO pacienteDTO = this.pacienteService.buscarPorId(pacienteId);
+			if (!pacienteDTO.getNomeCompleto().equals(nomeCompletoPaciente)) {
+                throw new IllegalArgumentException("O id e nome devem ser do mesmo paciente.");
+			}
+		}
 		if (idPreenchido) {
-			PacienteResponseDTO pacienteDTO = this.pacienteService.buscarPorId(prontuario.getPacienteId());
+			PacienteResponseDTO pacienteDTO = this.pacienteService.buscarPorId(pacienteId);
 			prontuariosDTO.add(montarProntuarioResponseDTO(pacienteDTO));
 		} else if (nomePreenchido) {
 
-			List<PacienteResponseDTO> pacientesDTO = this.pacienteService.buscarPorNome(
-				prontuario.getNomeCompletoPaciente()
-			);
+			List<PacienteResponseDTO> pacientesDTO = this.pacienteService.buscarPorNome(nomeCompletoPaciente);
 
 			for (PacienteResponseDTO paciente : pacientesDTO) {
 

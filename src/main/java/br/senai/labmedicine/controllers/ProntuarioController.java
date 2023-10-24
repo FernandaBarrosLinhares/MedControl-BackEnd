@@ -22,7 +22,7 @@ public class ProntuarioController {
 	private ProntuarioService prontuarioService;
 
 	@GetMapping
-	public ResponseEntity<List<ProntuarioResponseDTO>> buscar(@RequestParam ProntuarioRequestDTO prontuarioRequestDTO) {
-		return new ResponseEntity<>(this.prontuarioService.buscarPorIdOuNome(prontuarioRequestDTO), HttpStatus.OK);
+	public ResponseEntity<List<ProntuarioResponseDTO>> buscar(@RequestParam(required = false) String nomeCompletoPaciente, @RequestParam(required = false) Long pacienteId) {
+		return new ResponseEntity<>(this.prontuarioService.buscarPorIdOuNome(nomeCompletoPaciente, pacienteId), HttpStatus.OK);
 	}
 }
