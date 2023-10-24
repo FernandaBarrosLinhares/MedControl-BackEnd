@@ -63,9 +63,10 @@ public class ExameService {
 
 		BeanUtils.copyProperties(exame.getPaciente(), pacienteDTO);
 		BeanUtils.copyProperties(exame, exameResponseDTO);
+		ExameResponseDTO exameResponseDTO1 = new ExameResponseDTO(exame);
 		exameResponseDTO.setPaciente(pacienteDTO);
 
-		return exameResponseDTO;
+		return exameResponseDTO1;
 	}
 
 	public List<ExameResponseDTO> buscarExamePorPaciente(String nomePaciente) {
@@ -99,24 +100,16 @@ public class ExameService {
 	}
 
 	public ExameResponseDTO atualizarExame(Long idUsuarioLogado,Long id,ExameEdicaoDTO exameEdicao) {
-        Exame exame = this.exameRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Dieta não encontrada."));
+        Exame exame = this.exameRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Exame não encontrado."));
 		UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
-        if (exameEdicao.getPaciente().getId() == null) {
-            throw new EntityNotFoundException("Paciente não encontrado.");
-        }
 
-        PacienteResponseDTO pacienteDTO = this.pacienteService.buscarPorId(exameEdicao.getPaciente().getId());
         ExameResponseDTO exameResponseDTO = new ExameResponseDTO();
-        Paciente paciente = new Paciente();
-
         BeanUtils.copyProperties(exameEdicao,exame);
-        paciente.setId(exameEdicao.getPaciente().getId());
-        exame.setPaciente(paciente);
+
         exame = this.exameRepository.save(exame);
-        BeanUtils.copyProperties(exame,exameResponseDTO);
-        exameResponseDTO.setPaciente(pacienteDTO);
+		ExameResponseDTO exameResponseDTO1 = new ExameResponseDTO(exame);
 		String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Atualizou o exame (id:"+ exame.getId()+") para o paciente (id:"+exame.getPaciente().getId()+") nome: "+ exame.getPaciente().getNomeCompleto();
 		logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
-        return exameResponseDTO;
+        return exameResponseDTO1;
     }
 }

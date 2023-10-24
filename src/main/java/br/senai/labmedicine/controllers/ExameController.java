@@ -20,7 +20,7 @@ public class ExameController {
 	private ExameService exameService;
 
 	@GetMapping
-	public ResponseEntity<List<ExameResponseDTO>> buscar(@RequestBody String nomeUsuario) {
+	public ResponseEntity<List<ExameResponseDTO>> buscar(@RequestParam(required = false) String nomeUsuario) {
 		return new ResponseEntity<>(this.exameService.buscarExamePorPaciente(nomeUsuario), HttpStatus.OK);
 	}
 
