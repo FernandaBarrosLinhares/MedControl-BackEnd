@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.senai.labmedicine.dtos.ProntuarioRequestDTO;
-import br.senai.labmedicine.dtos.validacoes.ProntuarioResponseDTO;
+import br.senai.labmedicine.dtos.prontuario.ProntuarioResponseDTO;
 import br.senai.labmedicine.services.ProntuarioService;
 
 @RestController
@@ -22,12 +21,7 @@ public class ProntuarioController {
 	private ProntuarioService prontuarioService;
 
 	@GetMapping
-	public ResponseEntity<List<ProntuarioResponseDTO>> buscar() {
-		return new ResponseEntity<>(this.prontuarioService.buscarTodos(), HttpStatus.OK);
-	}
-
-	@GetMapping
-	public ResponseEntity<List<ProntuarioResponseDTO>> buscar(@RequestParam ProntuarioRequestDTO prontuarioRequestDTO) {
-		return new ResponseEntity<>(this.prontuarioService.buscarPorIdOuNome(prontuarioRequestDTO), HttpStatus.OK);
+	public ResponseEntity<List<ProntuarioResponseDTO>> buscar(@RequestParam(required = false) String nomeCompletoPaciente, @RequestParam(required = false) Long pacienteId) {
+		return new ResponseEntity<>(this.prontuarioService.buscarPorIdOuNome(nomeCompletoPaciente, pacienteId), HttpStatus.OK);
 	}
 }

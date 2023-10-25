@@ -1,9 +1,7 @@
-package br.senai.labmedicine.dtos.Dieta;
+package br.senai.labmedicine.dtos.dieta;
 
-import br.senai.labmedicine.dtos.PacienteCadastroDTO;
-import br.senai.labmedicine.dtos.PacienteResponseDTO;
+import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import br.senai.labmedicine.enums.TipoDietaEnum;
-import br.senai.labmedicine.models.Paciente;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
@@ -40,7 +38,6 @@ public class DietaCadastroDTO {
     @Setter(AccessLevel.NONE)
     private final Boolean status = true;
 
-   // TODO quando arrumar a classe paciente pode descomentar
     @NotNull(message = "Paciente obrigatório")
     private PacienteResponseDTO paciente;
 
@@ -59,7 +56,7 @@ public class DietaCadastroDTO {
             try {
                 this.horario = LocalTime.from(formatoHorario.parse(horario));
             }catch (DateTimeParseException e){
-                throw new DateTimeParseException("Horario inválido", "", 0);
+                throw new DateTimeParseException("Horário inválido", "", 0);
             }
         }
     }

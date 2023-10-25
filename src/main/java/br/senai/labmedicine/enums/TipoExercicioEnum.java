@@ -26,7 +26,7 @@ public enum TipoExercicioEnum {
     public static TipoExercicioEnum fromString(String value){
         for(TipoExercicioEnum tipo: TipoExercicioEnum.values()){
             try {
-                if(tipo.ordinal() == Integer.parseInt(value)){
+                if(tipo.name().equals(value)){
                     return tipo;
                 }
             }catch (NumberFormatException erro){

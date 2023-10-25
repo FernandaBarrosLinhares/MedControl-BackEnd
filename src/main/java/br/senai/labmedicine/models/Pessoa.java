@@ -18,7 +18,7 @@ public abstract class Pessoa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false,length = 150)
+    @Column(nullable = false,length = 64)
     private String nomeCompleto;
 
     @Column(nullable = false)
@@ -27,10 +27,10 @@ public abstract class Pessoa {
     @Column(unique = true,nullable = false,length = 11)
     private String cpf;
 
-    @Column(nullable = false,length = 16)
+    @Column(nullable = false,length = 11)
     private String telefone;
 
-    @Column(nullable = false,length = 150)
+    @Column(unique = true,nullable = false,length = 150)
     private String email;
 
     @Column(nullable = false)

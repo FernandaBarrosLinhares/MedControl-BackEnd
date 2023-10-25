@@ -1,7 +1,8 @@
-package br.senai.labmedicine.dtos.validacoes;
+package br.senai.labmedicine.dtos.prontuario;
 
 import java.util.List;
 
+import br.senai.labmedicine.dtos.consulta.ConsultaResponseDTO;
 import br.senai.labmedicine.dtos.exame.ExameResponseDTO;
 import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import br.senai.labmedicine.dtos.dieta.DietaResponseDTO;
@@ -19,5 +20,5 @@ public class ProntuarioResponseDTO {
 	private List<ExameResponseDTO> exames;
 	private List<ExercicioResponseDTO> exercicios;
 	// TODO descomentar abaixo quando consulta estiver disponível
-	// private List<ConsultaResponseDTO> consultas;
+	private List<ConsultaResponseDTO> consultas;
 }

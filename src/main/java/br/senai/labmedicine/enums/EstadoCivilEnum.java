@@ -1,30 +1,35 @@
 package br.senai.labmedicine.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 
 @Getter
 public enum EstadoCivilEnum {
-    SOLTEIRO(1, "solteiro"),
-    CASADO(2, "casado"),
-    SEPARADO(3, "separado"),
-    DIVORCIADO(4, "divorciado"),
-    VIUVO(5, "viúvo"),
-    UNIAO_ESTAVEL(6, "união estável");
+    SOLTEIRO("solteiro"),
+    CASADO( "casado"),
+    SEPARADO( "separado"),
+    DIVORCIADO("divorciado"),
+    VIUVO("viúvo"),
+    UNIAO_ESTAVEL("união estável");
 
     private final String descricao;
-    private final int valor;
 
-    EstadoCivilEnum(int valor,String descricao) {
+
+    EstadoCivilEnum(String descricao) {
         this.descricao = descricao;
-        this.valor = valor;
     }
 
-    public static EstadoCivilEnum retornarValor(int valor){
-        for(EstadoCivilEnum estadoCivil: EstadoCivilEnum.values()){
-            if(estadoCivil.valor == valor){
-                return estadoCivil;
+    @JsonCreator
+    public static EstadoCivilEnum fromString(String value){
+        for(EstadoCivilEnum estado: EstadoCivilEnum.values()){
+            try {
+                if(estado.name().equals(value)){
+                    return estado;
+                }
+            }catch (NumberFormatException erro){
+                throw new NumberFormatException("Estado civil inválido.");
             }
-        }
-        throw new IllegalArgumentException("Valor inválido para enum");
+        };
+        throw new IllegalArgumentException("Estado civil inválido");
     }
 }

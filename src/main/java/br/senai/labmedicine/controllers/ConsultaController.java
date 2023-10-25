@@ -22,8 +22,8 @@ public class ConsultaController {
 
     @PostMapping
 
-    public ResponseEntity<ConsultaResponseDTO> salvarConsulta(@RequestBody @Valid ConsultaCadastroDTO novaConsulta){
-        return new ResponseEntity<>(this.consultaService.salvar(novaConsulta), HttpStatus.CREATED);
+    public ResponseEntity<ConsultaResponseDTO> salvarConsulta(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@RequestBody @Valid ConsultaCadastroDTO novaConsulta){
+        return new ResponseEntity<>(this.consultaService.salvar(idUsuarioLogado,novaConsulta), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -37,14 +37,14 @@ public class ConsultaController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deletarConsulta(@PathVariable Long id){
-        this.consultaService.deletarConsulta(id);
+    public ResponseEntity<Void> deletarConsulta(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id){
+        this.consultaService.deletarConsulta(idUsuarioLogado,id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<ConsultaResponseDTO> atualizarConsulta(@PathVariable Long id,@RequestBody @Valid ConsultaAtualizacaoDTO consultaAtualizada){
-        return new ResponseEntity<>(this.consultaService.atualizarConsulta(id,consultaAtualizada),HttpStatus.CREATED);
+    public ResponseEntity<ConsultaResponseDTO> atualizarConsulta(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id,@RequestBody @Valid ConsultaAtualizacaoDTO consultaAtualizada){
+        return new ResponseEntity<>(this.consultaService.atualizarConsulta(idUsuarioLogado,id,consultaAtualizada),HttpStatus.CREATED);
     }
 
 }

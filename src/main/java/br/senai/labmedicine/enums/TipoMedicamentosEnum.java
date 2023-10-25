@@ -1,32 +1,36 @@
 package br.senai.labmedicine.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 
 @Getter
 public enum TipoMedicamentosEnum {
-    CAPSULA(1, "Cápsula"),
-    COMPRIMIDO(2, "Comprimido"),
-    LIQUIDO(3, "Líquido"),
-    CREME(4, "Creme"),
-    GEL(5, "Gel"),
-    INALACAO(5, "Inalação"),
-    INJECAO(6, "Injeção"),
-    SPRAY(7, "Spray");
+    CAPSULA("Cápsula"),
+    COMPRIMIDO("Comprimido"),
+    LIQUIDO("Líquido"),
+    CREME("Creme"),
+    GEL("Gel"),
+    INALACAO("Inalação"),
+    INJECAO("Injeção"),
+    SPRAY("Spray");
 
     private final String descricao;
-    private final int valor;
 
-    TipoMedicamentosEnum(int valor,String descricao) {
+    TipoMedicamentosEnum(String descricao) {
         this.descricao = descricao;
-        this.valor = valor;
     }
 
-    public static TipoMedicamentosEnum retornarValor(int valor){
-        for(TipoMedicamentosEnum tipoMedicamento: TipoMedicamentosEnum.values()){
-            if(tipoMedicamento.valor == valor){
-                return tipoMedicamento;
+    @JsonCreator
+    public static TipoMedicamentosEnum fromString(String value){
+        for(TipoMedicamentosEnum tipo: TipoMedicamentosEnum.values()){
+            try {
+                if(tipo.name().equals(value)){
+                    return tipo;
+                }
+            }catch (NumberFormatException erro){
+                throw new NumberFormatException("Tipo de medicamento informado é inválido.");
             }
-        }
-        throw new IllegalArgumentException("Valor inválido para enum");
+        };
+        throw new IllegalArgumentException("Tipo de medicamento informado é inválido");
     }
 }

@@ -1,10 +1,11 @@
-package br.senai.labmedicine.dtos;
+package br.senai.labmedicine.dtos.exame;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -72,7 +73,7 @@ public class ExameCadastroDTO {
             try {
                 this.horario = LocalTime.from(formatoHorario.parse(horario));
             }catch (DateTimeParseException e){
-                throw new DateTimeParseException("Horario inválido", "", 0);
+                throw new DateTimeParseException("Horário inválido", "", 0);
             }
         }
     }

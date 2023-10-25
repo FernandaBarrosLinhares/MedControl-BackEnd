@@ -9,13 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.security.sasl.AuthenticationException;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.AccessDeniedException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @RestController
-@RequestMapping("usuarios")
+@RequestMapping("/usuarios")
 public class UsuarioController {
 
     @Autowired
@@ -53,8 +52,10 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@PathVariable Long id,@RequestBody @Valid UsuarioAtualizacaoDTO usuarioAtualizacaoDTO) throws NoSuchAlgorithmException {
-        return new ResponseEntity<>(this.usuarioService.atualizarUsuario(id,usuarioAtualizacaoDTO),HttpStatus.OK);
+    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@PathVariable Long id,
+                                                               @RequestBody @Valid UsuarioAtualizacaoDTO usuarioAtualizacaoDTO,
+                                                               @RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado) throws NoSuchAlgorithmException {
+        return new ResponseEntity<>(this.usuarioService.atualizarUsuario(idUsuarioLogado,id,usuarioAtualizacaoDTO),HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

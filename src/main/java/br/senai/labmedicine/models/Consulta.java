@@ -1,14 +1,21 @@
 package br.senai.labmedicine.models;
 
-import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -18,7 +25,7 @@ import java.time.LocalTime;
 public class Consulta {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false,length = 100)
     private String motivo;
@@ -30,16 +37,17 @@ public class Consulta {
     private LocalTime horario;
     @Column(nullable = false,length = 1024)
     private String descricao;
-    @Column(nullable = false,length = 100)
-    private String indicadorMedicacao;
     @Column(nullable = false,length = 256)
     private String dosagensPrecaucoes;
     @Column(nullable = false)
     private Boolean status;
-
-    //TODO relacionamento usuario
-    //TODO relacionamento medicamento
     @ManyToOne
     @JoinColumn(name = "paciente_id",referencedColumnName = "id",nullable = false)
     private Paciente paciente;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id",referencedColumnName = "id",nullable = false)
+    private Usuario usuario;
+    @ManyToOne
+    @JoinColumn(name = "medicamento_id",referencedColumnName = "id",nullable = true)
+    private Medicamento medicamento;
 }

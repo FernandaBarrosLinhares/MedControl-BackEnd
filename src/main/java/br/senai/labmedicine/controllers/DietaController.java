@@ -1,8 +1,8 @@
 package br.senai.labmedicine.controllers;
 
-import br.senai.labmedicine.dtos.Dieta.DietaAtualizacaoDTO;
-import br.senai.labmedicine.dtos.Dieta.DietaCadastroDTO;
-import br.senai.labmedicine.dtos.Dieta.DietaResponseDTO;
+import br.senai.labmedicine.dtos.dieta.DietaAtualizacaoDTO;
+import br.senai.labmedicine.dtos.dieta.DietaCadastroDTO;
+import br.senai.labmedicine.dtos.dieta.DietaResponseDTO;
 import br.senai.labmedicine.services.DietaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/dieta")
+@RequestMapping("/dietas")
 public class DietaController {
 
     @Autowired
     private DietaService dietaService;
 
     @PostMapping
-    public ResponseEntity<DietaResponseDTO> salvarDieta(@RequestBody @Valid DietaCadastroDTO novaDieta){
-        return new ResponseEntity<>(this.dietaService.salvar(novaDieta), HttpStatus.CREATED);
+    public ResponseEntity<DietaResponseDTO> salvarDieta(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@RequestBody @Valid DietaCadastroDTO novaDieta){
+        return new ResponseEntity<>(this.dietaService.salvar(idUsuarioLogado,novaDieta), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -35,14 +35,14 @@ public class DietaController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deletarDieta(@PathVariable Long id){
-        this.dietaService.deletarDieta(id);
+    public ResponseEntity<Void> deletarDieta(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id){
+        this.dietaService.deletarDieta(idUsuarioLogado,id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<DietaResponseDTO> atualizarDieta(@PathVariable Long id,@RequestBody @Valid DietaAtualizacaoDTO dietaAtualizada){
-        return new ResponseEntity<>(this.dietaService.atualizarDieta(id,dietaAtualizada),HttpStatus.CREATED);
+    public ResponseEntity<DietaResponseDTO> atualizarDieta(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id,@RequestBody @Valid DietaAtualizacaoDTO dietaAtualizada){
+        return new ResponseEntity<>(this.dietaService.atualizarDieta(idUsuarioLogado,id,dietaAtualizada),HttpStatus.CREATED);
     }
 
 }

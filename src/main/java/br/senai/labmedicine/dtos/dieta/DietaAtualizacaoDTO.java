@@ -1,7 +1,7 @@
-package br.senai.labmedicine.dtos.Dieta;
+package br.senai.labmedicine.dtos.dieta;
 
 
-import br.senai.labmedicine.dtos.PacienteResponseDTO;
+import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import br.senai.labmedicine.enums.TipoDietaEnum;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -28,9 +28,5 @@ public class DietaAtualizacaoDTO {
 
     @NotNull(message = "O status deve ser informado.")
     private Boolean status;
-
-    // TODO quando arrumar a classe paciente pode descomentar
-    @NotNull(message = "Paciente obrigatório.")
-    private PacienteResponseDTO paciente;
 
 }
