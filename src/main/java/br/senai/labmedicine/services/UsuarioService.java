@@ -78,7 +78,7 @@ public class UsuarioService {
     public UsuarioResponseDTO buscarUsuarioPorEmail(String email) throws AuthenticationException {
         Usuario usuario = this.usuarioRepository.findByEmail(email);
         if(usuario == null){
-            throw new InternalError("Erro ao buscar.");
+            throw new InternalError("Nenhum usuário encontrado para o email fornecido.");
         }
         return new UsuarioResponseDTO(usuario);
     }

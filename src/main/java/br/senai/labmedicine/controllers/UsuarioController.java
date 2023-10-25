@@ -25,17 +25,17 @@ public class UsuarioController {
         return new ResponseEntity<>(this.usuarioService.cadastrarUsuario(idUsuarioLogado,novoUsuario), HttpStatus.CREATED);
     }
 
-    @GetMapping("/buscarporemail/{email}")
-    public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorEmail(@PathVariable String email) throws AuthenticationException {
+    @GetMapping("/buscarPorEmail")
+    public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorEmail(@RequestParam String email) throws AuthenticationException {
         return new ResponseEntity<>(this.usuarioService.buscarUsuarioPorEmail(email),HttpStatus.OK);
     }
 
-    @PostMapping("/{login}")
+    @PostMapping("/login")
     public ResponseEntity<UsuarioResponseDTO> loginUsuario(@RequestBody @Valid UsuarioLoginDTO usuarioLogin) throws AuthenticationException, NoSuchAlgorithmException {
         return new ResponseEntity<>(this.usuarioService.login(usuarioLogin),HttpStatus.OK);
     }
 
-    @PatchMapping("/resetarsenha")
+    @PatchMapping("/resetarSenha")
     public ResponseEntity<Void> resetarSenha(@RequestBody @Valid UsuarioResetarSenhaDTO usuario) throws AuthenticationException, NoSuchAlgorithmException {
         this.usuarioService.resetarSenha(usuario);
         return new ResponseEntity<>(HttpStatus.OK);
