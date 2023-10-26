@@ -1,17 +1,33 @@
 package br.senai.labmedicine.controllers;
 
-import br.senai.labmedicine.dtos.usuario.*;
-import br.senai.labmedicine.services.UsuarioService;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.security.sasl.AuthenticationException;
 import java.nio.file.AccessDeniedException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+
+import javax.security.sasl.AuthenticationException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.senai.labmedicine.dtos.usuario.UsuarioAtualizacaoDTO;
+import br.senai.labmedicine.dtos.usuario.UsuarioCadastroDTO;
+import br.senai.labmedicine.dtos.usuario.UsuarioLoginDTO;
+import br.senai.labmedicine.dtos.usuario.UsuarioResetarSenhaDTO;
+import br.senai.labmedicine.dtos.usuario.UsuarioResponseDTO;
+import br.senai.labmedicine.services.UsuarioService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -62,5 +78,10 @@ public class UsuarioController {
     public ResponseEntity<Void> deletarUsuario(@PathVariable Long id,@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado) throws AccessDeniedException {
         this.usuarioService.deletarUsuario(id,idUsuarioLogado);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/listagem/{filtro}")
+    public ResponseEntity<List<UsuarioResponseDTO>> buscarPorFiltro(@PathVariable String filtro) throws Exception {
+        return new ResponseEntity<>(this.usuarioService.buscarProFiltro(filtro), HttpStatus.OK);
     }
 }

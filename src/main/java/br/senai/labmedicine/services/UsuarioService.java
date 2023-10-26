@@ -1,18 +1,5 @@
 package br.senai.labmedicine.services;
 
-import br.senai.labmedicine.dtos.log.LogCadastroDTO;
-import br.senai.labmedicine.dtos.usuario.*;
-import br.senai.labmedicine.models.Consulta;
-import br.senai.labmedicine.models.Usuario;
-import br.senai.labmedicine.repositories.ConsultaRepository;
-import br.senai.labmedicine.repositories.UsuarioRepository;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Service;
-
-import javax.security.sasl.AuthenticationException;
 import java.nio.file.AccessDeniedException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -20,6 +7,25 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.security.sasl.AuthenticationException;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+
+import br.senai.labmedicine.dtos.log.LogCadastroDTO;
+import br.senai.labmedicine.dtos.usuario.UsuarioAtualizacaoDTO;
+import br.senai.labmedicine.dtos.usuario.UsuarioCadastroDTO;
+import br.senai.labmedicine.dtos.usuario.UsuarioLoginDTO;
+import br.senai.labmedicine.dtos.usuario.UsuarioResetarSenhaDTO;
+import br.senai.labmedicine.dtos.usuario.UsuarioResponseDTO;
+import br.senai.labmedicine.models.Consulta;
+import br.senai.labmedicine.models.Usuario;
+import br.senai.labmedicine.repositories.ConsultaRepository;
+import br.senai.labmedicine.repositories.UsuarioRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UsuarioService {
@@ -134,5 +140,11 @@ public class UsuarioService {
         }else if(emailExiste){
             throw new DataIntegrityViolationException("Email já cadastrado.");
         }
+    }
+
+    public List<UsuarioResponseDTO> buscarProFiltro(String filtro) {
+        List<UsuarioResponseDTO> usuariosDTO;
+        usuariosDTO = this.usuarioRepository.buscarComFiltro(filtro).stream().map(UsuarioResponseDTO::new).toList();
+        return usuariosDTO;
     }
 }
