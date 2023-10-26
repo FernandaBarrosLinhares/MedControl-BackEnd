@@ -1,6 +1,6 @@
 package br.senai.labmedicine.services;
 
-import br.senai.labmedicine.dtos.estatistica.EstattisticaDTO;
+import br.senai.labmedicine.dtos.estatistica.EstatisticaDTO;
 import br.senai.labmedicine.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +20,8 @@ public class EstatisticasService {
     @Autowired
     private DietaRepository dietaRepository;
 
-    public EstattisticaDTO listarEstatisticas() {
-        EstattisticaDTO estatistica = new EstattisticaDTO();
+    public EstatisticaDTO listarEstatisticas() {
+        EstatisticaDTO estatistica = new EstatisticaDTO();
         estatistica.setNumPacientes(this.pacienteRepository.count());
         estatistica.setNumExames(this.exameRepository.count());
         estatistica.setNumExercicios(this.exercicioRepository.count());

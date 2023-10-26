@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EstattisticaDTO {
+public class EstatisticaDTO {
     private Long numPacientes;
     private Long numExames;
     private Long numExercicios;

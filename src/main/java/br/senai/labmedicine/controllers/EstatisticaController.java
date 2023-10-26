@@ -1,6 +1,6 @@
 package br.senai.labmedicine.controllers;
 
-import br.senai.labmedicine.dtos.estatistica.EstattisticaDTO;
+import br.senai.labmedicine.dtos.estatistica.EstatisticaDTO;
 import br.senai.labmedicine.services.EstatisticasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ public class EstatisticaController {
     private EstatisticasService estatisticasService;
 
     @GetMapping
-    public ResponseEntity<EstattisticaDTO> listarEstatisticas(){
+    public ResponseEntity<EstatisticaDTO> listarEstatisticas(){
         return new ResponseEntity<>(this.estatisticasService.listarEstatisticas(), HttpStatus.OK);
     }
 }
