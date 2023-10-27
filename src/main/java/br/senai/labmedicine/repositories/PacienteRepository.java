@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PacienteRepository extends JpaRepository<Paciente, Long> {
 
-    List<Paciente> findByNomeCompleto(String nomeCompleto);
+    List<Paciente> findByNomeCompletoContainingIgnoreCase(String nomeCompleto);
 
     @Query(value = "SELECT * FROM PACIENTE WHERE nome_completo ILIKE %:filtro% or email ILIKE %:filtro% or cpf ILIKE :filtro% or telefone ILIKE :filtro%",nativeQuery = true)
     List<Paciente> buscarComFiltro(String filtro);

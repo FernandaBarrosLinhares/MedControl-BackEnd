@@ -6,6 +6,7 @@ import br.senai.labmedicine.dtos.paciente.PacienteCadastroDTO;
 import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import br.senai.labmedicine.services.PacienteService;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,4 +56,8 @@ public class PacienteController {
         return new ResponseEntity<>(this.service.buscarProFiltro(filtro), HttpStatus.OK);
     }
 
+    @GetMapping("/buscarPorNome")
+    public ResponseEntity<List<PacienteResponseDTO>> buscarPorNome(@RequestParam String nomeCompleto) {
+        return new ResponseEntity<>(this.service.buscarPorNome(nomeCompleto), HttpStatus.OK);
+    }
 }
