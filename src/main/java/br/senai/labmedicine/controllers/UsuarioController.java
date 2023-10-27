@@ -42,8 +42,8 @@ public class UsuarioController {
     }
 
     @GetMapping("/buscarPorEmail")
-    public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorEmail(@RequestParam String email){
-        return new ResponseEntity<>(this.usuarioService.buscarUsuarioPorEmail(email),HttpStatus.OK);
+    public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorEmail(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@RequestParam String email) throws AccessDeniedException {
+        return new ResponseEntity<>(this.usuarioService.buscarUsuarioPorEmail(idUsuarioLogado,email),HttpStatus.OK);
     }
 
     @PostMapping("/login")
@@ -63,8 +63,8 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UsuarioResponseDTO>> buscarTodosUsuarios(){
-        return new ResponseEntity<>(this.usuarioService.buscarTodosUsuarios(),HttpStatus.OK);
+    public ResponseEntity<List<UsuarioResponseDTO>> buscarTodosUsuarios(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado) throws AccessDeniedException {
+        return new ResponseEntity<>(this.usuarioService.buscarTodosUsuarios(idUsuarioLogado),HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
@@ -76,12 +76,13 @@ public class UsuarioController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarUsuario(@PathVariable Long id,@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado) throws AccessDeniedException {
+
         this.usuarioService.deletarUsuario(id,idUsuarioLogado);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/listagem/{filtro}")
-    public ResponseEntity<List<UsuarioResponseDTO>> buscarPorFiltro(@PathVariable String filtro) throws Exception {
-        return new ResponseEntity<>(this.usuarioService.buscarProFiltro(filtro), HttpStatus.OK);
+    public ResponseEntity<List<UsuarioResponseDTO>> buscarPorFiltro(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable String filtro) throws Exception {
+        return new ResponseEntity<>(this.usuarioService.buscarProFiltro(idUsuarioLogado,filtro), HttpStatus.OK);
     }
 }

@@ -73,7 +73,11 @@ public class UsuarioService {
         return new UsuarioResponseDTO(usuario);
     }
 
-    public List<UsuarioResponseDTO> buscarTodosUsuarios(){
+    public List<UsuarioResponseDTO> buscarTodosUsuarios(Long idUsuarioLogado) throws AccessDeniedException {
+        UsuarioResponseDTO usuarioLogado = this.buscarUsuarioPorId(idUsuarioLogado);
+        if(!usuarioLogado.getTipoUsuario().getDescricao().equals("Administrador")){
+            throw new AccessDeniedException("Usuário sem acesso!");
+        }
         return this.usuarioRepository.findAll().stream().map(UsuarioResponseDTO::new).toList();
     }
     public UsuarioResponseDTO buscarUsuarioPorId(Long id){
@@ -81,7 +85,11 @@ public class UsuarioService {
         return new UsuarioResponseDTO(usuario);
     }
 
-    public UsuarioResponseDTO buscarUsuarioPorEmail(String email){
+    public UsuarioResponseDTO buscarUsuarioPorEmail(Long idUsuarioLogado,String email) throws AccessDeniedException {
+        UsuarioResponseDTO usuarioLogado = this.buscarUsuarioPorId(idUsuarioLogado);
+        if(!usuarioLogado.getTipoUsuario().getDescricao().equals("Administrador")){
+            throw new AccessDeniedException("Usuário sem acesso!");
+        }
         Usuario usuario = this.usuarioRepository.findByEmail(email);
         if(usuario == null){
             throw new InternalError("Nenhum usuário encontrado para o email fornecido.");
@@ -145,7 +153,11 @@ public class UsuarioService {
         }
     }
 
-    public List<UsuarioResponseDTO> buscarProFiltro(String filtro) {
+    public List<UsuarioResponseDTO> buscarProFiltro(Long idUsuarioLogado,String filtro) throws AccessDeniedException {
+        Usuario usuarioLogado = this.usuarioRepository.findById(idUsuarioLogado).orElseThrow(()->new EntityNotFoundException("Usuário Logado não encontrado."));
+        if(!usuarioLogado.getTipoUsuario().getDescricao().equals("Administrador")){
+            throw new AccessDeniedException("Usuário sem acesso!");
+        }
         List<UsuarioResponseDTO> usuariosDTO;
         usuariosDTO = this.usuarioRepository.buscarComFiltro(filtro).stream().map(UsuarioResponseDTO::new).toList();
         return usuariosDTO;
