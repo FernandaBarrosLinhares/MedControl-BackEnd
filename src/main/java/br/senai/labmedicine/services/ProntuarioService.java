@@ -1,5 +1,6 @@
 package br.senai.labmedicine.services;
 
+import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,13 +31,13 @@ public class ProntuarioService {
 	 @Autowired
 	 private ConsultaService consultaService;
 
-	public List<ProntuarioResponseDTO> buscarTodos() {
+	public List<ProntuarioResponseDTO> buscarTodos(Long idUsuarioLogado) throws AccessDeniedException {
 		List<ProntuarioResponseDTO> prontuariosDTO = new ArrayList<>();
 		List<PacienteResponseDTO> pacientes = this.pacienteService.buscarTodos();
 
 		for (PacienteResponseDTO paciente : pacientes) {
 
-			ProntuarioResponseDTO prontuarioDTO = montarProntuarioResponseDTO(paciente);
+			ProntuarioResponseDTO prontuarioDTO = montarProntuarioResponseDTO(idUsuarioLogado,paciente);
 
 			prontuariosDTO.add(prontuarioDTO);
 		}
@@ -44,7 +45,7 @@ public class ProntuarioService {
 		return prontuariosDTO;
 	}
 
-	public List<ProntuarioResponseDTO> buscarPorIdOuNome(String nomeCompletoPaciente, Long pacienteId) {
+	public List<ProntuarioResponseDTO> buscarPorIdOuNome(Long idUsuarioLogado,String nomeCompletoPaciente, Long pacienteId) throws AccessDeniedException {
 		List<ProntuarioResponseDTO> prontuariosDTO = new ArrayList<>();
 		boolean nomePreenchido = false;
 		boolean idPreenchido = false;
@@ -62,33 +63,33 @@ public class ProntuarioService {
 		}
 		if (idPreenchido) {
 			PacienteResponseDTO pacienteDTO = this.pacienteService.buscarPorId(pacienteId);
-			prontuariosDTO.add(montarProntuarioResponseDTO(pacienteDTO));
+			prontuariosDTO.add(montarProntuarioResponseDTO(idUsuarioLogado,pacienteDTO));
 		} else if (nomePreenchido) {
 
 			List<PacienteResponseDTO> pacientesDTO = this.pacienteService.buscarPorNome(nomeCompletoPaciente);
 
 			for (PacienteResponseDTO paciente : pacientesDTO) {
 
-				ProntuarioResponseDTO prontuarioDTO = montarProntuarioResponseDTO(paciente);
+				ProntuarioResponseDTO prontuarioDTO = montarProntuarioResponseDTO(idUsuarioLogado,paciente);
 
 				prontuariosDTO.add(prontuarioDTO);
 			}
 		} else {
 
-			prontuariosDTO = this.buscarTodos();
+			prontuariosDTO = this.buscarTodos(idUsuarioLogado);
 		}
 
 		return prontuariosDTO;
 	}
 
-	private ProntuarioResponseDTO montarProntuarioResponseDTO(PacienteResponseDTO paciente) {
+	private ProntuarioResponseDTO montarProntuarioResponseDTO(Long idUsuarioLogado,PacienteResponseDTO paciente) throws AccessDeniedException {
 		ProntuarioResponseDTO prontuarioDTO = new ProntuarioResponseDTO();
 
 		prontuarioDTO.setPaciente(paciente);
 		prontuarioDTO.setDietas(this.buscarDietasPorNomePaciente(paciente.getNomeCompleto()));
-		prontuarioDTO.setExames(this.buscarExamesPorNomePaciente(paciente.getNomeCompleto()));
+		prontuarioDTO.setExames(this.buscarExamesPorNomePaciente(idUsuarioLogado,paciente.getNomeCompleto()));
 		prontuarioDTO.setExercicios(this.buscarExerciciosPorNomePaciente(paciente.getNomeCompleto()));
-		prontuarioDTO.setConsultas(this.buscarConsultasPorNomePaciente(paciente.getId()));
+		prontuarioDTO.setConsultas(this.buscarConsultasPorNomePaciente(idUsuarioLogado,paciente.getId()));
 
 		return prontuarioDTO;
 	}
@@ -97,8 +98,8 @@ public class ProntuarioService {
 		return this.dietaService.buscarDietaPorPaciente(nomeCompleto);
 	}
 
-	private List<ExameResponseDTO> buscarExamesPorNomePaciente(String nomeCompleto) {
-		return this.exameService.buscarExamePorPaciente(nomeCompleto);
+	private List<ExameResponseDTO> buscarExamesPorNomePaciente(Long idUsuarioLogado,String nomeCompleto) throws AccessDeniedException {
+		return this.exameService.buscarExamePorPaciente(idUsuarioLogado,nomeCompleto);
 	}
 
 	private List<ExercicioResponseDTO> buscarExerciciosPorNomePaciente(String nomeCompleto) {
@@ -106,8 +107,7 @@ public class ProntuarioService {
 	}
 
 
-	 private List<ConsultaResponseDTO> buscarConsultasPorNomePaciente(Long
-	 id) {
-	 return this.consultaService.buscarConsultaPorPaciente(id);
+	 private List<ConsultaResponseDTO> buscarConsultasPorNomePaciente(Long idUsuarioLogado,Long id) throws AccessDeniedException {
+	 return this.consultaService.buscarConsultaPorPaciente(idUsuarioLogado,id);
 	 }
 }

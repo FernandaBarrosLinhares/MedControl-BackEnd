@@ -1,5 +1,6 @@
 package br.senai.labmedicine.controllers;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,27 +21,27 @@ public class ExameController {
 	private ExameService exameService;
 
 	@GetMapping
-	public ResponseEntity<List<ExameResponseDTO>> buscar(@RequestParam(required = false) String nomeUsuario) {
-		return new ResponseEntity<>(this.exameService.buscarExamePorPaciente(nomeUsuario), HttpStatus.OK);
+	public ResponseEntity<List<ExameResponseDTO>> buscar(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@RequestParam(required = false) String nomeUsuario) throws AccessDeniedException {
+		return new ResponseEntity<>(this.exameService.buscarExamePorPaciente(idUsuarioLogado,nomeUsuario), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ExameResponseDTO> buscarPorId(@PathVariable Long id) {
-		return new ResponseEntity<>(this.exameService.buscarExamePorId(id), HttpStatus.OK);
+	public ResponseEntity<ExameResponseDTO> buscarPorId(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id) throws AccessDeniedException {
+		return new ResponseEntity<>(this.exameService.buscarExamePorId(idUsuarioLogado,id), HttpStatus.OK);
 	}
 
 	@PostMapping
-	public ResponseEntity<ExameResponseDTO> salvar(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@RequestBody ExameCadastroDTO exameDTO) {
+	public ResponseEntity<ExameResponseDTO> salvar(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@RequestBody ExameCadastroDTO exameDTO) throws AccessDeniedException {
 		return new ResponseEntity<>(this.exameService.salvar(idUsuarioLogado,exameDTO), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<ExameResponseDTO> editar(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id, @RequestBody ExameEdicaoDTO exameDTO) {
+	public ResponseEntity<ExameResponseDTO> editar(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id, @RequestBody ExameEdicaoDTO exameDTO) throws AccessDeniedException {
 		return new ResponseEntity<>(this.exameService.atualizarExame(idUsuarioLogado,id, exameDTO), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deletar(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id) {
+	public ResponseEntity<Void> deletar(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id) throws AccessDeniedException {
 		this.exameService.deletarExame(idUsuarioLogado,id);
 		return new ResponseEntity<>(HttpStatus.ACCEPTED);
 	}

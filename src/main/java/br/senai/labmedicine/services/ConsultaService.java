@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -37,14 +38,16 @@ public class ConsultaService {
     @Autowired
     private LogService logService;
 
-    public ConsultaResponseDTO salvar(Long idUsuarioLogado, ConsultaCadastroDTO novaConsulta) {
+    public ConsultaResponseDTO salvar(Long idUsuarioLogado, ConsultaCadastroDTO novaConsulta) throws AccessDeniedException {
+        UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
+        if(usuarioLogado.getTipoUsuario().getDescricao().equals("Enfermeiro")){
+            throw new AccessDeniedException("Usuário sem acesso!");
+        }
         Consulta consulta = new Consulta();
         ConsultaResponseDTO consultaDTO = new ConsultaResponseDTO();
         PacienteResponseDTO pacienteDTO = this.pacienteService.buscarPorId(novaConsulta.getPaciente().getId());
         UsuarioResponseDTO usuarioDTO = this.usuarioService.buscarUsuarioPorId(novaConsulta.getUsuario().getId());
-        UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
-        MedicamentoResponseDTO medicamentoDTO = this.medicamentoService
-                .buscarMedicamentoPorId(novaConsulta.getMedicamento().getId());
+        MedicamentoResponseDTO medicamentoDTO = this.medicamentoService.buscarMedicamentoPorId(novaConsulta.getMedicamento().getId());
 
         BeanUtils.copyProperties(novaConsulta, consulta);
 
@@ -70,10 +73,15 @@ public class ConsultaService {
         return consultaDTO;
     }
 
-    public ConsultaResponseDTO buscarConsultaPorId(Long id) {
-        Consulta consulta = this.consultaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Consulta não encontrada."));
+    public ConsultaResponseDTO buscarConsultaPorId(Long idUsuarioLogado,Long id) throws AccessDeniedException {
+        Consulta consulta = this.consultaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Consulta não encontrada."));
         ConsultaResponseDTO consultaResponseDTO = new ConsultaResponseDTO();
+
+
+        UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
+        if(usuarioLogado.getTipoUsuario().getDescricao().equals("Enfermeiro")){
+            throw new AccessDeniedException("Usuário sem acesso!");
+        }
 
         PacienteResponseDTO pacienteDTO = new PacienteResponseDTO();
         BeanUtils.copyProperties(consulta.getPaciente(), pacienteDTO);
@@ -91,7 +99,11 @@ public class ConsultaService {
         return consultaResponseDTO;
     }
 
-    public List<ConsultaResponseDTO> buscarConsultaPorPaciente(Long id) {
+    public List<ConsultaResponseDTO> buscarConsultaPorPaciente(Long idUsuarioLogado,Long id) throws AccessDeniedException {
+        UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
+        if(usuarioLogado.getTipoUsuario().getDescricao().equals("Enfermeiro")){
+            throw new AccessDeniedException("Usuário sem acesso!");
+        }
         List<Consulta> consultas;
         List<ConsultaResponseDTO> consultasDTO = new ArrayList<>();
         if (id == null) {
@@ -120,31 +132,40 @@ public class ConsultaService {
         return consultasDTO;
     }
 
-    public void deletarConsulta(Long idUsuarioLogado,Long id) {
-        Consulta consulta = this.consultaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Consulta não encontrada."));
+    public void deletarConsulta(Long idUsuarioLogado,Long id) throws AccessDeniedException {
+        Consulta consulta = this.consultaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Consulta não encontrada."));
         UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
+        if(usuarioLogado.getTipoUsuario().getDescricao().equals("Enfermeiro")){
+            throw new AccessDeniedException("Usuário sem acesso!");
+        }
         this.consultaRepository.deleteById(id);
         String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Deletou a consulta (id:"+ consulta.getId()+") com o paciente: (id: "+consulta.getPaciente().getId()+") "+consulta.getPaciente().getNomeCompleto();
         logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
     }
 
-    public ConsultaResponseDTO atualizarConsulta(Long idUsuarioLogado,Long id, ConsultaAtualizacaoDTO consultaAtualizada) {
+    public ConsultaResponseDTO atualizarConsulta(Long idUsuarioLogado,Long id, ConsultaAtualizacaoDTO consultaAtualizada) throws AccessDeniedException {
         Consulta consulta = this.consultaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Consulta não encontrada."));
         UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
+        if(usuarioLogado.getTipoUsuario().getDescricao().equals("Enfermeiro")){
+            throw new AccessDeniedException("Usuário sem acesso!");
+        }
         MedicamentoResponseDTO medicamentoDTO = this.medicamentoService.buscarMedicamentoPorId(consultaAtualizada.getMedicamento().getId());
-        ConsultaResponseDTO consultaResponseDTO = new ConsultaResponseDTO();
         BeanUtils.copyProperties(consultaAtualizada, consulta);
         consulta.setMedicamento(new Medicamento(medicamentoDTO));
         consulta = this.consultaRepository.save(consulta);
 //        BeanUtils.copyProperties(consulta, consultaResponseDTO);
-        ConsultaResponseDTO consultaResponseDTO1 = new ConsultaResponseDTO(consulta);
+        ConsultaResponseDTO consultaResponseDTO = new ConsultaResponseDTO(consulta);
         String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Atualizou a consulta (id:"+ consulta.getId()+") com o paciente: (id: "+consulta.getPaciente().getId()+") "+consulta.getPaciente().getNomeCompleto();
         logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
-        return consultaResponseDTO1;
+        return consultaResponseDTO;
     }
 
-    public List<ConsultaResponseDTO> buscarConsultaPorUsuario(Long idUsuario){
+    public List<ConsultaResponseDTO> buscarConsultaPorUsuario(Long idUsuarioLogado,Long idUsuario) throws AccessDeniedException {
+
+        UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
+        if(usuarioLogado.getTipoUsuario().getDescricao().equals("Enfermeiro")){
+            throw new AccessDeniedException("Usuário sem acesso!");
+        }
         return this.consultaRepository.findAllByUsuarioId(idUsuario).stream().map(ConsultaResponseDTO::new).toList();
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController
@@ -22,28 +23,28 @@ public class ConsultaController {
 
     @PostMapping
 
-    public ResponseEntity<ConsultaResponseDTO> salvarConsulta(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@RequestBody @Valid ConsultaCadastroDTO novaConsulta){
+    public ResponseEntity<ConsultaResponseDTO> salvarConsulta(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@RequestBody @Valid ConsultaCadastroDTO novaConsulta) throws AccessDeniedException {
         return new ResponseEntity<>(this.consultaService.salvar(idUsuarioLogado,novaConsulta), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ConsultaResponseDTO> buscarConsultaPorId(@PathVariable Long id){
-        return new ResponseEntity<>(this.consultaService.buscarConsultaPorId(id),HttpStatus.ACCEPTED);
+    public ResponseEntity<ConsultaResponseDTO> buscarConsultaPorId(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id) throws AccessDeniedException {
+        return new ResponseEntity<>(this.consultaService.buscarConsultaPorId(idUsuarioLogado,id),HttpStatus.ACCEPTED);
     }
 
     @GetMapping
-    public ResponseEntity<List<ConsultaResponseDTO>> buscarConsultaPorPaciente(@RequestParam(required = false) Long id){
-        return new ResponseEntity<>(this.consultaService.buscarConsultaPorPaciente(id),HttpStatus.OK);
+    public ResponseEntity<List<ConsultaResponseDTO>> buscarConsultaPorPaciente(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@RequestParam(required = false) Long id) throws AccessDeniedException {
+        return new ResponseEntity<>(this.consultaService.buscarConsultaPorPaciente(idUsuarioLogado,id),HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deletarConsulta(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id){
+    public ResponseEntity<Void> deletarConsulta(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id) throws AccessDeniedException {
         this.consultaService.deletarConsulta(idUsuarioLogado,id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<ConsultaResponseDTO> atualizarConsulta(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id,@RequestBody @Valid ConsultaAtualizacaoDTO consultaAtualizada){
+    public ResponseEntity<ConsultaResponseDTO> atualizarConsulta(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id,@RequestBody @Valid ConsultaAtualizacaoDTO consultaAtualizada) throws AccessDeniedException {
         return new ResponseEntity<>(this.consultaService.atualizarConsulta(idUsuarioLogado,id,consultaAtualizada),HttpStatus.CREATED);
     }
 

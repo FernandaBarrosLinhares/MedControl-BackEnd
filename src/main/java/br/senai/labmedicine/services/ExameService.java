@@ -1,5 +1,6 @@
 package br.senai.labmedicine.services;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -35,8 +36,11 @@ public class ExameService {
 	@Autowired
 	private LogService logService;
 
-	public ExameResponseDTO salvar(Long idUsuarioLogado,ExameCadastroDTO novoExame) {
+	public ExameResponseDTO salvar(Long idUsuarioLogado,ExameCadastroDTO novoExame) throws AccessDeniedException {
 		UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
+		if(usuarioLogado.getTipoUsuario().getDescricao().equals("Enfermeiro")){
+			throw new AccessDeniedException("Usuário sem acesso!");
+		}
 		Exame exame = new Exame();
 		ExameResponseDTO exameDTO = new ExameResponseDTO();
 		PacienteResponseDTO pacienteDTO = this.pacienteService.buscarPorId(novoExame.getPaciente().getId());
@@ -55,9 +59,12 @@ public class ExameService {
 		return exameDTO;
 	}
 
-	public ExameResponseDTO buscarExamePorId(Long id) {
-		Exame exame = this.exameRepository.findById(id)
-				.orElseThrow(() -> new EntityNotFoundException("Exame não encontrado."));
+	public ExameResponseDTO buscarExamePorId(Long idUsuarioLogado,Long id) throws AccessDeniedException {
+		Exame exame = this.exameRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Exame não encontrado."));
+		UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
+		if(usuarioLogado.getTipoUsuario().getDescricao().equals("Enfermeiro")){
+			throw new AccessDeniedException("Usuário sem acesso!");
+		}
 		ExameResponseDTO exameResponseDTO = new ExameResponseDTO();
 		PacienteResponseDTO pacienteDTO = new PacienteResponseDTO();
 
@@ -69,7 +76,11 @@ public class ExameService {
 		return exameResponseDTO1;
 	}
 
-	public List<ExameResponseDTO> buscarExamePorPaciente(String nomePaciente) {
+	public List<ExameResponseDTO> buscarExamePorPaciente(Long idUsuarioLogado,String nomePaciente) throws AccessDeniedException {
+		UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
+		if(usuarioLogado.getTipoUsuario().getDescricao().equals("Enfermeiro")){
+			throw new AccessDeniedException("Usuário sem acesso!");
+		}
 		List<Exame> exames;
 		List<ExameResponseDTO> examesDTO = new ArrayList<>();
 
@@ -91,18 +102,23 @@ public class ExameService {
 		return examesDTO;
 	}
 
-	public void deletarExame(Long idUsuarioLogado,Long id) {
+	public void deletarExame(Long idUsuarioLogado,Long id) throws AccessDeniedException {
 		UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
+		if(usuarioLogado.getTipoUsuario().getDescricao().equals("Enfermeiro")){
+			throw new AccessDeniedException("Usuário sem acesso!");
+		}
 		Exame exame = this.exameRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Exame não encontrado."));
 		this.exameRepository.deleteById(id);
 		String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" deletou o exame (id:"+ exame.getId()+") para o paciente (id:"+exame.getPaciente().getId()+") nome: "+ exame.getPaciente().getNomeCompleto();
 		logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
 	}
 
-	public ExameResponseDTO atualizarExame(Long idUsuarioLogado,Long id,ExameEdicaoDTO exameEdicao) {
+	public ExameResponseDTO atualizarExame(Long idUsuarioLogado,Long id,ExameEdicaoDTO exameEdicao) throws AccessDeniedException {
         Exame exame = this.exameRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Exame não encontrado."));
 		UsuarioResponseDTO usuarioLogado = usuarioService.buscarUsuarioPorId(idUsuarioLogado);
-
+		if(usuarioLogado.getTipoUsuario().getDescricao().equals("Enfermeiro")){
+			throw new AccessDeniedException("Usuário sem acesso!");
+		}
         ExameResponseDTO exameResponseDTO = new ExameResponseDTO();
         BeanUtils.copyProperties(exameEdicao,exame);
 

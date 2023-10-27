@@ -81,7 +81,7 @@ public class UsuarioService {
         return new UsuarioResponseDTO(usuario);
     }
 
-    public UsuarioResponseDTO buscarUsuarioPorEmail(String email) throws AuthenticationException {
+    public UsuarioResponseDTO buscarUsuarioPorEmail(String email){
         Usuario usuario = this.usuarioRepository.findByEmail(email);
         if(usuario == null){
             throw new InternalError("Nenhum usuário encontrado para o email fornecido.");
@@ -89,9 +89,12 @@ public class UsuarioService {
         return new UsuarioResponseDTO(usuario);
     }
 
-    public UsuarioResponseDTO atualizarUsuario(Long idUsuarioLogado,Long id,UsuarioAtualizacaoDTO usuarioAtualizado) throws NoSuchAlgorithmException {
+    public UsuarioResponseDTO atualizarUsuario(Long idUsuarioLogado,Long id,UsuarioAtualizacaoDTO usuarioAtualizado) throws NoSuchAlgorithmException, AccessDeniedException {
         Usuario usuario = this.usuarioRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Usuário não encontrado."));
         Usuario usuarioLogado = this.usuarioRepository.findById(idUsuarioLogado).orElseThrow(()->new EntityNotFoundException("Usuário Logado não encontrado."));
+        if(!usuarioLogado.getTipoUsuario().getDescricao().equals("Administrador")){
+            throw new AccessDeniedException("Usuário sem acesso!");
+        }
         BeanUtils.copyProperties(usuarioAtualizado,usuario);
         usuario.setSenha(criptografarSenha(usuarioAtualizado.getSenha()));
         this.inativarConsulta(usuarioLogado.getId(),usuario.getId(),usuarioAtualizado.getStatus());

@@ -42,7 +42,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/buscarPorEmail")
-    public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorEmail(@RequestParam String email) throws AuthenticationException {
+    public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorEmail(@RequestParam String email){
         return new ResponseEntity<>(this.usuarioService.buscarUsuarioPorEmail(email),HttpStatus.OK);
     }
 
@@ -70,7 +70,7 @@ public class UsuarioController {
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@PathVariable Long id,
                                                                @RequestBody @Valid UsuarioAtualizacaoDTO usuarioAtualizacaoDTO,
-                                                               @RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado) throws NoSuchAlgorithmException {
+                                                               @RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado) throws NoSuchAlgorithmException, AccessDeniedException {
         return new ResponseEntity<>(this.usuarioService.atualizarUsuario(idUsuarioLogado,id,usuarioAtualizacaoDTO),HttpStatus.OK);
     }
 
