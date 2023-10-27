@@ -3,6 +3,7 @@ package br.senai.labmedicine.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.senai.labmedicine.dtos.consulta.ConsultaResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +26,9 @@ public class ProntuarioService {
 
 	@Autowired
 	private ExercicioService exercicioService;
-
-	// TODO descomentar abaixo quando consulta estiver disponível
-	// @Autowired
-	// private ConsultaService consultaService;
+	
+	 @Autowired
+	 private ConsultaService consultaService;
 
 	public List<ProntuarioResponseDTO> buscarTodos() {
 		List<ProntuarioResponseDTO> prontuariosDTO = new ArrayList<>();
@@ -88,8 +88,7 @@ public class ProntuarioService {
 		prontuarioDTO.setDietas(this.buscarDietasPorNomePaciente(paciente.getNomeCompleto()));
 		prontuarioDTO.setExames(this.buscarExamesPorNomePaciente(paciente.getNomeCompleto()));
 		prontuarioDTO.setExercicios(this.buscarExerciciosPorNomePaciente(paciente.getNomeCompleto()));
-		// TODO descomentar abaixo quando consulta estiver disponível
-		// prontuariosDTO.setConsultas(this.buscarConsultasPorNomePaciente(paciente.getNomeCompleto()));
+		prontuarioDTO.setConsultas(this.buscarConsultasPorNomePaciente(paciente.getId()));
 
 		return prontuarioDTO;
 	}
@@ -106,9 +105,9 @@ public class ProntuarioService {
 		return this.exercicioService.buscarExercicioPorPaciente(nomeCompleto);
 	}
 
-	// TODO descomentar abaixo quando consulta estiver disponível
-	// private List<ConsultaReponseDTO> buscarConsultasPorNomePaciente(String
-	// nomeCompleto) {
-	// return this.consultaService.buscarConsultaPorPaciente(nomeCompleto);
-	// }
+
+	 private List<ConsultaResponseDTO> buscarConsultasPorNomePaciente(Long
+	 id) {
+	 return this.consultaService.buscarConsultaPorPaciente(id);
+	 }
 }
