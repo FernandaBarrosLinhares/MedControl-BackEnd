@@ -99,7 +99,7 @@ public class PacienteService {
 
     public List<PacienteResponseDTO> buscarPorNome(String nomeCompleto) {
         List<PacienteResponseDTO> pacientesDTO;
-        pacientesDTO = this.pacienteRepository.findByNomeCompleto(nomeCompleto).stream().map(PacienteResponseDTO::new).toList();
+        pacientesDTO = this.pacienteRepository.findByNomeCompletoContainingIgnoreCase(nomeCompleto).stream().map(PacienteResponseDTO::new).toList();
         return pacientesDTO;
     }
 
