@@ -45,7 +45,7 @@ public class ExercicioService {
         exercicio = this.exercicioRepository.save(exercicio);
         BeanUtils.copyProperties(exercicio, exercicioDTO);
         exercicioDTO.setPaciente(pacienteDTO);
-        String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Cadastrou um exercício (id:"+ exercicio.getId()+") para o paciente (id:"+exercicio.getPaciente().getId()+") nome: "+ exercicio.getPaciente().getNomeCompleto();
+        String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Cadastrou um exercício (id:"+ exercicio.getId()+") para o paciente (id:"+exercicio.getPaciente().getId()+") nome: "+ pacienteDTO.getNomeCompleto();
         logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
         return exercicioDTO;
     }
