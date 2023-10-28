@@ -12,10 +12,15 @@ import br.senai.labmedicine.dtos.exame.ExameResponseDTO;
 import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import br.senai.labmedicine.dtos.dieta.DietaResponseDTO;
 import br.senai.labmedicine.dtos.exercicio.ExercicioResponseDTO;
+import br.senai.labmedicine.dtos.medicamento.MedicamentoResponseDTO;
 import br.senai.labmedicine.dtos.prontuario.ProntuarioResponseDTO;
 
 @Service
 public class ProntuarioService {
+
+	@Autowired
+	private MedicamentoService medicamentoService;
+
 	@Autowired
 	private PacienteService pacienteService;
 
@@ -89,7 +94,8 @@ public class ProntuarioService {
 		prontuarioDTO.setDietas(this.buscarDietasPorNomePaciente(paciente.getNomeCompleto()));
 		prontuarioDTO.setExames(this.buscarExamesPorNomePaciente(idUsuarioLogado,paciente.getNomeCompleto()));
 		prontuarioDTO.setExercicios(this.buscarExerciciosPorNomePaciente(paciente.getNomeCompleto()));
-		prontuarioDTO.setConsultas(this.buscarConsultasPorNomePaciente(idUsuarioLogado,paciente.getId()));
+		prontuarioDTO.setConsultas(this.buscarConsultasPorIdPaciente(idUsuarioLogado,paciente.getId()));
+		prontuarioDTO.setMedicamentos(this.buscarMedicamentosPorNomePaciente(paciente.getNomeCompleto()));
 
 		return prontuarioDTO;
 	}
@@ -107,7 +113,11 @@ public class ProntuarioService {
 	}
 
 
-	 private List<ConsultaResponseDTO> buscarConsultasPorNomePaciente(Long idUsuarioLogado,Long id) throws AccessDeniedException {
+	 private List<ConsultaResponseDTO> buscarConsultasPorIdPaciente(Long idUsuarioLogado, Long id) throws AccessDeniedException {
 	 return this.consultaService.buscarConsultaPorPaciente(idUsuarioLogado,id);
+	 }
+
+	 private List<MedicamentoResponseDTO> buscarMedicamentosPorNomePaciente(String nomeCompleto) {
+		return this.medicamentoService.buscar(nomeCompleto);
 	 }
 }
