@@ -54,7 +54,7 @@ public class ExameService {
 
 		BeanUtils.copyProperties(exame, exameDTO);
 		exameDTO.setPaciente(pacienteDTO);
-		String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Registrou um exame (id:"+ exame.getId()+") para o paciente (id:"+exame.getPaciente().getId()+") nome: "+ exame.getPaciente().getNomeCompleto();
+		String mensagem = "O usuário: (id: "+usuarioLogado.getId()+") "+usuarioLogado.getNomeCompleto()+" Registrou um exame (id:"+ exame.getId()+") para o paciente (id:"+exame.getPaciente().getId()+") nome: "+ pacienteDTO.getNomeCompleto();
 		logService.cadastrarLog(new LogCadastroDTO(LocalDate.now(), LocalTime.now(),mensagem));
 		return exameDTO;
 	}
