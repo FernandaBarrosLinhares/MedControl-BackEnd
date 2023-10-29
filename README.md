@@ -1,4 +1,4 @@
-# Med Control
+<center># Med Control
 
 Desenvolvido pela LabMedication, o **MedControl**, é um software de gestão para uso em hospitais, clinicas e similares da área da saúde.
 Com ele, o **administrador**, pode gerenciar quais usuários realizaram o atendimento, através de logs com mensagens e horários que foram realizados.
@@ -8,10 +8,10 @@ O modelo segue padrão **white-label** consiste em um software que pode ser pers
 
 ## Tecnologia ultilizadas
 
-<img alt="Logomarca" src="	https://user-images.githubusercontent.com/25181517/183891303-41f257f8-6b3d-487c-aa56-c497b880d0fb.png" width="50px">
-<img alt="Logomarca" src="	https://user-images.githubusercontent.com/25181517/117201156-9a724800-adec-11eb-9a9d-3cd0f67da4bc.png" width="50px">
-<img alt="Logomarca" src="https://user-images.githubusercontent.com/25181517/117208740-bfb78400-adf5-11eb-97bb-09072b6bedfc.png" width="50px">
-<img alt="Logomarca" src="https://user-images.githubusercontent.com/25181517/117207242-07d5a700-adf4-11eb-975e-be04e62b984b.png" width="50px">
+<img alt="SpringBoot" src="	https://user-images.githubusercontent.com/25181517/183891303-41f257f8-6b3d-487c-aa56-c497b880d0fb.png" width="50px">
+<img alt="Java" src="	https://user-images.githubusercontent.com/25181517/117201156-9a724800-adec-11eb-9a9d-3cd0f67da4bc.png" width="50px">
+<img alt="PgAdmin" src="https://user-images.githubusercontent.com/25181517/117208740-bfb78400-adf5-11eb-97bb-09072b6bedfc.png" width="50px">
+<img alt="Maven" src="https://user-images.githubusercontent.com/25181517/117207242-07d5a700-adf4-11eb-975e-be04e62b984b.png" width="50px">
 <img alt="Logomarca" src="https://user-images.githubusercontent.com/25181517/192109061-e138ca71-337c-4019-8d42-4792fdaa7128.png" width="50px">
 <img alt="Logomarca" src="https://user-images.githubusercontent.com/25181517/121401671-49102800-c959-11eb-9f6f-74d49a5e1774.png" width="50px">
 <img alt="Logomarca" src="https://user-images.githubusercontent.com/25181517/192108890-200809d1-439c-4e23-90d3-b090cf9a4eea.png" width="50px">
@@ -20,7 +20,7 @@ O modelo segue padrão **white-label** consiste em um software que pode ser pers
 
 
 ## 
-|[Spring Boot versão 3.11 ](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)|
+|[Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)|
 |[Java](https://docs.oracle.com/en/java/)|
 |[PgAdmin](https://www.pgadmin.org/docs/)|
 |[Maven](https://maven.apache.org/guides/index.html)|
@@ -57,21 +57,25 @@ https://github.com/FullStack-Itacorubi/M3P-BackEnd-Squad1
 
 **Login do Usuário: HTTP POST no path /api/usuarios/login**
 
-{
+`{
 "email":"joao1.silva@email.com",
 "senha":"12345678"
 }
+`
 
 **Resetar Senha do Usuário: HTTP PATCH no path /api/usuarios/res**
 
+`
 {
 "id":3,
 "email":"joao.silva@email.com",
 "senha":"000002"
 }
+`
 
 **Cadastro de um novo Usuário: HTTP POST no path /api/usuarios**
 
+`
 {
 "nomeCompleto": "Igor algusto",
 "genero": "MASCULINO",
@@ -82,9 +86,11 @@ https://github.com/FullStack-Itacorubi/M3P-BackEnd-Squad1
 "senha": "12345678",
 "tipoUsuario": "MEDICO"
 }
+`
 
 **Alteração de um Usuário por Identificador: HTTP PUT no path /api/usuarios/{id}**
 
+`
 {
 "nomeCompleto": "Joana da mata",
 "genero": "FEMININO",
@@ -93,6 +99,7 @@ https://github.com/FullStack-Itacorubi/M3P-BackEnd-Squad1
 "tipoUsuario": "ADMINISTRADOR",
 "status": false
 }
+`
 
 **Busca de todos os Usuários: HTTP GET no path /api/usuarios**
 
@@ -104,6 +111,7 @@ https://github.com/FullStack-Itacorubi/M3P-BackEnd-Squad1
 
 Cadastro de um novo Paciente: HTTP POST no path /api/pacientes
 
+`
 {
 "nomeCompleto": "Ricardo Tavares",
 "genero": "MASCULINO",
@@ -132,9 +140,11 @@ Cadastro de um novo Paciente: HTTP POST no path /api/pacientes
 "referencia": "Referência"
 }
 }
+`
 
 Atualização de um paciente por Identificador: HTTP PUT no path /api/pacientes/{id}
 
+`
 {
 "nomeCompleto": "Felisberto",
 "genero": "MASCULINO",
@@ -164,7 +174,7 @@ Atualização de um paciente por Identificador: HTTP PUT no path /api/pacientes/
 "referencia": "Referência"
 }
 }
-
+`
 
 Retorna todos os Pacientes: HTTP GET no path /api/pacientes
 
@@ -177,6 +187,7 @@ Deleta Paciente por Identificador: HTTP DELETE no path /api/pacientes/{id}
 
 Cria uma nova Consulta: HTTP POST no path /api/consultas
 
+`
 {
 "motivo": "Motivo da consulta deve ser informado",
 "data": "10/10/2023",
@@ -195,10 +206,11 @@ Cria uma nova Consulta: HTTP POST no path /api/consultas
 "id":2
 }
 }
-
+`
 
 Atualiza uma Consulta: HTTP PUT no path /api/consultas/{id}
 
+`
 {
 "motivo": "Motivo da consulta deve ser informado",
 "data": "10/10/2023",
@@ -211,7 +223,7 @@ Atualiza uma Consulta: HTTP PUT no path /api/consultas/{id}
 "id":1
 }
 }
-
+`
 
 
 Retorna as Consultas pelo Paciente: HTTP GET no path /api/consultas
@@ -224,6 +236,7 @@ Deleta Consulta por Identificador: HTTP DELETE no path /api/consultas/{id}
 
 Cadastro de um novo Exame: HTTP POST no path /api/exames
 
+`
 {
 "nome": "Exame de Sangue",
 "data": "21/10/2023",
@@ -237,10 +250,11 @@ Cadastro de um novo Exame: HTTP POST no path /api/exames
 "id": 3
 }
 }
-
+`
 
 Atualiza um Exame pelo Identificador: HTTP PUT no path /api/exames/{id}
 
+`
 {
 "nome": "Exame de Sangue",
 "data": "21/10/2023",
@@ -251,6 +265,7 @@ Atualiza um Exame pelo Identificador: HTTP PUT no path /api/exames/{id}
 "resultado": "Os resultados do exame estão dentro dos valores normais.",
 "status": false
 }
+`
 
 Retorna Exames por Paciente: HTTP GET no path /api/exames
 
@@ -262,6 +277,7 @@ Retorna Exame por Identificador: HTTP GET no path /api/exames/{id}
 
 Cadastra um novo Medicamento: HTTP POST no path /api/medicamentos
 
+`
 {
 "nome": "Paracetamol",
 "data": "21/10/2023",
@@ -272,9 +288,11 @@ Cadastra um novo Medicamento: HTTP POST no path /api/medicamentos
 "observacao": "Tomar um comprimido a cada 6 horas para reduzir a febre.",
 "status": false
 }
+`
 
 Atualiza um Medicado pelo Identificador: HTTP PUT no path /api/medicamentos/{id}
 
+`
 {
 "nome": "Paracetamol",
 "tipo": "COMPRIMIDO",
@@ -283,6 +301,7 @@ Atualiza um Medicado pelo Identificador: HTTP PUT no path /api/medicamentos/{id}
 "observacao": "Tomar um comprimido a cada 6 horas para reduzir a febre.",
 "status": false
 }
+`
 
 Retorna Medicamentos por Usuário: HTTP GET no path /api/medicamentos
 
@@ -294,6 +313,7 @@ Deleta Medicamento por Identificador: HTTP DELETE no path /api/medicamentos/{id}
 
 Cadastro de uma nova Dieta: HTTP POST no path /api/dietas
 
+`
 {
 "nome": "Paracetamol",
 "tipo": "COMPRIMIDO",
@@ -302,16 +322,18 @@ Cadastro de uma nova Dieta: HTTP POST no path /api/dietas
 "observacao": "Tomar um comprimido a cada 6 horas para reduzir a febre.",
 "status": false
 }
+`
 
 Atualiza Dieta pelo Identificador: HTTP PUT no path /api/dietas/{id}
 
+`
 {
 "nome": "Dieta proteica",
 "tipoDieta": "DUKAN",
 "descricao": "Uma dieta rica folha.",
 "status":false
 }
-
+`
 Busca de Dietas por Paciente: HTTP GET no path /api/dietas
 
 Retorna Dieta por Identificador: HTTP GET no path /api/dietas/{id}
@@ -322,6 +344,7 @@ Deleta Dietas por Identificador: HTTP DELETE no path /api/dietas/{id}
 
 Cadastro de um novo Exercício: HTTP POST no path /api/exercicios
 
+`
 {
 "nome": "Exercicio para perda de peso",
 "data": "20/10/2023",
@@ -334,9 +357,11 @@ Cadastro de um novo Exercício: HTTP POST no path /api/exercicios
 "id": 1
 }
 }
+`
 
 Atualiza Exercício pelo Identificador: HTTP PUT no path /api/exercicios/{id}
 
+`
 {
 "nome": "Exemplo de Exercício",
 "tipoExercicioEnum": "RESISTENCIA_AEROBICA",
@@ -344,6 +369,7 @@ Atualiza Exercício pelo Identificador: HTTP PUT no path /api/exercicios/{id}
 "status": false,
 "quantidadePorSemana": 3
 }
+`
 
 Busca de Exercícios por Paciente: HTTP GET no path /api/exercicios
 
@@ -357,6 +383,7 @@ Deleta o Exercício por Identificador: HTTP DELETE no path /api/exercicios/{id}
 
 Lista todos os Prontuários: HTTP GET no path /api/prontuarios
 
+`
 {
 "motivo": "Consulta de Rotina",
 "data": "21/10/2023",
@@ -373,9 +400,9 @@ Lista todos os Prontuários: HTTP GET no path /api/prontuarios
 },
 "medicamento": {
 "id": 2
-
 }
 }
+`
 
 Busca todos os Prontuários por Paciente: HTTP GET no path /api/prontuarios
 
