@@ -36,11 +36,11 @@ INSERT INTO medicamento (nome, tipo, observacao, data, horario, quantidade, unid
 INSERT INTO medicamento (nome, tipo, observacao, data, horario, quantidade, unidade, status) VALUES ('Prometazina', 4, 'passar sobre as feridas', '1998-07-09', '15:45:10', 20, 2, true);
 INSERT INTO medicamento (nome, tipo, observacao, data, horario, quantidade, unidade, status) VALUES ('Sulfacetamida', 5, 'passar fina camada sobre a queimadura 3x ao dia', '2022-08-13', '12:00:10', 3, 3, true);
 INSERT INTO medicamento (nome, tipo, observacao, data, horario, quantidade, unidade, status) VALUES ('Sulfato de Zinco', 3, 'tomar durante as refeições', '2010-01-28', '23:30:10', 5, 4, true);
-INSERT INTO medicamento (nome, tipo, observacao, data, horario, quantidade, unidade, status) VALUES ('Primidona', 2, 'tomar diariamente pela manhã', '1997-15-01', '18:55:10', 4, 1, true);
+INSERT INTO medicamento (nome, tipo, observacao, data, horario, quantidade, unidade, status) VALUES ('Primidona', 2, 'tomar diariamente pela manhã', '1997-12-01', '18:55:10', 4, 1, true);
 INSERT INTO medicamento (nome, tipo, observacao, data, horario, quantidade, unidade, status) VALUES ('Ondansetrona cloridrato', 2, 'Tomar quando enjoô', '2015-09-30', '06:14:10', 9, 1, true);
 INSERT INTO medicamento (nome, tipo, observacao, data, horario, quantidade, unidade, status) VALUES ('Amome', 6, 'Spay nasal', '1998-05-15', '08:40:10', 2, 2, true);
 INSERT INTO medicamento (nome, tipo, observacao, data, horario, quantidade, unidade, status) VALUES ('Gaballon', 2, 'Tomar 2x ao dia', '2000-04-24', '19:23:10', 4, 1, true);
-INSERT INTO medicamento (nome, tipo, observacao, data, horario, quantidade, unidade, status) VALUES ('Penicilina', 2, 'Tomar uma injeção', '2023-05-29', '16:43:10', 8, 7, true);
+INSERT INTO medicamento (nome, tipo, observacao, data, horario, quantidade, unidade, status) VALUES ('Penicilina', 2, 'Tomar uma injeção', '2023-05-29', '16:43:10', 8, 3, true);
 INSERT INTO medicamento (nome, tipo, observacao, data, horario, quantidade, unidade, status) VALUES ('Bromoprida', 3, 'Tomar quando sentir nauseas', '2022-04-15', '17:15:10', 5, 1, true);
 
 INSERT INTO consulta (motivo, data, horario, descricao, dosagens_precaucoes, status, paciente_id, usuario_id, medicamento_id) VALUES ('Desconforto gastrico', '2021-05-18', '10:30:00', 'O paciente com azia e má digestão recorrente', 'tomar diariamente omeprazol', true, 10, 2, 8);
