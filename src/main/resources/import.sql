@@ -25,4 +25,4 @@ INSERT INTO dieta (nome, data, horario, tipo_dieta, descricao, status, paciente_
 INSERT INTO EXERCICIO (nome, data, horario, tipo_exercicio_enum, quantidade_por_semana,descricao, status, paciente_id)VALUES ('Exercicio de Hit', '2023-10-09', '12:09:10', 1,5,'Exercicio para perda de peso.', true, 2);
 INSERT INTO EXERCICIO (nome, data, horario, tipo_exercicio_enum, quantidade_por_semana,descricao, status, paciente_id)VALUES ('Exercicio de Musculação', '2023-10-09', '12:09:10', 1,5,'Exercicio para ganho massa muscular.', true, 1);
 
-INSERT INTO WHITE_LABEL(nome_empresa,logo_url,cor_fonte,cor_principal) VALUES ('MedControl','logo','#000000','#00408a');
+INSERT INTO WHITE_LABEL(nome_empresa,logo_url,cor_fonte,cor_principal) VALUES ('MedControl','../../../../assets/MedControl.jpg','#000000','#00408a');
