@@ -11,14 +11,16 @@ import lombok.Setter;
 @NoArgsConstructor
 public class WhiteLabelDTO {
     private Long id;
-    private String logo_url;
-    private String cor_fonte;
-    private String cor_principal;
+    private String nomeEmpresa;
+    private String logoUrl;
+    private String corFonte;
+    private String corPrincipal;
 
     public WhiteLabelDTO(WhiteLabel config) {
         this.id = config.getId();
-        this.logo_url = config.getLogo_url();
-        this.cor_fonte = config.getCor_fonte();
-        this.cor_principal = config.getCor_principal();
+        this.nomeEmpresa = config.getNomeEmpresa();
+        this.logoUrl = config.getLogoUrl();
+        this.corFonte = config.getCorFonte();
+        this.corPrincipal = config.getCorPrincipal();
     }
 }
