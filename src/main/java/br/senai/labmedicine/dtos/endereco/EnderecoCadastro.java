@@ -1,12 +1,8 @@
-package br.senai.labmedicine.dtos;
+package br.senai.labmedicine.dtos.endereco;
 
 import jakarta.validation.constraints.Pattern;
-import org.hibernate.validator.constraints.Range;
-
-import br.senai.labmedicine.models.Endereco;
-import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,9 +26,8 @@ public class EnderecoCadastro {
 	@NotBlank(message = "Logradouro Obrigatório")
 	private String logradouro;
 
-	@NotNull(message = "Número Obrigatório")
-	@Range(min = 0)
-	private int numero;
+	@NotBlank(message = "Número Obrigatório")
+	private String numero;
 
 	private String complemento;
 

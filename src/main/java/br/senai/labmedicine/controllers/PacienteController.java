@@ -1,10 +1,12 @@
 package br.senai.labmedicine.controllers;
 
 
-import br.senai.labmedicine.dtos.PacienteCadastroDTO;
-import br.senai.labmedicine.dtos.PacienteResponseDTO;
+import br.senai.labmedicine.dtos.paciente.PacienteAtualizacaoDTO;
+import br.senai.labmedicine.dtos.paciente.PacienteCadastroDTO;
+import br.senai.labmedicine.dtos.paciente.PacienteResponseDTO;
 import br.senai.labmedicine.services.PacienteService;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/paciente")
-
+@RequestMapping("/pacientes")
 public class PacienteController {
 
     @Autowired
@@ -31,23 +32,32 @@ public class PacienteController {
     }
 
     @PostMapping
-    public ResponseEntity<PacienteResponseDTO> cadastrarPaciente(@Valid @RequestBody PacienteCadastroDTO paciente){
-        return new ResponseEntity<PacienteResponseDTO>(this.service.salvar(paciente), HttpStatus.CREATED);
+    public ResponseEntity<PacienteResponseDTO> cadastrarPaciente(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,
+                                                                 @Valid @RequestBody PacienteCadastroDTO paciente){
+        return new ResponseEntity<PacienteResponseDTO>(this.service.salvar(idUsuarioLogado,paciente), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PacienteResponseDTO> atualizarPaciente(@RequestBody @Valid PacienteResponseDTO paciente,
-                                                              @PathVariable Long id){
-        return new ResponseEntity<>(this.service.atualizarPaciente(id,paciente),HttpStatus.OK);
+    public ResponseEntity<PacienteResponseDTO> atualizarPaciente(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,
+                                                                 @RequestBody @Valid PacienteAtualizacaoDTO paciente,
+                                                                 @PathVariable Long id){
+        return new ResponseEntity<>(this.service.atualizarPaciente(idUsuarioLogado,id,paciente),HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removerPaciente(@PathVariable Long id) throws Exception {
-        this.service.remover(id);
+    public ResponseEntity<Void> removerPaciente(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,
+                                                @PathVariable Long id) throws Exception {
+        this.service.remover(idUsuarioLogado,id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/listagem/{filtro}")
+    public ResponseEntity<List<PacienteResponseDTO>> buscarPorFiltro(@PathVariable String filtro) throws Exception {
+        return new ResponseEntity<>(this.service.buscarProFiltro(filtro), HttpStatus.OK);
+    }
 
-
-
+    @GetMapping("/buscarPorNome")
+    public ResponseEntity<List<PacienteResponseDTO>> buscarPorNome(@RequestParam String nomeCompleto) {
+        return new ResponseEntity<>(this.service.buscarPorNome(nomeCompleto), HttpStatus.OK);
+    }
 }

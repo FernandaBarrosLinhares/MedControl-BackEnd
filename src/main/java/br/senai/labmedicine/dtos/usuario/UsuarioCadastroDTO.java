@@ -2,14 +2,14 @@ package br.senai.labmedicine.dtos.usuario;
 
 import br.senai.labmedicine.enums.GeneroEnum;
 import br.senai.labmedicine.enums.TipoUsuarioEnum;
-import br.senai.labmedicine.models.Usuario;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.hibernate.validator.constraints.br.CPF;
+
 
 @Getter @Setter
 @NoArgsConstructor

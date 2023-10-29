@@ -1,8 +1,7 @@
-package br.senai.labmedicine.dtos;
+package br.senai.labmedicine.dtos.endereco;
 
 import br.senai.labmedicine.models.Endereco;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,8 +26,8 @@ public class EnderecoResponse {
 	@NotBlank(message = "Logradouro Obrigatório")
 	private String logradouro;
 
-	@NotNull(message = "Número Obrigatório")
-	private int numero;
+	@NotBlank(message = "Número Obrigatório")
+	private String numero;
 
 	private String complemento;
 
@@ -48,4 +47,5 @@ public class EnderecoResponse {
 		this.complemento = endereco.getComplemento();
 		this.numero = endereco.getNumero();
 	}
+
 }

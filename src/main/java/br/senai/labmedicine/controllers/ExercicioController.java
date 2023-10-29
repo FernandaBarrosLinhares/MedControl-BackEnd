@@ -20,8 +20,8 @@ public class ExercicioController {
     private ExercicioService exercicioService;
 
     @PostMapping
-    public ResponseEntity<ExercicioResponseDTO> salvarExercicio(@RequestBody @Valid ExercicioCadastroDTO novoExercicio) {
-        return new ResponseEntity<>(this.exercicioService.salvar(novoExercicio), HttpStatus.CREATED);
+    public ResponseEntity<ExercicioResponseDTO> salvarExercicio(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@RequestBody @Valid ExercicioCadastroDTO novoExercicio) {
+        return new ResponseEntity<>(this.exercicioService.salvar(idUsuarioLogado,novoExercicio), HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")
@@ -35,13 +35,13 @@ public class ExercicioController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deletarExercicio(@PathVariable Long id){
-        this.exercicioService.deletarExercicio(id);
+    public ResponseEntity<Void> deletarExercicio(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id){
+        this.exercicioService.deletarExercicio(idUsuarioLogado,id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<ExercicioResponseDTO> atualizarExercicio(@PathVariable Long id, @RequestBody @Valid ExercicioAtualizacaoDTO exercicioAtualizado) {
-        return new ResponseEntity<>(this.exercicioService.atualizarExercicio(id, exercicioAtualizado) ,HttpStatus.OK);
+    public ResponseEntity<ExercicioResponseDTO> atualizarExercicio(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable Long id, @RequestBody @Valid ExercicioAtualizacaoDTO exercicioAtualizado) {
+        return new ResponseEntity<>(this.exercicioService.atualizarExercicio(idUsuarioLogado,id, exercicioAtualizado) ,HttpStatus.OK);
     }
 }

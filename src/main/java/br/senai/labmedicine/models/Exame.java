@@ -5,9 +5,6 @@ import java.time.LocalTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import br.senai.labmedicine.dtos.ExameCadastroDTO;
-import br.senai.labmedicine.dtos.ExameEdicaoDTO;
-import br.senai.labmedicine.dtos.ExameResponseDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -61,8 +58,4 @@ public class Exame {
     @JoinColumn(name = "paciente_id",referencedColumnName = "id",nullable = false)
 	private Paciente paciente;
 
-	// TODO esperar a classe usuario ser implementada
-	// @ManyToOne
-    // @JoinColumn(name = "usuario_id",referencedColumnName = "id",nullable = false)
-	// private Usuario usuario;
 }
