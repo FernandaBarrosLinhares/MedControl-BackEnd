@@ -4,11 +4,9 @@ import br.senai.labmedicine.enums.GeneroEnum;
 import br.senai.labmedicine.enums.TipoUsuarioEnum;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
+import org.hibernate.validator.constraints.br.CPF;
 
 
 @Getter @Setter
@@ -23,12 +21,12 @@ public class UsuarioCadastroDTO {
     @NotNull(message= "Gênero é obrigatório")
     private GeneroEnum genero;
 
-    //@CPF //TODO Retirar comentario após os testes
+    @CPF
     @NotBlank (message = "Cpf é obrigatório")
     private String cpf;
 
     @NotBlank (message ="Telefone é obrigatório")
-    @JsonFormat(pattern = "\\d{11}")
+    @Pattern(regexp = "\\d{11}",message = "Telefone: informe apenas números com DDD")
     private String telefone;
 
     @NotBlank (message ="Email é obrigatório")

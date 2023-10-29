@@ -38,7 +38,7 @@ public class PacienteCadastroDTO {
     @NotNull(message= "Estado Civil é obrigatório")
     private EstadoCivilEnum estadoCivil;
 
-    @CPF(message = "CPF inválido") //TODO retirar
+    @CPF(message = "CPF inválido")
     @NotBlank (message = "Cpf é obrigatório")
     @Pattern(regexp = "\\d{11}",message = "CPF: informe apenas números.")
     private String cpf;
