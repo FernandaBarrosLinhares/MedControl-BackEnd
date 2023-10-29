@@ -42,8 +42,8 @@ public class UsuarioController {
     }
 
     @GetMapping("/buscarPorEmail")
-    public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorEmail(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@RequestParam String email) throws AccessDeniedException {
-        return new ResponseEntity<>(this.usuarioService.buscarUsuarioPorEmail(idUsuarioLogado,email),HttpStatus.OK);
+    public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorEmail(@RequestParam String email) throws AccessDeniedException {
+        return new ResponseEntity<>(this.usuarioService.buscarUsuarioPorEmail(email),HttpStatus.OK);
     }
 
     @PostMapping("/login")

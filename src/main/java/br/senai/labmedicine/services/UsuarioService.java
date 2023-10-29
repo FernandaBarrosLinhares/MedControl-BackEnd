@@ -85,11 +85,7 @@ public class UsuarioService {
         return new UsuarioResponseDTO(usuario);
     }
 
-    public UsuarioResponseDTO buscarUsuarioPorEmail(Long idUsuarioLogado,String email) throws AccessDeniedException {
-        UsuarioResponseDTO usuarioLogado = this.buscarUsuarioPorId(idUsuarioLogado);
-        if(!usuarioLogado.getTipoUsuario().getDescricao().equals("Administrador")){
-            throw new AccessDeniedException("Usuário sem acesso!");
-        }
+    public UsuarioResponseDTO buscarUsuarioPorEmail(String email) throws AccessDeniedException {
         Usuario usuario = this.usuarioRepository.findByEmail(email);
         if(usuario == null){
             throw new InternalError("Nenhum usuário encontrado para o email fornecido.");
