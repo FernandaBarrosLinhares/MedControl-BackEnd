@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
+
 @RestController
 @RequestMapping("/config")
 public class WhiteLabelController {
@@ -15,8 +17,8 @@ public class WhiteLabelController {
     private WhiteLabelService whiteLabelService;
 
     @PutMapping("{id}")
-    public ResponseEntity<WhiteLabelDTO> atualizarConfig(@PathVariable(required = true)Long id,@RequestBody WhiteLabelDTO config){
-        return new ResponseEntity<>(this.whiteLabelService.atualizarConfig(id,config), HttpStatus.OK);
+    public ResponseEntity<WhiteLabelDTO> atualizarConfig(@RequestHeader(value = "idUsuarioLogado",required = true)Long idUsuarioLogado,@PathVariable(required = true)Long id,@RequestBody WhiteLabelDTO config) throws AccessDeniedException {
+        return new ResponseEntity<>(this.whiteLabelService.atualizarConfig(idUsuarioLogado,id,config), HttpStatus.OK);
     }
 
     @GetMapping("{id}")
